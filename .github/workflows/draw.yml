@@ -3,9 +3,16 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - "config/**"
-      - .github/workflows/draw.yml
-      - keymap_drawer.config.yaml
+      - "config/eyelash_corne.keymap"
+      - "config/*.dtsi"
+      - "keymap-drawer/config.yaml"
+      - ".github/workflows/draw.yml"
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   draw:
