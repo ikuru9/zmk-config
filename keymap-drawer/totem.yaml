@@ -190,9 +190,9 @@ layers:
   - Reset
   - Boot
   - {type: trans}
-  - {type: held}
-  - {type: held}
   - {type: trans}
+  - {type: held}
+  - {type: held}
   - {type: trans}
   - Cancel
 combos:
