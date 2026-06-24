@@ -1,9 +1,14 @@
 # configuration for https://github.com/caksoylar/keymap-drawer
 parse_config:
   zmk_additional_includes:
+    - "config"
     - "modules/zmk/helpers/include"
+    - "modules/zmk/auto-layer/dts"
+    - "modules/zmk/unicode/dts"
+    - "modules/zmk/unicode/include"
+
   zmk_preamble: |
-    #include <zmk-helpers/key-labels/34.h>
+    #define KEYMAP_DRAWER
     #define CONFIG_WIRELESS
 
   raw_binding_map:
@@ -13,23 +18,23 @@ parse_config:
     "&num_dance":
       tap: "Numword"
       shifted: "Sticky Num"
-    "&magic_shift": 
+    "&magic_shift":
       tap: "Magic"
       hold: "Shift"
     "&smart_mouse": $$mdi:mouse$$
-    "&undo_redo": 
+    "&undo_redo":
       tap: $$mdi:undo$$
       hold: $$mdi:redo$$
     "&lang_screen": $$tabler:world$$
-    "&comma_morph": 
+    "&comma_morph":
       tap: ","
       hold: "<"
       shifted: ";"
-    "&dot_morph": 
+    "&dot_morph":
       tap: "."
       hold: ">"
       shifted: "/"
-    "esc_grave": 
+    "esc_grave":
       tap: $$mdi:keyboard-esc$$
       shifted: "`"
 
@@ -98,7 +103,7 @@ parse_config:
     "&hmr LCTL L":
       tap: 'L'
       hold: $$mdi:apple-keyboard-control$$
-    
+
     # Modifiers
     "&caps_word": $$mdi:alpha-w-box$$
 
@@ -199,7 +204,7 @@ parse_config:
       align: bottom
     combo_cut:
       align: bottom
-    
+
     combo_esc:
       align: top
     combo_raycast:
@@ -285,15 +290,15 @@ parse_config:
     DOWN: $$mdi:arrow-down$$
     LEFT: $$mdi:arrow-left$$
     RIGHT: $$mdi:arrow-right$$
-    
+
     LC(LEFT): $$tabler:caret-left$$
     LC(RIGHT):  $$tabler:caret-right$$
-    
+
     LA(LEFT): $$mdi:arrow-collapse-left$$
     LA(RIGHT): $$mdi:arrow-collapse-right$$
     LA(UP): $$mdi:arrow-collapse-up$$
     LA(DOWN): $$mdi:arrow-collapse-down$$
-    
+
     LA(UP): $$mdi:arrow-expand-up$$
     LA(DOWN): $$mdi:arrow-expand-down$$
     LA(LEFT): $$mdi:format-pilcrow-arrow-left$$
@@ -306,20 +311,20 @@ parse_config:
     LG(X): $$mdi:content-cut$$
     LG(V): $$mdi:content-paste$$
     LG(Z): $$mdi:undo$$
-    
+
     LS(LG(Z)): $$mdi:redo$$
     LC(LG(F)): $$mdi:fullscreen$$
     LC(LA(SPACE)): $$mdi:text-search$$
-    
+
     LS(LG(TAB)): "Prev Win"
     LC(LA(LG(LEFT))): $$mdi:arrow-left-bold$$
     LC(LA(LG(RIGHT))): $$mdi:arrow-right-bold$$
-    
+
     LC(LA(LEFT)): $$tabler:layout-sidebar-left-collapse$$
     LC(LA(RIGHT)): $$tabler:layout-sidebar-right-collapse$$
 
     LC(LG(Q): $$mdi:sleep$$
-    
+
 
     # Numbers
     N1:
@@ -527,10 +532,3 @@ draw_config:
     mdil: https://raw.githubusercontent.com/Pictogrammers/MaterialDesignLight/master/svg/{}.svg
     material: https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/{}/default/48px.svg
   use_local_cache: true
-
-
-
-
-
-
-
