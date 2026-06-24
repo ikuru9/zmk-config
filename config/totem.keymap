@@ -200,7 +200,7 @@ ZMK_TAP_DANCE(lang_screen, bindings = <&kp LC(LG(SPACE))>, <&kp LC(LG(LS(N4)))>;
               tapping-term-ms = <200>;)
 
 // Tap: undo | double-tap: redo.
-ZMK_TAP_DANCE(undo_redo, bindings = <&kp LG(Z)>, <&kp LG(LS(Z)))>;
+ZMK_TAP_DANCE(undo_redo, bindings = <&kp LG(Z)>, <&kp LG(LS(Z))>;
               tapping-term-ms = <200>;)
 
 // Sticky shift + leader.
