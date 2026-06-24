@@ -208,7 +208,7 @@ ZMK_MACRO(leader_sft, bindings = <&sk LSHFT &leader>;)
 
 /* Keymap */
 
-ZMK_CONDITIONAL_LAYER(sys, NAV FN, SYS) // NAV + FN --> SYS.
+ZMK_CONDITIONAL_LAYER(sys, NAV NUM, SYS) // NAV + NUM --> SYS.
 
 #define SLEEP &kp LC(LG(Q))
 #define CANCEL    &kp K_CANCEL            // Cancel caps-word & auto-layers.
