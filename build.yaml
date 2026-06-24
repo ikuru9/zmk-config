@@ -1,10 +1,10 @@
 include:
   # TOTEM
-  - board: xiao_ble
+  - board: seeeduino_xiao_ble
     shield: settings_reset
-  - board: xiao_ble
+  - board: seeeduino_xiao_ble
     shield: totem_left
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
-  - board: xiao_ble
+  - board: seeeduino_xiao_ble
     shield: totem_right
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
