@@ -1,0 +1,240 @@
+layout: {zmk_keyboard: totem}
+layers:
+  Base:
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - {t: A, h: '$$mdi:apple-keyboard-control$$'}
+  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: D, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: F, h: '$$mdi:apple-keyboard-command$$'}
+  - G
+  - H
+  - {t: J, h: '$$mdi:apple-keyboard-command$$'}
+  - {t: K, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: L, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: '''', h: '$$mdi:apple-keyboard-control$$'}
+  - $$mdi:apple-keyboard-shift$$
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - N
+  - M
+  - {t: ',', h: ;}
+  - {t: ., h: ':'}
+  - {t: '?', h: '!'}
+  - {t: '$$mdi:undo$$', h: '$$mdi:redo$$'}
+  - $$mdi:keyboard-esc$$
+  - {t: '$$mdi:keyboard-tab$$', h: Fn}
+  - {t: '$$mdi:keyboard-space$$', h: Nav}
+  - {t: '$$mdi:keyboard-return$$', h: Num}
+  - {t: '$$mdi:keyboard-backspace$$', s: DELETE}
+  - $$tabler:world$$
+  Nav:
+  - {type: none}
+  - {type: none}
+  - $$tabler:layout-sidebar-left-collapse$$
+  - $$tabler:layout-sidebar-right-collapse$$
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {t: '$$mdi:arrow-up$$', h: '$$mdi:arrow-expand-up$$'}
+  - {type: none}
+  - {type: none}
+  - $$mdi:apple-keyboard-control$$
+  - $$mdi:apple-keyboard-option$$
+  - {t: '$$tabler:caret-left$$', h: '$$mdi:apple-keyboard-command$$'}
+  - {t: '$$tabler:caret-right$$', h: '$$mdi:apple-keyboard-shift$$'}
+  - $$mdi:fullscreen$$
+  - {type: none}
+  - {t: '$$mdi:arrow-left$$', h: '$$mdi:format-pilcrow-arrow-left$$'}
+  - {t: '$$mdi:arrow-down$$', h: '$$mdi:arrow-expand-down$$'}
+  - {t: '$$mdi:arrow-right$$', h: '$$mdi:format-pilcrow-arrow-right$$'}
+  - {type: none}
+  - {t: ▽, type: trans}
+  - {type: none}
+  - {type: none}
+  - $$mdi:arrow-left-bold$$
+  - $$mdi:arrow-right-bold$$
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {t: ▽, type: trans}
+  - {type: none}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - $$mdi:close-box$$
+  Fn:
+  - {type: none}
+  - F7
+  - F8
+  - F9
+  - F12
+  - $$mdi:volume-high$$
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - F4
+  - F5
+  - F6
+  - F11
+  - $$mdi:volume-off$$
+  - $$mdi:skip-previous$$
+  - $$mdi:play-pause$$
+  - $$mdi:skip-next$$
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - F1
+  - F2
+  - F3
+  - F10
+  - $$mdi:volume-low$$
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - $$mdi:close-box$$
+  Num:
+  - {type: none}
+  - {t: '7', h: Sft+7, s: '&'}
+  - {t: '8', h: Sft+8, s: '*'}
+  - {t: '9', h: Sft+9, s: (}
+  - +
+  - $$mdi:pan-up$$
+  - $$mdi:mouse-left-click-outline$$
+  - {t: '$$mdi:mouse$$', s: '$$mdi:menu-up$$'}
+  - $$mdi:mouse-right-click-outline$$
+  - $$mdi:pan-left$$
+  - {type: none}
+  - {t: '4', h: Sft+4, s: $}
+  - {t: '5', h: Sft+5, s: '%'}
+  - {t: '6', h: Sft+6, s: ^}
+  - {t: '-', h: _}
+  - $$mdi:pan-down$$
+  - {t: '$$mdi:mouse$$', left: '$$mdi:menu-left$$'}
+  - {t: '$$mdi:mouse$$', h: '$$mdi:menu-down$$'}
+  - {t: '$$mdi:mouse$$', right: '$$mdi:menu-right$$'}
+  - $$mdi:pan-right$$
+  - {t: ▽, type: trans}
+  - {type: none}
+  - {t: '1', h: Sft+1, s: '!'}
+  - {t: '2', h: Sft+2, s: '@'}
+  - {t: '3', h: Sft+3, s: '#'}
+  - '='
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: '0', h: Sft+0, s: )}
+  - $$mdi:apple-keyboard-command$$
+  - {type: held}
+  - {t: ▽, type: trans}
+  - $$mdi:close-box$$
+  Sys:
+  - $$mdi:bluetooth-off$$
+  - {t: '1', s: '$$mdi:bluetooth-connect$$'}
+  - {t: '2', s: '$$mdi:bluetooth-connect$$'}
+  - {t: '3', s: '$$mdi:bluetooth-connect$$'}
+  - {t: '4', s: '$$mdi:bluetooth-connect$$'}
+  - Ctl+Gui+Q
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {t: '$$mdi:toggle-switch$$', h: '$$mdi:bluetooth$$', s: '$$mdi:usb$$', type: toggle}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {t: '$$mdi:progress-download$$', type: ghost}
+  - {t: '$$mdi:backup-restore$$', type: ghost}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {type: none}
+  - {t: '$$mdi:backup-restore$$', type: ghost}
+  - {t: '$$mdi:progress-download$$', type: ghost}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - $$mdi:close-box$$
+combos:
+- p: [3, 2]
+  k: (
+  l: [Base]
+- p: [6, 7]
+  k: )
+  l: [Base]
+- p: [2, 1]
+  k: {h: '[', s: '{'}
+  l: [Base]
+- p: [7, 8]
+  k: {h: ']', s: '}'}
+  l: [Base]
+- p: [22, 24]
+  k: $$mdi:content-cut$$
+  l: [Base, Nav]
+  a: bottom
+- p: [22, 23]
+  k: $$mdi:content-copy$$
+  l: [Base, Nav]
+- p: [23, 24]
+  k: $$mdi:content-paste$$
+  l: [Base, Nav]
+- p: [0, 1]
+  k: '`'
+  l: [Base]
+- p: [8, 9]
+  k: \
+  l: [Base]
+- p: [18, 19]
+  k: /
+  l: [Base]
+- p: [29, 30]
+  k: '|'
+  l: [Base]
+- p: [33, 34]
+  k: $$mdi:keyboard-esc$$
+  l: [Base]
+  a: top
+- p: [36, 35]
+  k: $$mdi:text-search$$
+  l: [Base]
+  a: top

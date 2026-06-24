@@ -1,0 +1,33 @@
+// KEY POSITIONS
+  //     ╭──────────────────────┬─────────────────────╮
+  //     │  LT4 LT3 LT2 LT1 LT0 │ RT0 RT1 RT2 RT3 RT4 │
+  //  ╭──╯  LM4 LM3 LM2 LM1 LM0 │ RM0 RM1 RM2 RM3 RM4 ╰───╮
+  //  │ LB5 LB4 LB3 LB2 LB1 LB0 │ RB0 RB1 RB2 RB3 RB4 RB5 │
+  //  ╰──────────╮  LH2 LH1 LH0 │ RH0 RH1 RH2 ╭───────────╯
+  //             ╰──────────────┴─────────────╯
+#define ZMK_COMBO_TERM_FAST 18
+#define ZMK_COMBO_TERM_SLOW 30
+
+#define ZMK_COMBO_IDLE_FAST 150
+#define ZMK_COMBO_IDLE_SLOW 50
+
+
+ZMK_COMBO(lbrc,      &kp LPAR,             LT1 LT2,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(rbrc,      &kp RPAR,             RT1 RT2,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+
+ZMK_COMBO(lbkt,      &kp LBKT,             LT2 LT3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(rbkt,      &kp RBKT,             RT2 RT3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+
+ZMK_COMBO(cut,       &kp LC(X),            LB3 LB1,     DEF NAV    , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(copy,      &kp LC(C),            LB3 LB2,     DEF NAV    , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(paste,     &kp LC(V),            LB2 LB1,     DEF NAV    , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+
+
+ZMK_COMBO(grave,     &kp GRAVE,            LT4 LT3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+
+ZMK_COMBO(bslh,      &kp BSLH,             RT3 RT4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(flsh,      &kp SLASH,            RM3 RM4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(pipe,      &kp PIPE,             RB3 RB4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+
+ZMK_COMBO(esc,       &kp ESC,              LH1 LH0,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(raycast,   &kp LG(LA(SPACE)),    RH1 RH0,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)

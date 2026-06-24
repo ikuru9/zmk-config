@@ -1,0 +1,35 @@
+manifest:
+  defaults:
+    revision: v0.3
+  remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+    - name: urob
+      url-base: https://github.com/urob
+  projects:
+    - name: zmk
+      remote: zmkfirmware
+      import: app/west.yml
+
+      # urob modules
+    - name: zmk-adaptive-key
+      remote: urob
+      path: modules/zmk/adaptive-key
+    - name: zmk-auto-layer
+      remote: urob
+      path: modules/zmk/auto-layer
+    - name: zmk-helpers
+      remote: urob
+      path: modules/zmk/helpers
+    - name: zmk-leader-key
+      remote: urob
+      path: modules/zmk/leader-key
+    - name: zmk-tri-state
+      remote: urob
+      path: modules/zmk/tri-state
+    - name: zmk-unicode
+      remote: urob
+      path: modules/zmk/unicode
+  self:
+    path: config
+  
