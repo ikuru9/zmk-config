@@ -105,7 +105,7 @@ layers:
   - F2
   - F3
   - F10
-  - MUTE.
+  - $$mdi:volume-off$$
   - ''
   - ''
   - ''
