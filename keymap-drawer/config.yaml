@@ -115,8 +115,30 @@ parse_config:
     "&mkp MB4": Back Click
     "&mkp MB5": Forward Click
 
+    "&kp LC(LG(Q))": "$$mdi:lock$$"
+
+    "&kp LG(Z)": "$$mdi:undo$$"
+    "&kp LG(LS(Z))": "$$mdi:redo$$"
+
     # shared repo mappings used outside Continuum
     "&soft_off": BAT Save
+
+    # arrows
+    "&mt LA(LEFT) LEFT": { "tap": "$$mdi:arrow-left$$", "hold": "$$mdi:arrow-collapse-left$$" }
+    "&mt LA(RIGHT) RIGHT": { "tap": "$$mdi:arrow-right$$", "hold": "$$mdi:arrow-collapse-right$$" }
+    "&mt LA(UP) UP": { "tap": "$$mdi:arrow-up$$", "hold": "$$mdi:arrow-collapse-up$$" }
+    "&mt LA(DOWN) DOWN": { "tap": "$$mdi:arrow-down$$", "hold": "$$mdi:arrow-collapse-down$$" }
+
+    "&kp LC(LEFT)": "$$mdi:chevron-left-box$$"
+    "&kp LC(RIGHT)": "$$mdi:chevron-right-box$$"
+
+    "&kp LC(LA(LEFT))": "$$mdi:arrow-collapse-left$$"
+    "&kp LC(LA(RIGHT))": "$$mdi:arrow-collapse-right$$"
+
+    "&kp LC(LA(LG(LEFT)))": "$$mdi:arrow-left-box$$"
+    "&kp LC(LA(LG(RIGHT)))": "$$mdi:arrow-right-box$$"
+
+    "&kp LC(LG(F))": "$$mdi:fullscreen$$"
 
   trans_legend: { "tap": "", "type": "trans" }
 

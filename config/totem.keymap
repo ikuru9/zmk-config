@@ -102,15 +102,16 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 #define NAV_UP    &mt LA(UP) UP    // Tap: up    | Long-tap: move up one line.
 #define NAV_DOWN  &mt LA(DOWN) DOWN  // Tap: down  | Long-tap: move down one line.
 
-#define WIN_LEFT  &kp LC(LA(LG(LEFT)))
-#define WIN_RIGHT  &kp LC(LA(LG(RIGHT)))
-#define FIT_LEFT  &kp LC(LA(LEFT))
-#define FIT_RIGHT  &kp LC(LA(RIGHT))
+#define WIN_LEFT    &kp LC(LA(LG(LEFT)))
+#define WIN_RIGHT   &kp LC(LA(LG(RIGHT)))
+#define FIT_LEFT    &kp LC(LA(LEFT))
+#define FIT_RIGHT   &kp LC(LA(RIGHT))
 #define SPACE_LEFT  &kp LC(LEFT)
-#define SPACE_RIGHT  &kp LC(RIGHT)
+#define SPACE_RIGHT &kp LC(RIGHT)
+#define SP_LEFT     &kp LC(LEFT)
+#define SP_RIGHT    &kp LC(RIGHT)
+
 #define SPACE_FULL &kp LC(LG(F))
-#define HML_SP_LEFT &hml LGUI LC(LEFT)
-#define HML_SP_RIGHT &hml LSHFT LC(RIGHT)
 
 // Mask CTRL on left/right hold to avoid accidental jumps to start/end of doc.
 #define MASK_MODS(NAME, MODS, BINDING)                                         \
@@ -210,7 +211,7 @@ ZMK_MACRO(leader_sft, bindings = <&sk LSHFT &leader>;)
 
 ZMK_CONDITIONAL_LAYER(sys, NAV NUM, SYS) // NAV + NUM --> SYS.
 
-#define SLEEP &kp LC(LG(Q))
+#define LOCK     &kp LC(LG(Q))
 #define CANCEL    &kp K_CANCEL            // Cancel caps-word & auto-layers.
 
 #ifndef ZMK_BASE_LAYER
@@ -232,11 +233,11 @@ ZMK_BASE_LAYER(Base,
 
 ZMK_BASE_LAYER(Nav,
 //                 ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮   ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
-                     XXX              XXX              FIT_LEFT         FIT_RIGHT        XXX            ,     XXX              XXX              NAV_UP           XXX              XXX            ,
+                     XXX              FIT_LEFT         XXX              FIT_RIGHT        XXX            ,     XXX              XXX              NAV_UP           XXX              XXX            ,
 //                 ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤   ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
-                     XXX              XXX              HML_SP_LEFT      HML_SP_RIGHT     SPACE_FULL     ,     XXX              NAV_LEFT         NAV_DOWN         NAV_RIGHT        XXX            ,
+                     XXX              SP_LEFT          XXX              SP_RIGHT         SPACE_FULL     ,     XXX              NAV_LEFT         NAV_DOWN         NAV_RIGHT        XXX            ,
 //╭────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤   ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────╮
-    ___              XXX              XXX              WIN_LEFT         WIN_RIGHT        XXX            ,     XXX              XXX              XXX              XXX              XXX              ___            ,
+    ___              XXX              WIN_LEFT         XXX              WIN_RIGHT        XXX            ,     XXX              XXX              XXX              XXX              XXX              ___            ,
 //╰────────────────┼────────────────┼────────────────┴────────────────┼────────────────┼────────────────┤   ├────────────────┼────────────────┼────────────────┴────────────────┴────────────────┴────────────────╯
                                                        XXX              ___              ___            ,     ___              ___              CANCEL
 //                                                   ╰────────────────┴────────────────┴────────────────╯   ╰────────────────┴────────────────┴────────────────╯
@@ -246,11 +247,11 @@ ZMK_BASE_LAYER(Fn,
 //                 ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮   ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
                      XXX              &kp F7           &kp F8           &kp F9           &kp F12        ,      &kp C_VOL_UP    XXX              XXX              XXX              XXX            ,
 //                 ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤   ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
-                     XXX              &kp F4           &kp F5           &kp F6           &kp F11        ,      &kp C_MUTE      &kp C_PREV       &kp C_PP         &kp C_NEXT       XXX            ,
+                     XXX              &kp F4           &kp F5           &kp F6           &kp F11        ,      &kp C_VOL_DN    &kp C_PREV       &kp C_PP         &kp C_NEXT       XXX            ,
 //╭────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤   ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────╮
-    XXX              XXX              &kp F1           &kp F2           &kp F3           &kp F10        ,      &kp C_VOL_DN    XXX              XXX              XXX              XXX              XXX            ,
+    XXX              XXX              &kp F1           &kp F2           &kp F3           &kp F10        ,      &kp C_MUTE.     XXX              XXX              XXX              XXX              XXX            ,
 //╰────────────────┼────────────────┼────────────────┴────────────────┼────────────────┼────────────────┤   ├────────────────┼────────────────┼────────────────┴────────────────┴────────────────┴────────────────╯
-                                                       ___              ___              ___            ,     ___              ___              CANCEL
+                                                       ___              ___              ___            ,     LOCK             ___              CANCEL
 //                                                   ╰────────────────┴────────────────┴────────────────╯   ╰────────────────┴────────────────┴────────────────╯
 )
 
@@ -262,13 +263,13 @@ ZMK_BASE_LAYER(Num,
 //╭────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤   ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────╮
     ___              XXX             &hml LS(N1) N1   &hml LS(N2) N2   &hml LS(N3) N3    &kp EQUAL      ,     XXX              XXX              XXX              XXX              XXX              ___            ,
 //╰────────────────┼───────────────┼────────────────┴────────────────┼────────────────┼─────────────────┤   ├────────────────┼────────────────┴────────────────┼────────────────┴────────────────┴────────────────╯
-                                                      ___              &hml LS(N0) N0    &kp LGUI       ,     ___              ___              CANCEL
+                                                      ___              &hml LS(N0) N0    ___            ,     ___              ___              CANCEL
 //                                                  ╰────────────────┴────────────────┴─────────────────╯   ╰────────────────┴────────────────┴────────────────╯
 )
 
 ZMK_BASE_LAYER(Sys,
 //                 ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮   ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
-                                                        _BT_SEL_KEYS_                                   ,     SLEEP            XXX              XXX              XXX              &out OUT_TOG   ,
+                                                        _BT_SEL_KEYS_                                   ,     XXX              XXX              XXX              XXX              &out OUT_TOG   ,
 //                 ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤   ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
                      XXX              XXX              XXX              XXX              XXX            ,     XXX              XXX              XXX              XXX              XXX            ,
 //╭────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤   ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────╮
