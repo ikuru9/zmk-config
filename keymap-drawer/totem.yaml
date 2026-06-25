@@ -41,30 +41,30 @@ layers:
   - '&lang_screen'
   Nav:
   - ''
+  - $$mdi:arrow-collapse-left$$
   - ''
-  - Ctrl+Alt+←
-  - Ctrl+Alt+→
-  - ''
-  - ''
-  - ''
-  - {t: ↑, h: Alt+↑}
+  - $$mdi:arrow-collapse-right$$
   - ''
   - ''
   - ''
+  - {t: '$$mdi:arrow-up$$', h: '$$mdi:arrow-collapse-up$$'}
   - ''
-  - {t: Ctrl+←, h: Gui}
-  - {t: Ctrl+→, h: Shift}
-  - Ctrl+Gui+F
   - ''
-  - {t: ←, h: Alt+←}
-  - {t: ↓, h: Alt+↓}
-  - {t: →, h: Alt+→}
+  - ''
+  - $$mdi:chevron-left-box$$
+  - ''
+  - $$mdi:chevron-right-box$$
+  - $$mdi:fullscreen$$
+  - ''
+  - {t: '$$mdi:arrow-left$$', h: '$$mdi:arrow-collapse-left$$'}
+  - {t: '$$mdi:arrow-down$$', h: '$$mdi:arrow-collapse-down$$'}
+  - {t: '$$mdi:arrow-right$$', h: '$$mdi:arrow-collapse-right$$'}
   - ''
   - {type: trans}
   - ''
+  - $$mdi:arrow-left-box$$
   - ''
-  - Ctrl+Alt+Gui+←
-  - Ctrl+Alt+Gui+→
+  - $$mdi:arrow-right-box$$
   - ''
   - ''
   - ''
@@ -94,7 +94,7 @@ layers:
   - F5
   - F6
   - F11
-  - $$mdi:volume-off$$
+  - $$mdi:volume-medium$$
   - $$mdi:skip-backward$$
   - $$mdi:play-pause$$
   - $$mdi:skip-forward$$
@@ -105,7 +105,7 @@ layers:
   - F2
   - F3
   - F10
-  - $$mdi:volume-medium$$
+  - MUTE.
   - ''
   - ''
   - ''
@@ -114,7 +114,7 @@ layers:
   - {type: trans}
   - {type: held}
   - {type: trans}
-  - {type: trans}
+  - $$mdi:lock$$
   - {type: trans}
   - Cancel
   Num:
@@ -152,7 +152,7 @@ layers:
   - {type: trans}
   - {type: trans}
   - {t: '0', h: Shift+0}
-  - Gui
+  - {type: trans}
   - {type: held}
   - {type: trans}
   - Cancel
@@ -162,7 +162,7 @@ layers:
   - BT 3
   - BT 4
   - BT Clear
-  - Ctrl+Gui+Q
+  - ''
   - ''
   - ''
   - ''
