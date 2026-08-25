@@ -37,29 +37,29 @@ layers:
   - {t: Bspc, s: Del}
   Nav:
   - ''
-  - Ctrl+Alt+←
+  - Shift+Gui+←
   - ''
-  - Ctrl+Alt+→
-  - ''
-  - ''
-  - ''
-  - {t: ↑, h: Alt+↑}
+  - Shift+Gui+→
   - ''
   - ''
   - ''
-  - Ctrl+←
-  - ''
-  - Ctrl+→
-  - Ctrl+Gui+F
-  - ''
-  - {t: ←, h: Alt+←}
-  - {t: ↓, h: Alt+↓}
-  - {t: →, h: Alt+→}
+  - {t: ↑, h: Ctrl+Home}
   - ''
   - ''
-  - Ctrl+Alt+Gui+←
   - ''
-  - Ctrl+Alt+Gui+→
+  - Ctrl+Gui+←
+  - ''
+  - Ctrl+Gui+→
+  - Gui+↑
+  - ''
+  - {t: ←, h: Home}
+  - {t: ↓, h: Ctrl+End}
+  - {t: →, h: End}
+  - ''
+  - ''
+  - Gui+←
+  - ''
+  - Gui+→
   - ''
   - ''
   - ''
@@ -69,7 +69,7 @@ layers:
   - {type: trans}
   - {type: held}
   - {type: trans}
-  - {type: trans}
+  - Cancel
   Fn:
   - ''
   - F7
@@ -103,8 +103,8 @@ layers:
   - ''
   - {type: held}
   - {type: trans}
-  - Ctrl+Gui+Q
-  - {type: trans}
+  - Gui+L
+  - Cancel
   Num:
   - ''
   - {t: '7', h: Shift+7}
@@ -139,7 +139,7 @@ layers:
   - {t: '0', h: Shift+0}
   - {type: trans}
   - {type: held}
-  - {type: trans}
+  - Cancel
   Sys:
   - BT 1
   - BT 2
@@ -148,9 +148,9 @@ layers:
   - BT Clear
   - ''
   - ''
-  - ''
-  - ''
   - Out Toggle
+  - USB
+  - BLE
   - ''
   - ''
   - ''
@@ -161,6 +161,7 @@ layers:
   - ''
   - ''
   - ''
+  - Boot
   - Reset
   - ''
   - ''
@@ -168,14 +169,12 @@ layers:
   - ''
   - ''
   - ''
-  - ''
-  - ''
   - Reset
+  - Boot
   - {type: trans}
   - {type: held}
   - {type: held}
-  - {type: trans}
-  Combos: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+  - Cancel
 combos:
 - p: [3, 2]
   k: (

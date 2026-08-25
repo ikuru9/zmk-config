@@ -1,0 +1,222 @@
+name: Release ZMK Firmware
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Tag to release for manual runs (example: v1.2.3)"
+        required: false
+        type: string
+      profile:
+        description: "Optional build profile override (`stable`)"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
+      profile: ${{ steps.meta.outputs.profile }}
+      prerelease: ${{ steps.meta.outputs.prerelease }}
+      make_latest: ${{ steps.meta.outputs.make_latest }}
+    steps:
+      - name: Resolve release settings
+        id: meta
+        shell: bash
+        env:
+          REF_NAME: ${{ github.ref_name }}
+          REF_TYPE: ${{ github.ref_type }}
+          INPUT_PROFILE: ${{ github.event.inputs.profile }}
+          INPUT_TAG_NAME: ${{ github.event.inputs.tag_name }}
+        run: |
+          set -euo pipefail
+
+          tag="${INPUT_TAG_NAME:-}"
+          if [ "${REF_TYPE}" = "tag" ]; then
+            tag="${REF_NAME}"
+          fi
+
+          if [ -z "${tag}" ]; then
+            echo "::error::No release tag resolved. For manual runs, set 'tag_name'."
+            exit 1
+          fi
+
+          profile="${INPUT_PROFILE:-stable}"
+
+          case "${profile}" in
+            stable)
+              ;;
+            *)
+              echo "::error::Unsupported profile '${profile}'. Expected 'stable'."
+              exit 1
+              ;;
+          esac
+
+          if [[ "${tag}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            prerelease=false
+            make_latest=true
+          else
+            prerelease=true
+            make_latest=false
+          fi
+
+          {
+            echo "tag=${tag}"
+            echo "profile=${profile}"
+            echo "prerelease=${prerelease}"
+            echo "make_latest=${make_latest}"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "Using release tag: ${tag}"
+          echo "Using build profile: ${profile}"
+
+  build:
+    needs: prepare
+    uses: ./.github/workflows/build.yml
+    with:
+      profile: ${{ needs.prepare.outputs.profile }}
+      archive_name: firmware
+
+  release:
+    needs:
+      - prepare
+      - build
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+    steps:
+      - name: Download built firmware artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Display downloaded file structure
+        run: ls -R ./artifacts
+
+      - name: Package firmware files into release assets
+        id: package
+        env:
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+        run: |
+          set -euo pipefail
+          mapfile -t firmware_files < <(find ./artifacts -type f \( -name "*.uf2" -o -name "*.bin" -o -name "*.hex" \) | sort)
+
+          if [ "${#firmware_files[@]}" -eq 0 ]; then
+            echo "No firmware files (.uf2/.bin/.hex) found in artifacts."
+            exit 1
+          fi
+
+          mkdir -p ./release-assets
+          for file in "${firmware_files[@]}"; do
+            cp "$file" "./release-assets/$(basename "$file")"
+          done
+
+          (
+            cd ./release-assets
+            : > SHA256SUMS
+            for file in *.uf2 *.bin *.hex; do
+              [ -f "$file" ] || continue
+              sha256sum "$file" >> SHA256SUMS
+            done
+            sort -o SHA256SUMS SHA256SUMS
+          )
+
+          zip_file="zmk-firmware-${RELEASE_TAG}.zip"
+          (
+            cd ./release-assets
+            assets=(./SHA256SUMS)
+            for file in ./*.uf2 ./*.bin ./*.hex; do
+              [ -f "$file" ] || continue
+              assets+=("$file")
+            done
+            zip -9 "../${zip_file}" "${assets[@]}"
+          )
+
+          echo "zip_file=${zip_file}" >> "$GITHUB_OUTPUT"
+          echo "sha_file=release-assets/SHA256SUMS" >> "$GITHUB_OUTPUT"
+      - name: Publish GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.ZMK_ACTIONS_TOKEN != '' && secrets.ZMK_ACTIONS_TOKEN || secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+          RELEASE_PRERELEASE: ${{ needs.prepare.outputs.prerelease }}
+          RELEASE_MAKE_LATEST: ${{ needs.prepare.outputs.make_latest }}
+          RELEASE_ZIP_FILE: ${{ steps.package.outputs.zip_file }}
+          RELEASE_SHA_FILE: ${{ steps.package.outputs.sha_file }}
+        run: |
+          set -euo pipefail
+
+          release_name="Firmware ${RELEASE_TAG}"
+          release_body=$'Automated ZMK firmware release for `'"${RELEASE_TAG}"$'`.\nFirmware binaries are attached as release assets (`zmk-firmware-*.zip` and `SHA256SUMS`).\nGitHub auto-generates source code archives for every release; those links cannot be disabled.'
+
+          payload="$(jq -n \
+            --arg tag_name "${RELEASE_TAG}" \
+            --arg target_commitish "${GITHUB_SHA}" \
+            --arg name "${release_name}" \
+            --arg body "${release_body}" \
+            --arg make_latest "${RELEASE_MAKE_LATEST}" \
+            --argjson prerelease "${RELEASE_PRERELEASE}" \
+            '{
+              tag_name: $tag_name,
+              target_commitish: $target_commitish,
+              name: $name,
+              body: $body,
+              prerelease: $prerelease,
+              generate_release_notes: true,
+              make_latest: $make_latest
+            }')"
+
+          if release_json="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${RELEASE_TAG}" 2>/dev/null)"; then
+            release_id="$(jq -r '.id' <<<"${release_json}")"
+            gh api \
+              --method PATCH \
+              "repos/${GITHUB_REPOSITORY}/releases/${release_id}" \
+              --input - <<<"${payload}" >/dev/null
+          else
+            gh api \
+              --method POST \
+              "repos/${GITHUB_REPOSITORY}/releases" \
+              --input - <<<"${payload}" >/dev/null
+          fi
+
+          gh release upload \
+            "${RELEASE_TAG}" \
+            "${RELEASE_ZIP_FILE}" \
+            "${RELEASE_SHA_FILE}" \
+            --clobber \
+            --repo "${GITHUB_REPOSITORY}"
+
+      - name: Queue changelog update
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+        run: |
+          set -euo pipefail
+
+          release_name="Firmware ${RELEASE_TAG}"
+          release_url="https://github.com/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}"
+          release_body=$'Automated ZMK firmware release for `'"${RELEASE_TAG}"$'`.\nFirmware binaries are attached as release assets (`zmk-firmware-*.zip` and `SHA256SUMS`).\nGitHub auto-generates source code archives for every release; those links cannot be disabled.'
+
+          gh workflow run update-changelog.yml \
+            --repo "${GITHUB_REPOSITORY}" \
+            --ref "${DEFAULT_BRANCH}" \
+            --raw-field "tag_name=${RELEASE_TAG}" \
+            --raw-field "release_name=${release_name}" \
+            --raw-field "release_url=${release_url}" \
+            --raw-field "release_body=${release_body}"

@@ -18,10 +18,13 @@ Use the single active development line:
 
 Build and release are matrix-driven via `build.yaml`.
 
-- `.github/workflows/build.yml`: the only reusable firmware build workflow; supports full matrix, filtered builds, and profile selection
+- `.github/workflows/build.yml`: runs the full matrix for relevant pushes/PRs and supports reusable/manual profile-driven builds
 - `.github/workflows/release.yml`: builds and publishes firmware release assets using the stable profile
 - `.github/workflows/run-tests.yml` and `.github/workflows/test-main.yml`: run `tests/west.yml` directly against ZMK `main` and upload isolated build logs
 - `.github/workflows/config-policy-guard.yml`: policy lint plus random matrix sanity builds through `build.yml`
+
+- `.github/workflows/draw-keymaps.yml`: generates keymap drawings and opens a refresh PR
+- `.github/workflows/update-changelog.yml`: creates a changelog PR from release metadata
 
 ## Recommended Workflow (GitHub Actions)
 

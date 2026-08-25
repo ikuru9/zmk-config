@@ -1,0 +1,249 @@
+name: Build ZMK firmware
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "Build profile (`stable`)"
+        default: "stable"
+        required: false
+        type: string
+      artifact_names:
+        description: "Optional comma-separated artifact-name values or wildcard patterns"
+        default: ""
+        required: false
+        type: string
+      build_matrix_path:
+        description: "Path to the build matrix file"
+        default: "build.yaml"
+        required: false
+        type: string
+      build_matrix:
+        description: "JSON build matrix override"
+        required: false
+        default: ""
+        type: string
+      config_path:
+        description: "Path to the config directory"
+        default: "config"
+        required: false
+        type: string
+      fallback_binary:
+        description: "Fallback binary format, if no *.uf2 file was built"
+        default: "bin"
+        required: false
+        type: string
+      archive_name:
+        description: "Archive output file name"
+        default: "firmware"
+        required: false
+        type: string
+  push:
+    paths:
+      - ".github/workflows/build.yml"
+      - "build.yaml"
+      - "boards/**"
+      - "config/**"
+      - "snippets/**"
+      - "scripts/**"
+      - "zephyr/**"
+  pull_request:
+    paths:
+      - ".github/workflows/build.yml"
+      - "build.yaml"
+      - "boards/**"
+      - "config/**"
+      - "snippets/**"
+      - "scripts/**"
+      - "zephyr/**"
+  workflow_call:
+    inputs:
+      profile:
+        description: "Build profile (`stable`)"
+        default: "stable"
+        required: false
+        type: string
+      artifact_names:
+        description: "Optional comma-separated artifact-name values or wildcard patterns"
+        default: ""
+        required: false
+        type: string
+      build_matrix_path:
+        description: "Path to the build matrix file"
+        default: "build.yaml"
+        required: false
+        type: string
+      build_matrix:
+        description: "JSON build matrix override"
+        default: ""
+        required: false
+        type: string
+      config_path:
+        description: "Path to the config directory"
+        default: "config"
+        required: false
+        type: string
+      fallback_binary:
+        description: "Fallback binary format, if no *.uf2 file was built"
+        default: "bin"
+        required: false
+        type: string
+      archive_name:
+        description: "Archive output file name"
+        default: "firmware"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}-${{ inputs.profile || 'stable' }}
+  cancel-in-progress: true
+
+jobs:
+  prepare:
+    runs-on: ubuntu-22.04
+    name: Prepare Build Matrix
+    outputs:
+      profile: ${{ steps.profile.outputs.profile }}
+      container_image: ${{ steps.profile.outputs.container_image }}
+      zmk_revision: ${{ steps.profile.outputs.zmk_revision }}
+      base_dir: ${{ steps.profile.outputs.base_dir }}
+      cache_key: ${{ steps.profile.outputs.cache_key }}
+      build_matrix: ${{ steps.select.outputs.build_matrix }}
+      selected_count: ${{ steps.select.outputs.selected_count }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install Python dependencies
+        run: python3 -m pip install --quiet pyyaml
+
+      - name: Resolve build profile
+        id: profile
+        run: |
+          python3 scripts/build_profiles.py resolve-profile \
+            --profile "${{ inputs.profile || 'stable' }}" \
+            --github-output "$GITHUB_OUTPUT"
+
+      - name: Select build matrix entries
+        id: select
+        shell: bash
+        env:
+          ARTIFACT_NAMES: ${{ inputs.artifact_names }}
+          BUILD_MATRIX_INPUT: ${{ inputs.build_matrix }}
+          BUILD_MATRIX_PATH: ${{ inputs.build_matrix_path || 'build.yaml' }}
+        run: |
+          set -euo pipefail
+
+          args=(
+            select-matrix
+            --build-matrix-path "${BUILD_MATRIX_PATH}"
+            --artifact-names "${ARTIFACT_NAMES}"
+            --github-output "$GITHUB_OUTPUT"
+          )
+
+          if [ -n "${BUILD_MATRIX_INPUT}" ]; then
+            args+=(--build-matrix-json "${BUILD_MATRIX_INPUT}")
+          fi
+
+          python3 scripts/build_runner.py "${args[@]}"
+
+      - name: Show selected targets
+        shell: bash
+        run: |
+          echo '${{ steps.select.outputs.build_matrix }}' | jq .
+
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ needs.prepare.outputs.container_image }}
+    needs: prepare
+    name: Build
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.prepare.outputs.build_matrix) }}
+    env:
+      BUILD_ROOT: /tmp/zmk-build/build
+      ARTIFACT_ROOT: /tmp/zmk-build/artifacts
+      BUILD_DIR: /tmp/zmk-build/build/${{ matrix.artifact_name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Cache west modules
+        uses: actions/cache@v5
+        continue-on-error: true
+        with:
+          path: |
+            ${{ needs.prepare.outputs.base_dir }}/modules/
+            ${{ needs.prepare.outputs.base_dir }}/tools/
+            ${{ needs.prepare.outputs.base_dir }}/zephyr/
+            ${{ needs.prepare.outputs.base_dir }}/bootloader/
+            ${{ needs.prepare.outputs.base_dir }}/zmk/
+          key: ${{ runner.os }}-build-${{ needs.prepare.outputs.cache_key }}-${{ hashFiles('**/west.yml', '**/build.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ needs.prepare.outputs.cache_key }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Build firmware
+        env:
+          MATRIX_ENTRY: ${{ toJson(matrix) }}
+        run: |
+          mkdir -p "${BUILD_ROOT}" "${ARTIFACT_ROOT}"
+          python3 scripts/build_runner.py build-one \
+            --profile "${{ needs.prepare.outputs.profile }}" \
+            --config-path "${{ inputs.config_path || 'config' }}" \
+            --fallback-binary "${{ inputs.fallback_binary || 'bin' }}" \
+            --build-root "${BUILD_ROOT}" \
+            --output-dir "${ARTIFACT_ROOT}" \
+            --base-dir "${{ needs.prepare.outputs.base_dir }}" \
+            --entry-json "${MATRIX_ENTRY}"
+
+      - name: ${{ matrix.artifact_name }} Kconfig file
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -f "${BUILD_DIR}/zephyr/.config" ]
+          then
+            grep -v -e "^#" -e "^$" "${BUILD_DIR}/zephyr/.config" | sort
+          else
+            echo "No Kconfig output"
+          fi
+
+      - name: ${{ matrix.artifact_name }} Devicetree file
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -f "${BUILD_DIR}/zephyr/zephyr.dts" ]
+          then
+            cat "${BUILD_DIR}/zephyr/zephyr.dts"
+          elif [ -f "${BUILD_DIR}/zephyr/zephyr.dts.pre" ]
+          then
+            cat -s "${BUILD_DIR}/zephyr/zephyr.dts.pre"
+          else
+            echo "No Devicetree output"
+          fi
+
+      - name: Archive (${{ matrix.artifact_name }})
+        uses: actions/upload-artifact@v7
+        with:
+          name: artifact-${{ matrix.artifact_name }}
+          path: ${{ env.ARTIFACT_ROOT }}
+
+  merge:
+    runs-on: ubuntu-latest
+    needs: build
+    name: Merge Output Artifacts
+    steps:
+      - name: Merge Artifacts
+        uses: actions/upload-artifact/merge@v7
+        with:
+          name: ${{ inputs.archive_name || 'firmware' }}
+          pattern: artifact-*
+          delete-merged: true

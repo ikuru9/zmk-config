@@ -1,0 +1,87 @@
+name: Config Policy Guard
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/config-policy-guard.yml"
+      - ".github/workflows/build.yml"
+      - "scripts/build_profiles.py"
+      - "scripts/build_runner.py"
+      - "scripts/ci/check_config_policy.sh"
+      - "boards/**"
+      - "config/**"
+      - "snippets/**"
+      - "build.yaml"
+  pull_request:
+    paths:
+      - ".github/workflows/config-policy-guard.yml"
+      - ".github/workflows/build.yml"
+      - "scripts/build_profiles.py"
+      - "scripts/build_runner.py"
+      - "scripts/ci/check_config_policy.sh"
+      - "boards/**"
+      - "config/**"
+      - "snippets/**"
+      - "build.yaml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: config-policy-guard-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  policy-lint:
+    name: Enforce Config Policy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Run policy guard
+        shell: bash
+        run: bash scripts/ci/check_config_policy.sh
+
+  random-sanity-selection:
+    name: Select Random Sanity Targets
+    needs: policy-lint
+    runs-on: ubuntu-latest
+    outputs:
+      build_matrix: ${{ steps.select.outputs.build_matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install Python dependencies
+        run: python3 -m pip install --quiet pyyaml
+
+      - name: Select random firmware targets from build.yaml
+        id: select
+        run: |
+          python3 scripts/build_runner.py select-matrix \
+            --build-matrix-path build.yaml \
+            --sample-count 2 \
+            --github-output "$GITHUB_OUTPUT"
+
+      - name: Show selected targets
+        shell: bash
+        run: |
+          echo '${{ steps.select.outputs.build_matrix }}' | jq .
+
+  random-firmware-sanity:
+    name: Build Random Sanity Targets
+    needs:
+      - policy-lint
+      - random-sanity-selection
+    uses: ./.github/workflows/build.yml
+    with:
+      profile: "stable"
+      build_matrix: ${{ needs.random-sanity-selection.outputs.build_matrix }}
+      archive_name: guard-random-sanity

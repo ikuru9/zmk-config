@@ -1,0 +1,48 @@
+name: Run tests (main)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/run-tests.yml"
+      - ".github/workflows/build.yml"
+      - ".github/workflows/release.yml"
+      - ".github/workflows/test-main.yml"
+      - "scripts/ci/run-zmk-tests.sh"
+      - "scripts/build_profiles.py"
+      - "scripts/build_runner.py"
+      - "build.yaml"
+      - "boards/**"
+      - "config/**"
+      - "config/west.yml"
+      - "dts/**"
+      - "include/**"
+      - "src/**"
+      - "tests/**"
+  pull_request:
+    paths:
+      - ".github/workflows/run-tests.yml"
+      - ".github/workflows/build.yml"
+      - ".github/workflows/release.yml"
+      - ".github/workflows/test-main.yml"
+      - "scripts/ci/run-zmk-tests.sh"
+      - "scripts/build_profiles.py"
+      - "scripts/build_runner.py"
+      - "build.yaml"
+      - "boards/**"
+      - "config/**"
+      - "config/west.yml"
+      - "dts/**"
+      - "include/**"
+      - "src/**"
+      - "tests/**"
+  schedule:
+    - cron: "0 21 * * 3"
+
+concurrency:
+  group: test-main-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    uses: ./.github/workflows/run-tests.yml

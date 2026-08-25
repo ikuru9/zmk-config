@@ -79,9 +79,13 @@ graph TD
 zmk-config/
 ├── .github/
 │   └── workflows/
-│       ├── build.yml                 # 재사용 가능한 펌웨어 빌드 워크플로우
+│       ├── build.yml                 # push/PR 전체 빌드 + 재사용 가능한 펌웨어 빌드
 │       ├── config-policy-guard.yml   # 설정 정책 검사 + 랜덤 sanity 빌드
-│       └── release.yml               # 태그 릴리스 아티팩트 생성
+│       ├── draw-keymaps.yml          # 키맵 다이어그램 생성 및 갱신 PR
+│       ├── release.yml               # 태그 릴리스 아티팩트 생성
+│       ├── run-tests.yml             # 재사용 가능한 ZMK 테스트 워크플로우
+│       ├── test-main.yml             # ZMK main 기준 테스트 실행
+│       └── update-changelog.yml      # 릴리스 changelog 갱신 PR
 │
 ├── boards/
 │   └── shields/
