@@ -1,0 +1,84 @@
+// shortcut select os
+#ifdef MAC_OS
+// homerow mods
+  #define M_IDX LCTRL
+  #define M_MDL LSHFT
+  #define M_RNG LALT
+  #define M_PNK LGUI
+// clipboard shortcut
+  #define C_RDO LG(LS(Z))
+  #define C_PST LG(V)
+  #define C_CPY LG(C)
+  #define C_CUT LG(X)
+  #define C_UND LG(Z)
+  #define C_ALL LG(A)
+// Desktop and tab navigation shortcuts
+  #define LANG_CHANGE LC(LG(SPACE))
+  #define SCREENSHOT LC(LG(LS(N4)))
+  #define LOCK  &kp LC(LG(Q))
+  #define W_CLS LG(Q)
+  #define T_CLS LG(W)
+  #define T_RHT LC(TAB)
+  #define T_LFT LC(LS(TAB))
+  #define W_RHT LG(TAB)
+  #define W_LFT LG(LS(TAB))
+  #define D_PRV LG(LC(LEFT))
+  #define D_NXT LG(LC(RIGHT))
+  #define SPACE_FULL &kp LC(LG(F))
+  #define NAV_LEFT  &mt LG(LEFT) LEFT  // Tap: left  | Long-tap: start of line.
+  #define NAV_RIGHT &mt LG(RIGHT) RIGHT // Tap: right | Long-tap: end of line.
+  #define NAV_UP    &mt LG(UP) UP    // Tap: up    | Long-tap: start of doc.
+  #define NAV_DOWN  &mt LG(DOWN) DOWN  // Tap: down  | Long-tap: end of doc.
+// window and fit
+  #define WIN_LEFT    &kp LC(LA(LG(LEFT)))
+  #define WIN_RIGHT   &kp LC(LA(LG(RIGHT)))
+  #define FIT_LEFT    &kp LC(LA(LEFT))
+  #define FIT_RIGHT   &kp LC(LA(RIGHT))
+  #define SPACE_LEFT  &kp LC(LEFT)
+  #define SPACE_RIGHT &kp LC(RIGHT)
+  #define SP_LEFT     &kp LC(LEFT)
+  #define SP_RIGHT    &kp LC(RIGHT)
+#else
+// homerow mods
+  #define M_IDX LCTRL
+  #define M_MDL LSHFT
+  #define M_RNG LALT
+  #define M_PNK LGUI
+// clipboard shortcut
+  #define C_RDO LC(Y)
+  #define C_PST LC(V)
+  #define C_CPY LC(C)
+  #define C_CUT LC(X)
+  #define C_UND LC(Z)
+  #define C_ALL LC(A)
+// Desktop and tab navigation
+  #define LANG_CHANGE LANG1
+  #define SCREENSHOT LG(LS(S))
+  #define LOCK  &kp LG(L)
+  #define W_CLS LA(F4)
+  #define T_CLS LC(F4)
+  #define T_RHT LC(TAB)
+  #define T_LFT LC(LS(TAB))
+  #define W_RHT LA(TAB)
+  #define W_LFT LA(LS(TAB))
+  #define D_PRV LG(LC(LEFT))
+  #define D_NXT LG(LC(RIGHT))
+  #define NAV_LEFT  &mt_home 0   LEFT  // Tap: left  | Long-tap: start of line.
+  #define NAV_RIGHT &mt_end 0    RIGHT // Tap: right | Long-tap: end   of line.
+  #define NAV_UP    &mt LC(HOME) UP    // Tap: up    | Long-tap: start of doc.
+  #define NAV_DOWN  &mt LC(END)  DOWN  // Tap: down  | Long-tap: end   of doc.
+// window and fit
+  #define WIN_LEFT    &kp LG(LEFT)       // Win + Left
+  #define WIN_RIGHT   &kp LG(RIGHT)      // Win + Right
+  #define SPACE_LEFT  &kp LC(LG(LEFT))   // Ctrl + Win + Left
+  #define SPACE_RIGHT &kp LC(LG(RIGHT))  // Ctrl + Win + Right
+  #define SP_LEFT     &kp LC(LG(LEFT))   // Ctrl + Win + Left
+  #define SP_RIGHT    &kp LC(LG(RIGHT))  // Ctrl + Win + Right
+  #define FIT_LEFT    &kp LS(LG(LEFT))   // Shift + Win + Left
+  #define FIT_RIGHT   &kp LS(LG(RIGHT))  // Shift + Win + Right
+  #define SPACE_FULL  &kp LG(UP)
+#endif
+// Desktop management shortcuts
+#define PIN_WIN   &kp LG(LC(LS(Q)))       // Pin window across desktops.
+#define PIN_APP   &kp LG(LC(LS(A)))       // Pin application across desktops.
+#define DSK_MGR   &kp LA(GRAVE)           // Desktop manager.

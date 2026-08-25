@@ -1,0 +1,89 @@
+manifest:
+  defaults:
+    revision: main
+  remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+    # Additional modules containing boards/shields/custom code can be listed here as well
+    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
+    - name: urob
+      url-base: https://github.com/urob
+
+    - name: englmaxi
+      url-base: https://github.com/englmaxi
+    - name: carrefinho
+      url-base: https://github.com/carrefinho
+
+    - name: caksoylar
+      url-base: https://github.com/caksoylar
+
+    - name: mctechnology17
+      url-base: https://github.com/mctechnology17
+    - name: m165437
+      url-base: https://github.com/M165437
+    - name: zzeneg
+      url-base: https://github.com/zzeneg
+    - name: srwi
+      url-base: https://github.com/srwi
+  projects:
+    - name: zmk
+      remote: zmkfirmware
+      import: app/west.yml
+
+    ## Urob's ZMK modules
+    - name: zmk-adaptive-key
+      path: modules/zmk/adaptive-key
+      remote: urob
+    - name: zmk-auto-layer
+      path: modules/zmk/auto-layer
+      remote: urob
+    - name: zmk-helpers
+      path: modules/zmk/helpers
+      remote: urob
+    - name: zmk-leader-key
+      path: modules/zmk/leader-key
+      remote: urob
+    - name: zmk-tri-state
+      path: modules/zmk/tri-state
+      remote: urob
+    - name: zmk-unicode
+      path: modules/zmk/unicode
+      remote: urob
+
+    ## ZMK Dongle Display
+    - name: zmk-dongle-display
+      remote: englmaxi
+
+    ## Prospector Dongle
+    - name: prospector-zmk-module
+      remote: carrefinho
+      revision: feat/new-status-screens
+
+
+    ## RGB LED Widget
+    - name: zmk-rgbled-widget
+      remote: caksoylar
+
+    ## KeyPeek support
+    - name: zmk-raw-hid
+      remote: zzeneg
+      revision: main
+    - name: zmk-keypeek-layer-notifier
+      remote: srwi
+      revision: master
+
+    ## NiceView Widget Modules
+    - name: zmk-nice-oled
+      remote: mctechnology17
+      revision: main
+    - name: zmk-dongle-display-view
+      remote: mctechnology17
+      revision: main
+    - name: zmk-oled-adapter
+      remote: mctechnology17
+      revision: main
+    - name: nice-view-gem
+      remote: m165437
+      revision: v0.3.0
+  self:
+    path: config

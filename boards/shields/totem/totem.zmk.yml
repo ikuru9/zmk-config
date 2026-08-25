@@ -1,0 +1,15 @@
+file_format: "1"
+id: totem
+name: TOTEM
+type: shield
+url: https://github.com/GEIGEIGEIST/TOTEM
+requires: [seeed_xiao, pro_micro]
+features:
+  - keys
+  - studio
+  - display
+siblings:
+  - totem_left
+  - totem_right
+  - totem_left_w_dongle
+  - totem_dongle

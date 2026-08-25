@@ -1,0 +1,5 @@
+#include "eyelash_corne.dtsi"
+
+&left_encoder {
+    status = "okay";
+};

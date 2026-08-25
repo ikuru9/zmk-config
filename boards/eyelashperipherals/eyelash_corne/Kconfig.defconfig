@@ -1,0 +1,53 @@
+#
+# Copyright (c) 2024 The ZMK Contributors
+#
+
+if BOARD_EYELASH_CORNE_LEFT
+
+config ZMK_KEYBOARD_NAME
+    default "Eyelash Corne"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif # BOARD_EYELASH_CORNE_LEFT
+
+if BOARD_EYELASH_CORNE_LEFT || BOARD_EYELASH_CORNE_RIGHT
+
+config BOARD
+    default "eyelash_corne"
+
+
+config ZMK_SLEEP
+    default y
+
+config ZMK_SPLIT
+    default y
+
+config ZMK_BLE
+    default y
+
+config BT_CTLR
+    default BT
+
+if USB
+
+config USB_NRFX
+    default y
+
+config USB_DEVICE_STACK
+    default y
+
+endif # USB
+
+if ZMK_BACKLIGHT
+
+config PWM
+    default y
+
+config LED_PWM
+    default y
+
+endif # ZMK_BACKLIGHT
+
+endif # BOARD_EYELASH_CORNE_LEFT || BOARD_EYELASH_CORNE_RIGHT

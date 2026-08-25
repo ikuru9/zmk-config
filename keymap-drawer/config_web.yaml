@@ -1,0 +1,293 @@
+draw_config:
+  key_w: 60
+  key_h: 56
+  split_gap: 30.0
+  combo_w: 28
+  combo_h: 26
+  key_rx: 6.0
+  key_ry: 6.0
+  dark_mode: auto
+  n_columns: 1
+  separate_combo_diagrams: false
+  combo_diagrams_scale: 2
+  inner_pad_w: 2.0
+  inner_pad_h: 2.0
+  outer_pad_w: 30.0
+  outer_pad_h: 56.0
+  line_spacing: 1.2
+  arc_radius: 6.0
+  append_colon_to_layer_header: false
+  small_pad: 2.0
+  legend_rel_x: 0.0
+  legend_rel_y: 0.0
+  draw_key_sides: false
+  key_side_pars:
+    rel_x: 0.0
+    rel_y: 4.0
+    rel_w: 12.0
+    rel_h: 12.0
+    rx: 4.0
+    ry: 4.0
+  svg_extra_style: ""
+  footer_text: "jon's zmk-config"
+  shrink_wide_legends: 8
+  style_layer_activators: true
+  glyph_tap_size: 14
+  glyph_hold_size: 12
+  glyph_shifted_size: 10
+  glyphs: {}
+
+parse_config:
+  preprocess: true
+  skip_binding_parsing: false
+
+  # Keep these lightweight for web portability.
+  qmk_remove_keycode_prefix:
+    - KC_
+
+  zmk_remove_keycode_prefix: []
+
+  # Web-safe preamble/includes. If parsing your full repo keymaps in CLI, use keymap-drawer/config.yaml instead.
+  zmk_preamble: "#define KEYMAP_DRAWER"
+  zmk_additional_includes: []
+
+  sticky_label: sticky
+  toggle_label: toggle
+  tap_toggle_label: tap-toggle
+  layer_legend_map: {}
+  mark_alternate_layer_activators: false
+
+  modifier_fn_map:
+    left_ctrl: Ctrl
+    right_ctrl: Ctrl
+    left_shift: Shift
+    right_shift: Shift
+    left_alt: Alt
+    right_alt: Alt
+    left_gui: Gui
+    right_gui: Gui
+    keycode_combiner: "{mods}+{key}"
+    mod_combiner: "{mod_1}+{mod_2}"
+    special_combinations:
+      left_ctrl+left_alt+left_gui+left_shift: Hyper
+      left_ctrl+left_alt+left_shift: Meh
+
+  raw_binding_map:
+    # core behaviors
+    "&sys_reset": Reset
+    "&bootloader": Boot
+    "&studio_unlock": Studio Unlock
+    "&caps_word": Caps Word
+    "&shift_repeat": Magic
+    "&leader": Leader
+    "&leader_sft": Shift+Leader
+    "&smart_mouse": Smart Mouse
+    "&swapper": Next Win
+    "&dot_spc": Sentence
+
+    "&num_dance": { tap: NumWord, shifted: Sticky Num }
+    "&magic_shift LSHFT 0": { tap: Magic, hold: Shift, shifted: Caps Word }
+    "&magic_shift": { tap: Magic, hold: Shift, shifted: Caps Word }
+
+    # bluetooth and output
+    "&bt BT_SEL 0": BT 1
+    "&bt BT_SEL 1": BT 2
+    "&bt BT_SEL 2": BT 3
+    "&bt BT_SEL 3": BT 4
+    "&bt BT_SEL 4": BT 5
+    "&bt BT_SEL 5": BT 6
+    "&bt BT_CLR": BT Clear
+    "&bt BT_NXT": BT Next
+    "&bt BT_PRV": BT Prev
+
+    "&out OUT_TOG": Out Toggle
+    "&out OUT_USB": USB
+    "&out OUT_BLE": BLE
+
+    # clipboard and window shortcuts
+    "&kp LC(C)": Copy
+    "&kp LC(X)": Cut
+    "&kp LC(V)": Paste
+    "&kp LC(Z)": Undo
+    "&kp LC(Y)": Redo
+    "&kp LC(A)": Select All
+
+    "&kp LG(C)": Copy
+    "&kp LG(X)": Cut
+    "&kp LG(V)": Paste
+    "&kp LG(Z)": Undo
+    "&kp LG(LS(Z))": Redo
+    "&kp LG(A)": Select All
+
+    "&kp LS(TAB)": Prev Win
+    "&kp LC(TAB)": Tab Right
+    "&kp LC(LS(TAB))": Tab Left
+    "&kp LA(TAB)": TaskSW →
+    "&kp LA(LS(TAB))": TaskSW ←
+    "&kp LG(TAB)": Next Win
+    "&kp LG(LS(TAB))": Prev Win
+    "&hml LS(LALT)TAB": Tab
+
+    "&kp LA(F4)": Win Close
+    "&kp LC(F4)": Tab Close
+    "&kp LG(Q)": App Close
+
+    "&kp LG(LC(LEFT))": Prev Desk
+    "&kp LG(LC(RIGHT))": Next Desk
+    "&kp LG(LC(LS(A)))": Pin App
+    "&kp LG(LC(LS(Q)))": Pin Win
+    "&kp LA(GRAVE)": Desk Mgr
+
+    # combo helper hold-taps
+    "&hm_combo_ldr": Leader
+    "&hm_combo_ldrsh": Shift+Leader
+    "&hm_combo_lpar": { tap: "(", right: "<" }
+    "&hm_combo_rpar": { tap: ")", right: ">" }
+    "&kp LBKT": { tap: "[", right: "{" }
+    "&kp RBKT": { tap: "]", right: "}" }
+
+    # pointer and mouse
+    "&mmv MOVE_UP": Mouse ↑
+    "&mmv MOVE_DOWN": Mouse ↓
+    "&mmv MOVE_LEFT": Mouse ←
+    "&mmv MOVE_RIGHT": Mouse →
+
+    "&msc SCRL_UP": Scroll ↑
+    "&msc SCRL_DOWN": Scroll ↓
+    "&msc SCRL_LEFT": Scroll ←
+    "&msc SCRL_RIGHT": Scroll →
+
+    "&mkp LCLK": Left Click
+    "&mkp RCLK": Right Click
+    "&mkp MCLK": Middle Click
+    "&mkp MB4": Back Click
+    "&mkp MB5": Forward Click
+
+    # shared repo mappings used outside Continuum
+    "&soft_off": BAT Save
+
+  trans_legend:
+    tap: ""
+    type: trans
+
+  zmk_keycode_map:
+    # modifiers
+    LALT: Alt
+    RALT: Alt
+    LCTRL: Ctrl
+    RCTRL: Ctrl
+    LGUI: Gui
+    RGUI: Gui
+    LSHFT: Shift
+    RSHFT: Shift
+
+    # common keys
+    BSPC: Bspc
+    CAPS: Caps
+    DEL: Del
+    ESC: Esc
+    ENTER: Enter
+    RET: Enter
+    SPACE: Spc
+    TAB: Tab
+    INS: Ins
+    INSERT: Ins
+    HOME: Home
+    END: End
+    PG_UP: PgUp
+    PG_DN: PgDn
+    K_CANCEL: Cancel
+    PRINTSCREEN: PrtSc
+
+    # arrows
+    UP: ↑
+    DOWN: ↓
+    LEFT: ←
+    RIGHT: →
+
+    # media and app control
+    C_MUTE: $$mdi:volume-off$$
+    C_PP: $$mdi:play-pause$$
+    C_VOL_UP: $$mdi:volume-high$$
+    C_VOL_DN: $$mdi:volume-medium$$
+    C_NEXT: $$mdi:skip-forward$$
+    C_PREV: $$mdi:skip-backward$$
+    C_FAST_FORWARD: $$mdi:fast-forward$$
+    C_REWIND: $$mdi:rewind$$
+    C_AC_SCROLL_UP: Scroll ↑
+    C_AC_SCROLL_DOWN: Scroll ↓
+
+    # defaults
+    AMPERSAND: "&"
+    AMPS: "&"
+    APOS: "'"
+    APOSTROPHE: "'"
+    ASTERISK: "*"
+    ASTRK: "*"
+    AT: "@"
+    AT_SIGN: "@"
+    BACKSLASH: '\\'
+    BSLH: '\\'
+    CARET: "^"
+    COLON: ":"
+    COMMA: ","
+    DLLR: "$"
+    DOLLAR: "$"
+    DOT: "."
+    DOUBLE_QUOTES: '"'
+    DQT: '"'
+    EQUAL: "="
+    EXCL: "!"
+    EXCLAMATION: "!"
+    FSLH: "/"
+    GRAVE: "`"
+    GREATER_THAN: ">"
+    GT: ">"
+    HASH: "#"
+    LBKT: "["
+    LBRC: "{"
+    LEFT_BRACE: "{"
+    LEFT_BRACKET: "["
+    LEFT_PARENTHESIS: "("
+    LESS_THAN: "<"
+    LPAR: "("
+    LT: "<"
+    MINUS: "-"
+    NON_US_BACKSLASH: '\\'
+    NON_US_BSLH: "|"
+    NON_US_HASH: "#"
+    NUHS: "#"
+    PERCENT: "%"
+    PERIOD: "."
+    PIPE: "|"
+    PIPE2: "|"
+    PLUS: "+"
+    POUND: "#"
+    PRCNT: "%"
+    QMARK: "?"
+    QUESTION: "?"
+    RBKT: "]"
+    RBRC: "}"
+    RIGHT_BRACE: "}"
+    RIGHT_BRACKET: "]"
+    RIGHT_PARENTHESIS: ")"
+    RPAR: ")"
+    SEMI: ";"
+    SEMICOLON: ";"
+    SINGLE_QUOTE: "'"
+    SLASH: "/"
+    SQT: "'"
+    STAR: "*"
+    TILDE: "~"
+    TILDE2: "~"
+    UNDER: "_"
+    UNDERSCORE: "_"
+
+  zmk_combos:
+    combo_cut: { align: bottom, offset: 0.10 }
+    combo_ldrsh: { align: top, offset: 1.35 }
+
+    combo_lt: { hidden: true }
+    combo_gt: { hidden: true }
+    combo_lbrc: { hidden: true }
+    combo_rbrc: { hidden: true }

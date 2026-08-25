@@ -1,0 +1,12 @@
+/ {
+    chosen {
+        zephyr,console = &snippet_scanner_config;
+        zephyr,shell-uart = &snippet_scanner_config;
+    };
+};
+
+&zephyr_udc0 {
+    snippet_scanner_config: snippet_scanner_config {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};

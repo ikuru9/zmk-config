@@ -1,0 +1,18 @@
+file_format: "1"
+id: eyelash_corne
+name: Eyelash Corne
+url: https://github.com/a741725193/zmk-new_corne
+type: board
+arch: arm
+features:
+  - keys
+  - display
+  - underglow
+  - encoder
+  - studio
+outputs:
+  - usb
+  - ble
+siblings:
+  - eyelash_corne_left//zmk
+  - eyelash_corne_right//zmk

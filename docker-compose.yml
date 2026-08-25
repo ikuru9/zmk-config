@@ -1,0 +1,13 @@
+services:
+  zmk-build-stable:
+    image: zmkfirmware/zmk-build-arm:4.1
+    working_dir: /workspace
+    entrypoint:
+      - python3
+      - scripts/build_runner.py
+      - build-many
+      - --profile
+      - stable
+    volumes:
+      - .:/workspace
+      - ./.build/local/workspace:/tmp/zmk-config

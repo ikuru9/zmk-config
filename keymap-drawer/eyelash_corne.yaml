@@ -1,0 +1,873 @@
+layout:
+  zmk_keyboard: eyelash_corne
+layers:
+  Base:
+  - Esc
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - ↑
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - t: '['
+    right: '{'
+  - Tab
+  - t: A
+    h: Gui
+  - t: S
+    h: Alt
+  - t: D
+    h: Shift
+  - t: F
+    h: Ctrl
+  - G
+  - ←
+  - Enter
+  - →
+  - H
+  - t: J
+    h: Ctrl
+  - t: K
+    h: Shift
+  - t: L
+    h: Alt
+  - t: ''''
+    h: Gui
+  - t: ']'
+    right: '}'
+  - Caps
+  - t: Z
+    h: Tool
+  - X
+  - C
+  - V
+  - B
+  - $$mdi:volume-off$$
+  - ↓
+  - N
+  - M
+  - t: ','
+    s: ;
+  - t: .
+    s: ':'
+  - t: '?'
+    h: Mouse
+    s: '!'
+  - \
+  - Alt
+  - t: Spc
+    h: Nav
+    s: Sentence
+  - t: Enter
+    h: Fn
+  - t: NumWord
+    h: Num
+    s: Sticky Num
+  - t: Magic
+    h: Shift
+    s: Caps Word
+  - Del
+  Extra:
+  - Esc
+  - Q
+  - W
+  - F
+  - P
+  - B
+  - ↑
+  - J
+  - L
+  - U
+  - Y
+  - ''''
+  - t: '['
+    right: '{'
+  - Tab
+  - t: A
+    h: Gui
+  - t: R
+    h: Alt
+  - t: S
+    h: Shift
+  - t: T
+    h: Ctrl
+  - G
+  - ←
+  - Enter
+  - →
+  - M
+  - t: N
+    h: Ctrl
+  - t: E
+    h: Shift
+  - t: I
+    h: Alt
+  - t: O
+    h: Gui
+  - t: ']'
+    right: '}'
+  - Caps
+  - t: Z
+    h: Tool
+  - X
+  - C
+  - D
+  - V
+  - $$mdi:volume-off$$
+  - ↓
+  - K
+  - H
+  - t: ','
+    s: ;
+  - t: .
+    s: ':'
+  - t: '?'
+    h: Mouse
+    s: '!'
+  - \
+  - Alt
+  - t: Spc
+    h: Nav
+    s: Sentence
+  - t: Enter
+    h: Fn
+  - t: NumWord
+    h: Num
+    s: Sticky Num
+  - t: Magic
+    h: Shift
+    s: Caps Word
+  - Del
+  Tap:
+  - Esc
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - ↑
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - t: '['
+    right: '{'
+  - Tab
+  - A
+  - S
+  - D
+  - F
+  - G
+  - ←
+  - Enter
+  - →
+  - H
+  - J
+  - K
+  - L
+  - ''''
+  - t: ']'
+    right: '}'
+  - Caps
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - $$mdi:volume-off$$
+  - ↓
+  - N
+  - M
+  - ','
+  - .
+  - '?'
+  - \
+  - Alt
+  - t: Spc
+    h: Nav
+    s: Sentence
+  - t: Enter
+    h: Fn
+  - t: NumWord
+    h: Num
+    s: Sticky Num
+  - t: Magic
+    h: Shift
+    s: Caps Word
+  - Del
+  Tool:
+  - Esc
+  - Undo
+  - Cut
+  - Copy
+  - Paste
+  - Redo
+  - ↑
+  - '`'
+  - '-'
+  - '='
+  - (
+  - )
+  - t: '['
+    right: '{'
+  - Tab
+  - Gui
+  - Alt
+  - Shift
+  - Ctrl
+  - PgUp
+  - ←
+  - Enter
+  - →
+  - '|'
+  - t: '['
+    h: Ctrl
+  - t: '{'
+    h: Shift
+  - t: '}'
+    h: Alt
+  - t: ']'
+    h: Gui
+  - t: ']'
+    right: '}'
+  - Caps
+  - type: held
+  - Home
+  - End
+  - Tab
+  - PgDn
+  - $$mdi:volume-off$$
+  - ↓
+  - ;
+  - \
+  - <
+  - '>'
+  - type: trans
+  - \
+  - Alt
+  - type: trans
+  - type: trans
+  - type: trans
+  - Cancel
+  - Del
+  Mouse:
+  - Esc
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - ↑
+  - type: trans
+  - Scroll ↑
+  - Mouse ↑
+  - Scroll ↓
+  - type: trans
+  - t: '['
+    right: '{'
+  - Tab
+  - Gui
+  - Alt
+  - Shift
+  - Ctrl
+  - PgUp
+  - ←
+  - Enter
+  - →
+  - Scroll ←
+  - Mouse ←
+  - Mouse ↓
+  - Mouse →
+  - Scroll →
+  - t: ']'
+    right: '}'
+  - Caps
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - $$mdi:volume-off$$
+  - ↓
+  - type: trans
+  - PgUp
+  - Middle Click
+  - PgDn
+  - type: held
+  - \
+  - Alt
+  - type: trans
+  - type: trans
+  - Left Click
+  - Right Click
+  - Del
+  Nav:
+  - Esc
+  - Win Close
+  - TaskSW ←
+  - TaskSW →
+  - Prev Win
+  - Next Win
+  - ↑
+  - PgUp
+  - t: Bspc
+    h: Ctrl+Bspc
+  - t: ↑
+    h: Ctrl+Home
+  - t: Del
+    h: Ctrl+Del
+  - type: trans
+  - t: '['
+    right: '{'
+  - Tab
+  - t: Gui
+    h: sticky
+  - t: Alt
+    h: sticky
+  - t: Shift
+    h: sticky
+  - t: Ctrl
+    h: sticky
+  - type: trans
+  - ←
+  - Enter
+  - →
+  - PgDn
+  - t: ←
+    h: Home
+  - t: ↓
+    h: Ctrl+End
+  - t: →
+    h: End
+  - Enter
+  - t: ']'
+    right: '}'
+  - Caps
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - $$mdi:volume-off$$
+  - ↓
+  - Ins
+  - Tab
+  - type: trans
+  - type: trans
+  - type: trans
+  - \
+  - Alt
+  - type: held
+  - type: trans
+  - type: trans
+  - Cancel
+  - Del
+  Fn:
+  - Esc
+  - F12
+  - F7
+  - F8
+  - F9
+  - type: trans
+  - ↑
+  - type: trans
+  - $$mdi:skip-backward$$
+  - $$mdi:play-pause$$
+  - $$mdi:skip-forward$$
+  - type: trans
+  - t: '['
+    right: '{'
+  - Tab
+  - t: F11
+    h: Gui
+  - t: F4
+    h: Alt
+  - t: F5
+    h: Shift
+  - t: F6
+    h: Ctrl
+  - type: trans
+  - ←
+  - Enter
+  - →
+  - Prev Desk
+  - t: $$mdi:volume-medium$$
+    h: Ctrl
+  - t: $$mdi:volume-off$$
+    h: Shift
+  - t: $$mdi:volume-high$$
+    h: Alt
+  - t: Next Desk
+    h: Gui
+  - t: ']'
+    right: '}'
+  - Caps
+  - F10
+  - F1
+  - F2
+  - F3
+  - type: trans
+  - $$mdi:volume-off$$
+  - ↓
+  - Pin App
+  - Pin Win
+  - Desk Mgr
+  - type: trans
+  - type: trans
+  - \
+  - Alt
+  - type: trans
+  - type: held
+  - type: trans
+  - Cancel
+  - Del
+  Num:
+  - Esc
+  - /
+  - '7'
+  - '8'
+  - '9'
+  - '-'
+  - ↑
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - t: '['
+    right: '{'
+  - Tab
+  - '*'
+  - '4'
+  - '5'
+  - '6'
+  - +
+  - ←
+  - Enter
+  - →
+  - type: trans
+  - Ctrl
+  - Shift
+  - Alt
+  - Gui
+  - t: ']'
+    right: '}'
+  - Caps
+  - '='
+  - '1'
+  - '2'
+  - '3'
+  - .
+  - $$mdi:volume-off$$
+  - ↓
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - \
+  - Alt
+  - '0'
+  - type: trans
+  - type: held
+  - Cancel
+  - Del
+  Sys:
+  - Esc
+  - BT 1
+  - BT 2
+  - BT 3
+  - BT 4
+  - BT Clear
+  - ↑
+  - t: Base
+    h: toggle
+  - t: Extra
+    h: toggle
+  - t: Tap
+    h: toggle
+  - t: Game
+    h: toggle
+  - type: trans
+  - t: '['
+    right: '{'
+  - Tab
+  - Reset
+  - Boot
+  - BT Prev
+  - BT Next
+  - BT Clear
+  - ←
+  - Enter
+  - →
+  - Out Toggle
+  - USB
+  - BLE
+  - type: trans
+  - type: trans
+  - t: ']'
+    right: '}'
+  - Caps
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - $$mdi:volume-off$$
+  - ↓
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - \
+  - Alt
+  - type: trans
+  - type: held
+  - type: held
+  - Cancel
+  - Del
+  Game:
+  - Esc
+  - Tab
+  - Q
+  - W
+  - E
+  - R
+  - ↑
+  - t: Base
+    h: toggle
+  - t: Extra
+    h: toggle
+  - t: Tap
+    h: toggle
+  - t: Game
+    h: toggle
+  - type: trans
+  - t: '['
+    right: '{'
+  - Tab
+  - Shift
+  - A
+  - S
+  - D
+  - F
+  - ←
+  - Enter
+  - →
+  - Out Toggle
+  - USB
+  - BLE
+  - type: trans
+  - type: trans
+  - t: ']'
+    right: '}'
+  - Caps
+  - Ctrl
+  - Z
+  - X
+  - C
+  - V
+  - $$mdi:volume-off$$
+  - ↓
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - type: trans
+  - \
+  - Alt
+  - Alt
+  - Spc
+  - type: trans
+  - Cancel
+  - Del
+  Combos:
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+combos:
+- p:
+  - 2
+  - 3
+  k: Esc
+  l:
+  - Combos
+- p:
+  - 3
+  - 4
+  k: Smart Mouse
+  l:
+  - Combos
+- p:
+  - 15
+  - 16
+  k: Tab
+  l:
+  - Combos
+- p:
+  - 16
+  - 17
+  k: Leader
+  l:
+  - Combos
+- p:
+  - 15
+  - 16
+  - 17
+  k: Shift+Leader
+  l:
+  - Combos
+  a: top
+  o: 1.35
+- p:
+  - 30
+  - 32
+  k: Cut
+  l:
+  - Combos
+  a: bottom
+  o: 0.1
+- p:
+  - 30
+  - 31
+  k: Copy
+  l:
+  - Combos
+- p:
+  - 31
+  - 32
+  k: Paste
+  l:
+  - Combos
+- p:
+  - 8
+  - 9
+  k: Bspc
+  l:
+  - Combos
+- p:
+  - 9
+  - 10
+  k: Del
+  l:
+  - Combos
+- p:
+  - 23
+  - 24
+  k:
+    t: (
+    right: <
+  l:
+  - Combos
+- p:
+  - 24
+  - 25
+  k:
+    t: )
+    right: '>'
+  l:
+  - Combos
+- p:
+  - 23
+  - 24
+  k: <
+  l:
+  - Combos
+  hidden: true
+- p:
+  - 24
+  - 25
+  k: '>'
+  l:
+  - Combos
+  hidden: true
+- p:
+  - 37
+  - 38
+  k:
+    t: '['
+    right: '{'
+  l:
+  - Combos
+- p:
+  - 38
+  - 39
+  k:
+    t: ']'
+    right: '}'
+  l:
+  - Combos
+- p:
+  - 37
+  - 38
+  k: '{'
+  l:
+  - Combos
+  hidden: true
+- p:
+  - 38
+  - 39
+  k: '}'
+  l:
+  - Combos
+  hidden: true
+- p:
+  - 2
+  - 15
+  k: '@'
+  l:
+  - Combos
+- p:
+  - 3
+  - 16
+  k: '#'
+  l:
+  - Combos
+- p:
+  - 4
+  - 17
+  k: $
+  l:
+  - Combos
+- p:
+  - 5
+  - 18
+  k: '%'
+  l:
+  - Combos
+- p:
+  - 15
+  - 30
+  k: '`'
+  l:
+  - Combos
+- p:
+  - 16
+  - 31
+  k: \
+  l:
+  - Combos
+- p:
+  - 17
+  - 32
+  k: '='
+  l:
+  - Combos
+- p:
+  - 18
+  - 33
+  k: '~'
+  l:
+  - Combos
+- p:
+  - 7
+  - 22
+  k: ^
+  l:
+  - Combos
+- p:
+  - 8
+  - 23
+  k: +
+  l:
+  - Combos
+- p:
+  - 9
+  - 24
+  k: '*'
+  l:
+  - Combos
+- p:
+  - 10
+  - 25
+  k: '&'
+  l:
+  - Combos
+- p:
+  - 22
+  - 36
+  k: _
+  l:
+  - Combos
+- p:
+  - 23
+  - 37
+  k: '-'
+  l:
+  - Combos
+- p:
+  - 24
+  - 38
+  k: /
+  l:
+  - Combos
+- p:
+  - 25
+  - 39
+  k: '|'
+  l:
+  - Combos
+- p:
+  - 7
+  - 8
+  k: LANG1
+  l:
+  - Combos
+- p:
+  - 5
+  - 4
+  k: LANG2
+  l:
+  - Combos
