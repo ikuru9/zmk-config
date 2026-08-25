@@ -1,4 +1,5 @@
-layout: {zmk_keyboard: totem}
+layout:
+  zmk_keyboard: totem
 layers:
   Base:
   - Q
@@ -11,16 +12,24 @@ layers:
   - I
   - O
   - P
-  - {t: A, h: LCTL}
-  - {t: S, h: Alt}
-  - {t: D, h: Shift}
-  - {t: F, h: Gui}
+  - t: A
+    h: LCTL
+  - t: S
+    h: Alt
+  - t: D
+    h: Shift
+  - t: F
+    h: Gui
   - G
   - H
-  - {t: J, h: Gui}
-  - {t: K, h: Shift}
-  - {t: L, h: Alt}
-  - {t: '''', h: RCTL}
+  - t: J
+    h: Gui
+  - t: K
+    h: Shift
+  - t: L
+    h: Alt
+  - t: ''''
+    h: RCTL
   - LSHIFT
   - Z
   - X
@@ -29,15 +38,22 @@ layers:
   - B
   - N
   - M
-  - {t: ',', h: ;}
-  - {t: ., h: ':'}
-  - {t: '?', h: '!'}
+  - t: ','
+    h: ;
+  - t: .
+    h: ':'
+  - t: '?'
+    h: '!'
   - '&undo_redo'
   - Esc
-  - {t: Tab, h: Fn}
-  - {t: Spc, h: Nav}
-  - {t: Enter, h: Num}
-  - {t: Bspc, s: Del}
+  - t: Tab
+    h: Fn
+  - t: Spc
+    h: Nav
+  - t: Enter
+    h: Num
+  - t: Bspc
+    s: Del
   - '&lang_screen'
   Nav:
   - ''
@@ -47,7 +63,8 @@ layers:
   - ''
   - ''
   - ''
-  - {t: ↑, h: Gui+↑}
+  - t: ↑
+    h: Gui+↑
   - ''
   - ''
   - ''
@@ -56,9 +73,12 @@ layers:
   - Ctrl+→
   - Ctrl+Gui+F
   - ''
-  - {t: ←, h: Gui+←}
-  - {t: ↓, h: Gui+↓}
-  - {t: →, h: Gui+→}
+  - t: ←
+    h: Gui+←
+  - t: ↓
+    h: Gui+↓
+  - t: →
+    h: Gui+→
   - ''
   - LSHIFT
   - ''
@@ -73,9 +93,9 @@ layers:
   - ''
   - '&undo_redo'
   - Esc
-  - {type: trans}
-  - {type: held}
-  - {type: trans}
+  - type: trans
+  - type: held
+  - type: trans
   - Cancel
   - '&lang_screen'
   Fn:
@@ -112,16 +132,19 @@ layers:
   - ''
   - '&undo_redo'
   - Esc
-  - {type: held}
-  - {type: trans}
+  - type: held
+  - type: trans
   - Ctrl+Gui+Q
   - Cancel
   - '&lang_screen'
   Num:
   - ''
-  - {t: '7', h: Shift+7}
-  - {t: '8', h: Shift+8}
-  - {t: '9', h: Shift+9}
+  - t: '7'
+    h: Shift+7
+  - t: '8'
+    h: Shift+8
+  - t: '9'
+    h: Shift+9
   - +
   - Scroll ↑
   - Left Click
@@ -129,10 +152,14 @@ layers:
   - Right Click
   - Scroll ←
   - ''
-  - {t: '4', h: Shift+4}
-  - {t: '5', h: Shift+5}
-  - {t: '6', h: Shift+6}
-  - {t: '-', h: _}
+  - t: '4'
+    h: Shift+4
+  - t: '5'
+    h: Shift+5
+  - t: '6'
+    h: Shift+6
+  - t: '-'
+    h: _
   - Scroll ↓
   - Mouse ←
   - Mouse ↓
@@ -140,9 +167,12 @@ layers:
   - Scroll →
   - LSHIFT
   - ''
-  - {t: '1', h: Shift+1}
-  - {t: '2', h: Shift+2}
-  - {t: '3', h: Shift+3}
+  - t: '1'
+    h: Shift+1
+  - t: '2'
+    h: Shift+2
+  - t: '3'
+    h: Shift+3
   - '='
   - ''
   - ''
@@ -151,9 +181,10 @@ layers:
   - ''
   - '&undo_redo'
   - Esc
-  - {t: '0', h: Shift+0}
-  - {type: trans}
-  - {type: held}
+  - t: '0'
+    h: Shift+0
+  - type: trans
+  - type: held
   - Cancel
   - '&lang_screen'
   Sys:
@@ -190,52 +221,134 @@ layers:
   - Boot
   - '&undo_redo'
   - Esc
-  - {type: trans}
-  - {type: held}
-  - {type: held}
+  - type: trans
+  - type: held
+  - type: held
   - Cancel
   - '&lang_screen'
+  Combos:
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
 combos:
-- p: [3, 2]
+- p:
+  - 3
+  - 2
   k: (
-  l: [Base]
+  l:
+  - Combos
   hidden: true
-- p: [6, 7]
+- p:
+  - 6
+  - 7
   k: )
-  l: [Base]
+  l:
+  - Combos
   hidden: true
-- p: [2, 1]
-  k: {t: '[', right: '{'}
-  l: [Base]
-- p: [7, 8]
-  k: {t: ']', right: '}'}
-  l: [Base]
-- p: [22, 24]
+- p:
+  - 2
+  - 1
+  k:
+    t: '['
+    right: '{'
+  l:
+  - Combos
+- p:
+  - 7
+  - 8
+  k:
+    t: ']'
+    right: '}'
+  l:
+  - Combos
+- p:
+  - 22
+  - 24
   k: Cut
-  l: [Base, Nav]
+  l:
+  - Combos
   a: bottom
   o: 0.1
-- p: [22, 23]
+- p:
+  - 22
+  - 23
   k: Copy
-  l: [Base, Nav]
-- p: [23, 24]
+  l:
+  - Combos
+- p:
+  - 23
+  - 24
   k: Paste
-  l: [Base, Nav]
-- p: [0, 1]
+  l:
+  - Combos
+- p:
+  - 0
+  - 1
   k: '`'
-  l: [Base]
-- p: [8, 9]
+  l:
+  - Combos
+- p:
+  - 8
+  - 9
   k: \
-  l: [Base]
-- p: [18, 19]
+  l:
+  - Combos
+- p:
+  - 18
+  - 19
   k: /
-  l: [Base]
-- p: [29, 30]
+  l:
+  - Combos
+- p:
+  - 29
+  - 30
   k: '|'
-  l: [Base]
-- p: [33, 34]
+  l:
+  - Combos
+- p:
+  - 33
+  - 34
   k: Esc
-  l: [Base]
-- p: [36, 35]
+  l:
+  - Combos
+- p:
+  - 36
+  - 35
   k: Gui+Alt+Spc
-  l: [Base]
+  l:
+  - Combos
