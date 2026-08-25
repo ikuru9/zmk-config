@@ -60,10 +60,10 @@ jobs:
             svg_out="draw-artifacts/${keyboard}.svg"
             layout_json=""
 
-            # Scanner config keymaps do not represent a physical keyboard layout.
-            # Skip drawing for non-keyboard artifacts to avoid keymap-drawer validation errors.
-            if [ "${keyboard}" = "prospector_scanner" ]; then
-              echo "Skipping non-keyboard keymap: ${keyboard}"
+            # Scanner and shared base wrappers do not represent a physical keyboard layout.
+            # Skip them so current keymap-drawer releases do not require a fabricated layout.
+            if [ "${keyboard}" = "prospector_scanner" ] || [ "${keyboard}" = "base" ]; then
+              echo "Skipping non-physical keymap: ${keyboard}"
               continue
             fi
 
@@ -129,6 +129,11 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p keymap-drawer
+
+          # Remove stale outputs for keymaps intentionally excluded from rendering.
+          for skipped in base prospector_scanner; do
+            rm -f "keymap-drawer/${skipped}.svg" "keymap-drawer/${skipped}.yaml"
+          done
           moved=0
 
           # Move only expected keymap-drawer outputs for config/*.keymap.
