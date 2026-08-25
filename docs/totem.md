@@ -14,16 +14,16 @@ TOTEM is a 38-key column-staggered split keyboard. This repository supports both
 
 Implemented matrix targets:
 
-| Target | Board | Shield | Snippet | Artifact Name | Status |
-| --- | --- | --- | --- | --- | --- |
-| Left half (direct split) | `xiao_ble//zmk` | `totem_left raw_hid_adapter` | `common-config studio-rpc-usb-uart` | `totem_left` | Active |
-| Right half | `xiao_ble//zmk` | `totem_right` | none | `totem_right` | Active |
-| Left half (dongle split) | `xiao_ble//zmk` | `totem_left_w_dongle` | none | `totem_left_w_dongle` | Active |
-| Dongle | `nice_nano//zmk` | `totem_dongle raw_hid_adapter` | `common-config studio-rpc-usb-uart` | `totem_dongle` | Active |
-| Dongle (ZDD) | `nice_nano//zmk` | `totem_dongle raw_hid_adapter zdd_adapter dongle_display` | `common-config studio-rpc-usb-uart` | `totem_zdd_dongle` | Active |
-| Dongle (Prospector) | `xiao_ble//zmk` | `totem_dongle prospector_adapter` | `common-config studio-rpc-usb-uart prospector-config` | `totem_prospector_dongle` | Active |
-| XIAO BLE settings reset | `xiao_ble//zmk` | `settings_reset` | none | `reset_seeeduino_xiao_ble` | Active |
-| nice!nano settings reset | `nice_nano//zmk` | `settings_reset` | none | `reset_nice_nano_v2` | Active |
+| Target                   | Board            | Shield                                                    | Snippet                                               | Artifact Name              | Status |
+| ------------------------ | ---------------- | --------------------------------------------------------- | ----------------------------------------------------- | -------------------------- | ------ |
+| Left half (direct split) | `xiao_ble//zmk`  | `totem_left raw_hid_adapter`                              | `common-config studio-rpc-usb-uart`                   | `totem_left`               | Active |
+| Right half               | `xiao_ble//zmk`  | `totem_right`                                             | none                                                  | `totem_right`              | Active |
+| Left half (dongle split) | `xiao_ble//zmk`  | `totem_left_w_dongle`                                     | none                                                  | `totem_left_w_dongle`      | Active |
+| Dongle                   | `nice_nano//zmk` | `totem_dongle raw_hid_adapter`                            | `common-config studio-rpc-usb-uart`                   | `totem_dongle`             | Active |
+| Dongle (ZDD)             | `nice_nano//zmk` | `totem_dongle raw_hid_adapter zdd_adapter dongle_display` | `common-config studio-rpc-usb-uart`                   | `totem_zdd_dongle`         | Active |
+| Dongle (Prospector)      | `xiao_ble//zmk`  | `totem_dongle prospector_adapter`                         | `common-config studio-rpc-usb-uart prospector-config` | `totem_prospector_dongle`  | Active |
+| XIAO BLE settings reset  | `xiao_ble//zmk`  | `settings_reset`                                          | none                                                  | `reset_seeeduino_xiao_ble` | Active |
+| nice!nano settings reset | `nice_nano//zmk` | `settings_reset`                                          | none                                                  | `reset_nice_nano_v2`       | Active |
 
 The Prospector target disables KeyPeek/Raw HID so the primary USB keyboard HID interface can enumerate reliably alongside the Operator display and Studio UART.
 
@@ -50,7 +50,7 @@ Physical switch arrangement. Visual reference only.
 
 ### Keymap
 
-![TOTEM keymap](/docs/images/totem_keymap.svg)
+![TOTEM keymap](/keymap-drawer/totem.svg)
 
 ## Firmware Structure
 
@@ -157,16 +157,16 @@ Prospector dongle split (`totem_prospector_dongle` + `totem_left_w_dongle` + `to
 
 Artifact-to-device mapping:
 
-| Artifact                          | Flash To                                  |
-| --------------------------------- | ----------------------------------------- |
-| `totem_left.uf2`                  | Left half (direct split)                  |
-| `totem_left_w_dongle.uf2`         | Left half (dongle split)                  |
-| `totem_right.uf2`                 | Right half                                |
-| `totem_dongle.uf2`                | Standard nice!nano dongle                 |
-| `totem_zdd_dongle.uf2`            | ZDD nice!nano dongle                      |
-| `totem_prospector_dongle.uf2`     | Prospector XIAO BLE dongle                |
-| `reset_seeeduino_xiao_ble.uf2`    | XIAO BLE device for clearing settings     |
-| `reset_nice_nano_v2.uf2`          | nice!nano device for clearing settings    |
+| Artifact                       | Flash To                               |
+| ------------------------------ | -------------------------------------- |
+| `totem_left.uf2`               | Left half (direct split)               |
+| `totem_left_w_dongle.uf2`      | Left half (dongle split)               |
+| `totem_right.uf2`              | Right half                             |
+| `totem_dongle.uf2`             | Standard nice!nano dongle              |
+| `totem_zdd_dongle.uf2`         | ZDD nice!nano dongle                   |
+| `totem_prospector_dongle.uf2`  | Prospector XIAO BLE dongle             |
+| `reset_seeeduino_xiao_ble.uf2` | XIAO BLE device for clearing settings  |
+| `reset_nice_nano_v2.uf2`       | nice!nano device for clearing settings |
 
 ## Configuration
 
