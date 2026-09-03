@@ -33,10 +33,33 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Initialize ZMK workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python -m pip install --upgrade west
+
+          west init -l config
+          west update --narrow
+
+      - name: Check ZMK modules
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -f modules/zmk/helpers/include/zmk-helpers/helper.h
+          test -d modules/zmk/auto-layer/dts
+          test -d modules/zmk/unicode/dts
+
+          echo "ZMK modules available:"
+          west list
+
       - name: Install keymap-drawer
         shell: bash
         run: |
           set -euo pipefail
+
           python -m pip install --upgrade pip
           python -m pip install keymap-drawer
 
