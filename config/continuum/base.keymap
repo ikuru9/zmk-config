@@ -52,9 +52,6 @@
   quick-tap-ms = <QUICK_TAP_MS>;
 };
 
-#define MASK_MODS(NAME, MODS, BINDING)                                         \
-  ZMK_MOD_MORPH(NAME, bindings = <BINDING>, <BINDING>; mods = <MODS>;)
-
 /* Homerow mods */
 
 #define KEYS_L LT0 LT1 LT2 LT3 LT4 LM0 LM1 LM2 LM3 LM4 LB0 LB1 LB2 LB3 LB4
@@ -79,12 +76,6 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
   MAKE_HRM(hm_combo_##NAME, &kp, TAP, SIDE THUMBS)                             \
   ZMK_COMBO_6(NAME, &hm_combo_##NAME HOLD 0, POS, LAYERS, COMBO_MS, IDLE_MS)
 
-/* Combos, leader key sequences, mouse emulation */
-
-#include "shortcuts.dtsi"
-#include "combos.dtsi" // Must be sourced after HRM-combo hack.
-#include "leader.dtsi"
-#include "mouse.dtsi"
 
 /* Nav cluster */
 
@@ -96,6 +87,16 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
   hold-trigger-key-positions = <0>;
 
 &mt { MT_CORE };
+
+#define MASK_MODS(NAME, MODS, BINDING)                                         \
+  ZMK_MOD_MORPH(NAME, bindings = <BINDING>, <BINDING>; mods = <MODS>;)
+
+/* Combos, leader key sequences, mouse emulation */
+
+#include "shortcuts.dtsi"
+#include "combos.dtsi" // Must be sourced after HRM-combo hack.
+#include "leader.dtsi"
+#include "mouse.dtsi"
 
 /* Magic-shift & auto-layers */
 // Tap: repeat after alpha, else sticky-shift |
