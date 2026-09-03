@@ -2,8 +2,8 @@
 #ifdef MAC_OS
   // Hold → Cmd + Left/Right = start/end of line.
   // If Cmd is already held, consume it to avoid accidental modifier stacking.
-  MASK_MODS(masked_home, (MOD_LGUI), &kp LG(LEFT))
-  MASK_MODS(masked_end,  (MOD_LGUI), &kp LG(RIGHT))
+  MASK_MODS(masked_home, (MOD_LGUI), &kp LEFT)
+  MASK_MODS(masked_end,  (MOD_LGUI), &kp RIGHT)
 
   ZMK_HOLD_TAP(mt_home, bindings = <&masked_home>, <&kp>; MT_CORE)
   ZMK_HOLD_TAP(mt_end,  bindings = <&masked_end>,  <&kp>; MT_CORE)
