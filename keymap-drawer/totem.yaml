@@ -13,9 +13,9 @@ layers:
   - O
   - P
   - t: A
-    h: LCTL
-  - t: S
     h: Alt
+  - t: S
+    h: Ctrl
   - t: D
     h: Shift
   - t: F
@@ -27,9 +27,9 @@ layers:
   - t: K
     h: Shift
   - t: L
-    h: Alt
+    h: Ctrl
   - t: ''''
-    h: RCTL
+    h: Alt
   - LSHIFT
   - Z
   - X
@@ -74,11 +74,11 @@ layers:
   - Ctrl+Gui+F
   - ''
   - t: ←
-    h: Gui+←
+    h: ←
   - t: ↓
     h: Gui+↓
   - t: →
-    h: Gui+→
+    h: →
   - ''
   - LSHIFT
   - ''
