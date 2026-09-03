@@ -5,6 +5,7 @@
 #include "utils/helper.h"
 
 #include <dt-bindings/zmk/keys.h>
+
 #ifdef CONFIG_WIRELESS
   #include <dt-bindings/zmk/bt.h>
   #include <dt-bindings/zmk/outputs.h>
@@ -93,18 +94,7 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 
 &mt { MT_CORE };
 
-ZMK_HOLD_TAP(mt_home, bindings = <&masked_home>, <&kp>; MT_CORE)
-ZMK_HOLD_TAP(mt_end, bindings = <&masked_end>, <&kp>; MT_CORE)
-
-// Mask CTRL on left/right hold to avoid accidental jumps to start/end of doc.
-#define MASK_MODS(NAME, MODS, BINDING)                                         \
-  ZMK_MOD_MORPH(NAME, bindings = <BINDING>, <BINDING>; mods = <MODS>;)
-
-MASK_MODS(masked_home, (MOD_LCTL), &kp HOME)
-MASK_MODS(masked_end,  (MOD_LCTL), &kp END)
-
 /* Magic-shift & auto-layers */
-
 // Tap: repeat after alpha, else sticky-shift |
 // Shift + tap/ double-tap: caps-word | Hold: shift.
 #define MAGIC_SHIFT &magic_shift LSHFT 0
@@ -205,7 +195,7 @@ ZMK_BASE_LAYER(Base,
 // ╭─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────╮   ╭─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────╮
      &kp Q             &kp W             &kp E             &kp R             &kp T           ,     &kp Y             &kp U             &kp I             &kp O             &kp P           ,
 // ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
-     &hml LCTL A       &hml LALT S       &hml LSHFT D      &hml LGUI F       &kp G           ,     &kp H             &hmr RGUI J       &hmr RSHFT K      &hmr RALT L       &hmr RCTL SQT   ,
+     &hml LALT A       &hml M_RNG S      &hml LSHFT D      &hml M_PNK F      &kp G           ,     &kp H             &hmr M_PNK J      &hmr RSHFT K      &hmr M_RNG L      &hmr RALT SQT   ,
 // ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
      &kp Z             &kp X             &kp C             &kp V             &kp B           ,     &kp N             &kp M             &hmr SEMI COMMA   &hmr COLON DOT    &hmr EXCL QMARK ,
 // ╰─────────────────┼─────────────────┴─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┴─────────────────┴─────────────────╯
@@ -252,7 +242,7 @@ ZMK_BASE_LAYER(Num,
 
 ZMK_BASE_LAYER(Sys,
 // ╭─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────╮   ╭─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────╮
-                                         _BT_SEL_KEYS_                                       ,     XXX               XXX                                 _OUT_KEYS_      ,
+                                         _BT_SEL_KEYS_                                       ,     XXX               XXX                                 _OUT_KEYS_                        ,
 // ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
      XXX               XXX               XXX               XXX               XXX             ,     XXX               XXX               XXX               XXX               XXX             ,
 // ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤

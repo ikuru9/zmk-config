@@ -1,10 +1,16 @@
 // shortcut select os
 #ifdef MAC_OS
+  // Hold → Cmd + Left/Right = start/end of line.
+  // If Cmd is already held, consume it to avoid accidental modifier stacking.
+  MASK_MODS(masked_home, (MOD_LGUI), &kp LG(LEFT))
+  MASK_MODS(masked_end,  (MOD_LGUI), &kp LG(RIGHT))
+
+  ZMK_HOLD_TAP(mt_home, bindings = <&masked_home>, <&kp>; MT_CORE)
+  ZMK_HOLD_TAP(mt_end,  bindings = <&masked_end>,  <&kp>; MT_CORE)
+
 // homerow mods
-  #define M_IDX LCTRL
-  #define M_MDL LSHFT
-  #define M_RNG LALT
-  #define M_PNK LGUI
+  #define M_IDX LGUI
+  #define M_PNK LCTRL
 // clipboard shortcut
   #define C_RDO LG(LS(Z))
   #define C_PST LG(V)
@@ -24,12 +30,15 @@
   #define W_LFT LG(LS(TAB))
   #define D_PRV LG(LC(LEFT))
   #define D_NXT LG(LC(RIGHT))
+
+  #define NAV_LEFT  &mt_home 0       LEFT   // Tap: left  | Long-tap: start of line.
+  #define NAV_RIGHT &mt_end  0       RIGHT  // Tap: right | Long-tap: end of line.
+  #define NAV_UP    &mt LG(UP)       UP     // Tap: up    | Long-tap: start of doc.
+  #define NAV_DOWN  &mt LG(DOWN)     DOWN   // Tap: down  | Long-tap: end of doc.
+
   #define SPACE_FULL &kp LC(LG(F))
-  #define NAV_LEFT  &mt LG(LEFT) LEFT  // Tap: left  | Long-tap: start of line.
-  #define NAV_RIGHT &mt LG(RIGHT) RIGHT // Tap: right | Long-tap: end of line.
-  #define NAV_UP    &mt LG(UP) UP    // Tap: up    | Long-tap: start of doc.
-  #define NAV_DOWN  &mt LG(DOWN) DOWN  // Tap: down  | Long-tap: end of doc.
-// window and fit
+
+  // window and fit
   #define WIN_LEFT    &kp LC(LA(LG(LEFT)))
   #define WIN_RIGHT   &kp LC(LA(LG(RIGHT)))
   #define FIT_LEFT    &kp LC(LA(LEFT))
@@ -39,10 +48,16 @@
   #define SP_LEFT     &kp LC(LEFT)
   #define SP_RIGHT    &kp LC(RIGHT)
 #else
+  // Hold → Home/End = start/end of line.
+  // If Ctrl is already held, consume it to avoid accidental Ctrl+Home/End.
+  MASK_MODS(masked_home, (MOD_LCTL), &kp HOME)
+  MASK_MODS(masked_end,  (MOD_LCTL), &kp END)
+
+  ZMK_HOLD_TAP(mt_home, bindings = <&masked_home>, <&kp>; MT_CORE)
+  ZMK_HOLD_TAP(mt_end,  bindings = <&masked_end>,  <&kp>; MT_CORE)
+
 // homerow mods
   #define M_IDX LCTRL
-  #define M_MDL LSHFT
-  #define M_RNG LALT
   #define M_PNK LGUI
 // clipboard shortcut
   #define C_RDO LC(Y)
@@ -63,11 +78,15 @@
   #define W_LFT LA(LS(TAB))
   #define D_PRV LG(LC(LEFT))
   #define D_NXT LG(LC(RIGHT))
-  #define NAV_LEFT  &mt_home 0   LEFT  // Tap: left  | Long-tap: start of line.
-  #define NAV_RIGHT &mt_end 0    RIGHT // Tap: right | Long-tap: end   of line.
-  #define NAV_UP    &mt LC(HOME) UP    // Tap: up    | Long-tap: start of doc.
-  #define NAV_DOWN  &mt LC(END)  DOWN  // Tap: down  | Long-tap: end   of doc.
-// window and fit
+
+  #define NAV_LEFT  &mt_home 0       LEFT   // Tap: left  | Long-tap: start of line.
+  #define NAV_RIGHT &mt_end  0       RIGHT  // Tap: right | Long-tap: end of line.
+  #define NAV_UP    &mt LC(HOME)     UP     // Tap: up    | Long-tap: start of doc.
+  #define NAV_DOWN  &mt LC(END)      DOWN   // Tap: down  | Long-tap: end of doc.
+
+  #define SPACE_FULL  &kp LG(UP)
+
+  // window and fit
   #define WIN_LEFT    &kp LG(LEFT)       // Win + Left
   #define WIN_RIGHT   &kp LG(RIGHT)      // Win + Right
   #define SPACE_LEFT  &kp LC(LG(LEFT))   // Ctrl + Win + Left
@@ -76,7 +95,6 @@
   #define SP_RIGHT    &kp LC(LG(RIGHT))  // Ctrl + Win + Right
   #define FIT_LEFT    &kp LS(LG(LEFT))   // Shift + Win + Left
   #define FIT_RIGHT   &kp LS(LG(RIGHT))  // Shift + Win + Right
-  #define SPACE_FULL  &kp LG(UP)
 #endif
 // Desktop management shortcuts
 #define PIN_WIN   &kp LG(LC(LS(Q)))       // Pin window across desktops.
