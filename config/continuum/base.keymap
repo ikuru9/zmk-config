@@ -92,7 +92,6 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
   ZMK_MOD_MORPH(NAME, bindings = <BINDING>, <BINDING>; mods = <MODS>;)
 
 /* Combos, leader key sequences, mouse emulation */
-
 #include "shortcuts.dtsi"
 #include "combos.dtsi" // Must be sourced after HRM-combo hack.
 #include "leader.dtsi"

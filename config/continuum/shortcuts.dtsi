@@ -1,13 +1,5 @@
 // shortcut select os
 #ifdef MAC_OS
-  // Hold → Cmd + Left/Right = start/end of line.
-  // If Cmd is already held, consume it to avoid accidental modifier stacking.
-  MASK_MODS(masked_home, (MOD_LGUI), &kp LEFT)
-  MASK_MODS(masked_end,  (MOD_LGUI), &kp RIGHT)
-
-  ZMK_HOLD_TAP(mt_home, bindings = <&masked_home>, <&kp>; MT_CORE)
-  ZMK_HOLD_TAP(mt_end,  bindings = <&masked_end>,  <&kp>; MT_CORE)
-
 // homerow mods
   #define M_IDX LGUI
   #define M_PNK LCTRL
@@ -31,10 +23,28 @@
   #define D_PRV LG(LC(LEFT))
   #define D_NXT LG(LC(RIGHT))
 
-  #define NAV_LEFT  &mt_home 0       LEFT   // Tap: left  | Long-tap: start of line.
-  #define NAV_RIGHT &mt_end  0       RIGHT  // Tap: right | Long-tap: end of line.
-  #define NAV_UP    &mt LG(UP)       UP     // Tap: up    | Long-tap: start of doc.
-  #define NAV_DOWN  &mt LG(DOWN)     DOWN   // Tap: down  | Long-tap: end of doc.
+  
+  // Hold → Cmd + Left/Right = start/end of line.
+  // If Cmd is already held, consume it to avoid accidental modifier stacking.
+  MASK_MODS(masked_left, (MOD_LGUI), &kp LEFT)
+  MASK_MODS(masked_right,  (MOD_LGUI), &kp RIGHT)
+
+  ZMK_HOLD_TAP(mt_left, bindings = <&masked_left>, <&kp>; MT_CORE)
+  ZMK_HOLD_TAP(mt_right,  bindings = <&masked_right>,  <&kp>; MT_CORE)
+
+  // Hold → Cmd + Up/Down = start/end of document.
+  // If Cmd is already held, consume it to avoid accidental modifier stacking.
+
+  MASK_MODS(masked_doc_up, (MOD_LGUI), &kp LG(UP))
+  MASK_MODS(masked_doc_down, (MOD_LGUI), &kp LG(DOWN))
+
+  ZMK_HOLD_TAP(mt_doc_up, bindings = <&masked_doc_up>, <&kp>; MT_CORE)
+  ZMK_HOLD_TAP(mt_doc_down, bindings = <&masked_doc_down>, <&kp>; MT_CORE)
+
+  #define NAV_LEFT &mt_home 0 LEFT   // Tap: left  | Long-tap: start of line.
+  #define NAV_RIGHT &mt_end 0 RIGHT  // Tap: right | Long-tap: end of line.
+  #define NAV_UP &mt_doc_up 0 UP     // Tap: up    | Long-tap: start of doc.
+  #define NAV_DOWN &mt_doc_down 0 DOWN   // Tap: down  | Long-tap: end of doc.
 
   #define SPACE_FULL &kp LC(LG(F))
 
@@ -48,14 +58,6 @@
   #define SP_LEFT     &kp LC(LEFT)
   #define SP_RIGHT    &kp LC(RIGHT)
 #else
-  // Hold → Home/End = start/end of line.
-  // If Ctrl is already held, consume it to avoid accidental Ctrl+Home/End.
-  MASK_MODS(masked_home, (MOD_LCTL), &kp HOME)
-  MASK_MODS(masked_end,  (MOD_LCTL), &kp END)
-
-  ZMK_HOLD_TAP(mt_home, bindings = <&masked_home>, <&kp>; MT_CORE)
-  ZMK_HOLD_TAP(mt_end,  bindings = <&masked_end>,  <&kp>; MT_CORE)
-
 // homerow mods
   #define M_IDX LCTRL
   #define M_PNK LGUI
@@ -79,10 +81,27 @@
   #define D_PRV LG(LC(LEFT))
   #define D_NXT LG(LC(RIGHT))
 
-  #define NAV_LEFT  &mt_home 0       LEFT   // Tap: left  | Long-tap: start of line.
-  #define NAV_RIGHT &mt_end  0       RIGHT  // Tap: right | Long-tap: end of line.
-  #define NAV_UP    &mt LC(HOME)     UP     // Tap: up    | Long-tap: start of doc.
-  #define NAV_DOWN  &mt LC(END)      DOWN   // Tap: down  | Long-tap: end of doc.
+  // Hold → Home/End = start/end of line.
+  // If Ctrl is already held, consume it to avoid accidental Ctrl+Home/End.
+  MASK_MODS(masked_left, (MOD_LCTL), &kp HOME)
+  MASK_MODS(masked_right,  (MOD_LCTL), &kp END)
+
+  ZMK_HOLD_TAP(mt_left, bindings = <&masked_left>, <&kp>; MT_CORE)
+  ZMK_HOLD_TAP(mt_right,  bindings = <&masked_right>,  <&kp>; MT_CORE)
+
+  // Hold → Ctrl + Home/End = start/end of document.
+  // If Ctrl is already held, consume it to avoid accidental modifier stacking.
+
+  MASK_MODS(masked_doc_home, (MOD_LCTL), &kp LC(HOME))
+  MASK_MODS(masked_doc_end, (MOD_LCTL), &kp LC(END))
+
+  ZMK_HOLD_TAP(mt_doc_home, bindings = <&masked_doc_home>, <&kp>; MT_CORE)
+  ZMK_HOLD_TAP(mt_doc_end, bindings = <&masked_doc_end>, <&kp>; MT_CORE)
+
+  #define NAV_LEFT  &mt_left 0       LEFT   // Tap: left  | Long-tap: start of line.
+  #define NAV_RIGHT &mt_right 0       RIGHT  // Tap: right | Long-tap: end of line.
+  #define NAV_UP    &mt_doc_home 0     UP     // Tap: up    | Long-tap: start of doc.
+  #define NAV_DOWN  &mt_doc_end 0      DOWN   // Tap: down  | Long-tap: end of doc.
 
   #define SPACE_FULL  &kp LG(UP)
 
