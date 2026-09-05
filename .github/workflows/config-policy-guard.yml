@@ -86,6 +86,9 @@ jobs:
     needs:
       - policy-lint
       - random-sanity-selection
+    permissions:
+      actions: write
+      contents: read  
     uses: ./.github/workflows/build.yml
     with:
       profile: "stable"
