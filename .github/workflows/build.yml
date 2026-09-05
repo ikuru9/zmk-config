@@ -3,91 +3,110 @@ name: Build ZMK firmware
 on:
   workflow_dispatch:
     inputs:
+      source_sha:
+        description: "Commit SHA to build; empty uses the workflow ref"
+        default: ""
+        required: false
+        type: string
+
+      chain_next:
+        description: "Continue to Draw ZMK keymaps after a successful build"
+        default: false
+        required: false
+        type: boolean
+
       profile:
         description: "Build profile (`stable`)"
         default: "stable"
         required: false
         type: string
+
       artifact_names:
         description: "Optional comma-separated artifact-name values or wildcard patterns"
         default: ""
         required: false
         type: string
+
       build_matrix_path:
         description: "Path to the build matrix file"
         default: "build.yaml"
         required: false
         type: string
+
       build_matrix:
         description: "JSON build matrix override"
         required: false
         default: ""
         type: string
+
       config_path:
         description: "Path to the config directory"
         default: "config"
         required: false
         type: string
+
       fallback_binary:
         description: "Fallback binary format, if no *.uf2 file was built"
         default: "bin"
         required: false
         type: string
+
       archive_name:
         description: "Archive output file name"
         default: "firmware"
         required: false
         type: string
-  push:
-    paths:
-      - ".github/workflows/build.yml"
-      - "build.yaml"
-      - "boards/**"
-      - "config/**"
-      - "snippets/**"
-      - "scripts/**"
-      - "zephyr/**"
-  pull_request:
-    paths:
-      - ".github/workflows/build.yml"
-      - "build.yaml"
-      - "boards/**"
-      - "config/**"
-      - "snippets/**"
-      - "scripts/**"
-      - "zephyr/**"
+
   workflow_call:
     inputs:
+      source_sha:
+        description: "Commit SHA to build; empty uses the caller SHA"
+        default: ""
+        required: false
+        type: string
+
+      chain_next:
+        description: "Continue to Draw ZMK keymaps after a successful build"
+        default: false
+        required: false
+        type: boolean
+
       profile:
         description: "Build profile (`stable`)"
         default: "stable"
         required: false
         type: string
+
       artifact_names:
         description: "Optional comma-separated artifact-name values or wildcard patterns"
         default: ""
         required: false
         type: string
+
       build_matrix_path:
         description: "Path to the build matrix file"
         default: "build.yaml"
         required: false
         type: string
+
       build_matrix:
         description: "JSON build matrix override"
         default: ""
         required: false
         type: string
+
       config_path:
         description: "Path to the config directory"
         default: "config"
         required: false
         type: string
+
       fallback_binary:
         description: "Fallback binary format, if no *.uf2 file was built"
         default: "bin"
         required: false
         type: string
+
       archive_name:
         description: "Archive output file name"
         default: "firmware"
@@ -105,6 +124,7 @@ jobs:
   prepare:
     runs-on: ubuntu-22.04
     name: Prepare Build Matrix
+
     outputs:
       profile: ${{ steps.profile.outputs.profile }}
       container_image: ${{ steps.profile.outputs.container_image }}
@@ -113,9 +133,12 @@ jobs:
       cache_key: ${{ steps.profile.outputs.cache_key }}
       build_matrix: ${{ steps.select.outputs.build_matrix }}
       selected_count: ${{ steps.select.outputs.selected_count }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.source_sha || github.sha }}
 
       - name: Setup Python
         uses: actions/setup-python@v7
@@ -162,20 +185,27 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+
     container:
       image: ${{ needs.prepare.outputs.container_image }}
+
     needs: prepare
     name: Build
+
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.prepare.outputs.build_matrix) }}
+
     env:
       BUILD_ROOT: /tmp/zmk-build/build
       ARTIFACT_ROOT: /tmp/zmk-build/artifacts
       BUILD_DIR: /tmp/zmk-build/build/${{ matrix.artifact_name }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.source_sha || github.sha }}
 
       - name: Cache west modules
         uses: actions/cache@v6
@@ -198,6 +228,7 @@ jobs:
           MATRIX_ENTRY: ${{ toJson(matrix) }}
         run: |
           mkdir -p "${BUILD_ROOT}" "${ARTIFACT_ROOT}"
+
           python3 scripts/build_runner.py build-one \
             --profile "${{ needs.prepare.outputs.profile }}" \
             --config-path "${{ inputs.config_path || 'config' }}" \
@@ -240,6 +271,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     name: Merge Output Artifacts
+
     steps:
       - name: Merge Artifacts
         uses: actions/upload-artifact/merge@v7
@@ -247,3 +279,37 @@ jobs:
           name: ${{ inputs.archive_name || 'firmware' }}
           pattern: artifact-*
           delete-merged: true
+
+  queue-keymap-draw:
+    name: Queue Keymap Drawing
+    needs: merge
+
+    # Build 전체 성공 시에만 실행됨.
+    if: ${{ inputs.chain_next == true }}
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: write
+      contents: read
+
+    steps:
+      - name: Trigger Draw ZMK keymaps
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ inputs.source_sha || github.sha }}
+          BUILD_RUN_ID: ${{ github.run_id }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+
+          echo "Source SHA: ${SOURCE_SHA}"
+          echo "Build Run ID: ${BUILD_RUN_ID}"
+
+          gh workflow run draw-keymaps.yml \
+            --repo "${GITHUB_REPOSITORY}" \
+            --ref "${DEFAULT_BRANCH}" \
+            --raw-field "source_sha=${SOURCE_SHA}" \
+            --raw-field "build_run_id=${BUILD_RUN_ID}" \
+            --raw-field "chain_next=true"

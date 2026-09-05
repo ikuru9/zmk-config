@@ -2,18 +2,44 @@ name: Draw ZMK keymaps
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - ".github/workflows/draw-keymaps.yml"
-      - "keymap-drawer/config.yaml"
-      - "boards/shields/*/*.json"
-      - "boards/shields/*/*.keymap"
-      - "config/*.json"
-      - "config/*.keymap"
-      - "config/*.dtsi"
-      - "config/**/*.keymap"
-      - "config/**/*.dtsi"
-      - "config/**/*.h"
+    inputs:
+      source_sha:
+        description: "Commit SHA to render; empty uses the workflow ref"
+        default: ""
+        required: false
+        type: string
+
+      build_run_id:
+        description: "Build workflow run ID containing the firmware artifact"
+        default: ""
+        required: false
+        type: string
+
+      chain_next:
+        description: "Continue to Release after a successful draw"
+        default: false
+        required: false
+        type: boolean
+
+  workflow_call:
+    inputs:
+      source_sha:
+        description: "Commit SHA to render; empty uses the caller SHA"
+        default: ""
+        required: false
+        type: string
+
+      build_run_id:
+        description: "Build workflow run ID containing the firmware artifact"
+        default: ""
+        required: false
+        type: string
+
+      chain_next:
+        description: "Continue to Release after a successful draw"
+        default: false
+        required: false
+        type: boolean
 
 concurrency:
   group: draw-keymaps-${{ github.ref }}
@@ -22,11 +48,15 @@ concurrency:
 jobs:
   keymap-drawer:
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
+
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.source_sha || github.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v7
@@ -67,9 +97,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+
           mkdir -p draw-artifacts
+
           shopt -s nullglob
           keymaps=(config/*.keymap)
+
           rendered=0
 
           if [ "${#keymaps[@]}" -eq 0 ]; then
@@ -83,9 +116,10 @@ jobs:
             svg_out="draw-artifacts/${keyboard}.svg"
             layout_json=""
 
-            # Scanner and shared base wrappers do not represent a physical keyboard layout.
-            # Skip them so current keymap-drawer releases do not require a fabricated layout.
-            if [ "${keyboard}" = "prospector_scanner" ] || [ "${keyboard}" = "base" ]; then
+            # Scanner and shared base wrappers do not represent
+            # a physical keyboard layout.
+            if [ "${keyboard}" = "prospector_scanner" ] || \
+               [ "${keyboard}" = "base" ]; then
               echo "Skipping non-physical keymap: ${keyboard}"
               continue
             fi
@@ -94,19 +128,40 @@ jobs:
               layout_json="config/${keyboard}.json"
             elif [ -f "boards/shields/${keyboard}/${keyboard}.json" ]; then
               layout_json="boards/shields/${keyboard}/${keyboard}.json"
-            elif grep -q 'continuum/matrix/34.h' "${keymap_file}" && [ -f "config/delta_omega.json" ]; then
+            elif grep -q 'continuum/matrix/34.h' "${keymap_file}" && \
+                 [ -f "config/delta_omega.json" ]; then
               # Reuse shared 34-key layout for continuum 34-key wrappers.
               layout_json="config/delta_omega.json"
             fi
 
-            keymap -c keymap-drawer/config.yaml parse -z "${keymap_file}" --virtual-layers Combos > "${yaml_out}"
+            keymap \
+              -c keymap-drawer/config.yaml \
+              parse \
+              -z "${keymap_file}" \
+              --virtual-layers Combos \
+              > "${yaml_out}"
 
-            python -c "import sys, yaml; path=sys.argv[1]; data=yaml.safe_load(open(path, encoding='utf-8')) or {}; [combo.__setitem__('l', ['Combos']) for combo in (data.get('combos') or [])]; yaml.safe_dump(data, open(path, 'w', encoding='utf-8'), sort_keys=False, allow_unicode=True)" "${yaml_out}"
+            python -c \
+              "import sys, yaml; \
+              path=sys.argv[1]; \
+              data=yaml.safe_load(open(path, encoding='utf-8')) or {}; \
+              [combo.__setitem__('l', ['Combos']) for combo in (data.get('combos') or [])]; \
+              yaml.safe_dump(data, open(path, 'w', encoding='utf-8'), sort_keys=False, allow_unicode=True)" \
+              "${yaml_out}"
 
             if [ -n "${layout_json}" ]; then
-              keymap -c keymap-drawer/config.yaml draw -j "${layout_json}" "${yaml_out}" > "${svg_out}"
+              keymap \
+                -c keymap-drawer/config.yaml \
+                draw \
+                -j "${layout_json}" \
+                "${yaml_out}" \
+                > "${svg_out}"
             else
-              keymap -c keymap-drawer/config.yaml draw "${yaml_out}" > "${svg_out}"
+              keymap \
+                -c keymap-drawer/config.yaml \
+                draw \
+                "${yaml_out}" \
+                > "${svg_out}"
             fi
 
             rendered=$((rendered + 1))
@@ -130,14 +185,18 @@ jobs:
     name: Create keymap drawing PR
     needs: keymap-drawer
     runs-on: ubuntu-latest
+
     if: ${{ github.ref != 'refs/heads/prepare-keymap-drawings' }}
+
     permissions:
       contents: write
       pull-requests: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v7
         with:
+          ref: ${{ inputs.source_sha || github.sha }}
           token: ${{ secrets.ZMK_ACTIONS_TOKEN != '' && secrets.ZMK_ACTIONS_TOKEN || github.token }}
           fetch-depth: 0
 
@@ -151,12 +210,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+
           mkdir -p keymap-drawer
 
           # Remove stale outputs for keymaps intentionally excluded from rendering.
           for skipped in base prospector_scanner; do
-            rm -f "keymap-drawer/${skipped}.svg" "keymap-drawer/${skipped}.yaml"
+            rm -f \
+              "keymap-drawer/${skipped}.svg" \
+              "keymap-drawer/${skipped}.yaml"
           done
+
           moved=0
 
           # Move only expected keymap-drawer outputs for config/*.keymap.
@@ -164,7 +227,14 @@ jobs:
             kb="$(basename "$keymap" .keymap)"
 
             for ext in svg yaml; do
-              src="$(find draw-artifacts -type f -name "${kb}.${ext}" | head -n1 || true)"
+              src="$(
+                find draw-artifacts \
+                  -type f \
+                  -name "${kb}.${ext}" \
+                  | head -n1 \
+                  || true
+              )"
+
               if [ -n "${src}" ]; then
                 mv "$src" "keymap-drawer/${kb}.${ext}"
                 moved=$((moved + 1))
@@ -185,18 +255,29 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add keymap-drawer/*.svg keymap-drawer/*.yaml 2>/dev/null || true
-          echo "count=$(git status --porcelain=v1 -- keymap-drawer | wc -l)" >> "$GITHUB_OUTPUT"
+
+          git add \
+            keymap-drawer/*.svg \
+            keymap-drawer/*.yaml \
+            2>/dev/null \
+            || true
+
+          echo "count=$(git status --porcelain=v1 -- keymap-drawer | wc -l)" \
+            >> "$GITHUB_OUTPUT"
 
       - name: Commit and push changes
         if: steps.changes.outputs.count > 0
         shell: bash
         run: |
           set -euo pipefail
+
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
           git checkout -B prepare-keymap-drawings
+
           git commit -m "[Draw] Refresh keymap diagrams"
+
           git push -f origin HEAD:prepare-keymap-drawings
 
       - name: Open pull request if needed
@@ -206,15 +287,32 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          PR=$(gh pr list \
-            --head prepare-keymap-drawings \
-            --base "${{ github.event.repository.default_branch }}" \
-            --json number -q '.[0].number')
+
+          PR="$(
+            gh pr list \
+              --head prepare-keymap-drawings \
+              --base "${{ github.event.repository.default_branch }}" \
+              --json number \
+              -q '.[0].number'
+          )"
 
           if [ -z "$PR" ]; then
-            PR_BODY=$(printf 'Automated keymap drawing refresh.\n\nSource run: https://github.com/%s/actions/runs/%s\n' "${{ github.repository }}" "${{ github.run_id }}")
+            PR_BODY="$(
+              printf \
+                'Automated keymap drawing refresh.\n\nSource run: https://github.com/%s/actions/runs/%s\n' \
+                "${{ github.repository }}" \
+                "${{ github.run_id }}"
+            )"
+
             LABEL_ARGS=()
-            EXISTING_LABELS="$(gh label list --limit 200 --json name -q '.[].name' || true)"
+
+            EXISTING_LABELS="$(
+              gh label list \
+                --limit 200 \
+                --json name \
+                -q '.[].name' \
+                || true
+            )"
 
             for label in dependencies automation; do
               if printf '%s\n' "$EXISTING_LABELS" | grep -Fxq "$label"; then
@@ -233,3 +331,44 @@ jobs:
           else
             echo "Pull request already exists (#$PR), skipped creating a new one."
           fi
+
+  queue-release:
+    name: Queue Firmware Release
+
+    needs:
+      - keymap-drawer
+      - keymap-pr
+
+    # keymap-drawer와 keymap-pr가 모두 성공해야 실행됨.
+    if: ${{ inputs.chain_next == true }}
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: write
+      contents: read
+
+    steps:
+      - name: Trigger Release ZMK Firmware
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ inputs.source_sha || github.sha }}
+          BUILD_RUN_ID: ${{ inputs.build_run_id }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${BUILD_RUN_ID}" ]; then
+            echo "::error::Missing build_run_id."
+            exit 1
+          fi
+
+          echo "Source SHA: ${SOURCE_SHA}"
+          echo "Build Run ID: ${BUILD_RUN_ID}"
+
+          gh workflow run release.yml \
+            --repo "${GITHUB_REPOSITORY}" \
+            --ref "${DEFAULT_BRANCH}" \
+            --raw-field "source_sha=${SOURCE_SHA}" \
+            --raw-field "build_run_id=${BUILD_RUN_ID}"
