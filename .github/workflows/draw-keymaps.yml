@@ -47,6 +47,7 @@ concurrency:
 
 jobs:
   keymap-drawer:
+    name: Generate keymap drawings
     runs-on: ubuntu-latest
 
     permissions:
@@ -181,16 +182,16 @@ jobs:
           path: draw-artifacts
           if-no-files-found: error
 
-  keymap-pr:
-    name: Create keymap drawing PR
+  keymap-sync:
+    name: Update keymap drawings
     needs: keymap-drawer
     runs-on: ubuntu-latest
 
-    if: ${{ github.ref != 'refs/heads/prepare-keymap-drawings' }}
-
     permissions:
       contents: write
-      pull-requests: write
+
+    outputs:
+      source_sha: ${{ steps.commit.outputs.source_sha }}
 
     steps:
       - name: Checkout
@@ -206,25 +207,32 @@ jobs:
           name: keymap-drawings
           path: draw-artifacts
 
-      - name: Normalize drawing paths
+      - name: Update drawing files
         shell: bash
         run: |
           set -euo pipefail
 
           mkdir -p keymap-drawer
 
-          # Remove stale outputs for keymaps intentionally excluded from rendering.
-          for skipped in base prospector_scanner; do
-            rm -f \
-              "keymap-drawer/${skipped}.svg" \
-              "keymap-drawer/${skipped}.yaml"
-          done
+          # Remove stale outputs for keymaps intentionally excluded
+          # from rendering.
+          rm -f \
+            keymap-drawer/base.svg \
+            keymap-drawer/base.yaml \
+            keymap-drawer/prospector_scanner.svg \
+            keymap-drawer/prospector_scanner.yaml
 
-          moved=0
+          shopt -s nullglob
 
-          # Move only expected keymap-drawer outputs for config/*.keymap.
-          for keymap in config/*.keymap; do
-            kb="$(basename "$keymap" .keymap)"
+          keymaps=(config/*.keymap)
+
+          for keymap in "${keymaps[@]}"; do
+            kb="$(basename "${keymap}" .keymap)"
+
+            if [ "${kb}" = "base" ] || \
+               [ "${kb}" = "prospector_scanner" ]; then
+              continue
+            fi
 
             for ext in svg yaml; do
               src="$(
@@ -236,110 +244,66 @@ jobs:
               )"
 
               if [ -n "${src}" ]; then
-                mv "$src" "keymap-drawer/${kb}.${ext}"
-                moved=$((moved + 1))
+                cp "${src}" "keymap-drawer/${kb}.${ext}"
               fi
             done
           done
 
-          if [ "$moved" -eq 0 ]; then
-            echo "No expected keymap artifacts were found."
-            exit 1
-          fi
-
-          echo "Staged drawing files:"
+          echo "Updated drawing files:"
           ls -la keymap-drawer
 
-      - name: Detect changes
-        id: changes
+      - name: Commit and push changes
+        id: commit
         shell: bash
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          SOURCE_SHA: ${{ inputs.source_sha || github.sha }}
         run: |
           set -euo pipefail
 
-          # Include added, modified, and deleted drawing files.
           git add -A -- keymap-drawer/
 
-          count="$(git diff --cached --name-only -- keymap-drawer/ | wc -l)"
-          echo "count=${count}" >> "$GITHUB_OUTPUT"
+          if git diff --cached --quiet; then
+            echo "No keymap drawing changes."
 
-          echo "Staged changes:"
-          git diff --cached --name-status -- keymap-drawer/
+            echo "source_sha=$(git rev-parse HEAD)" \
+              >> "$GITHUB_OUTPUT"
 
-      - name: Commit and push changes
-        if: steps.changes.outputs.count > 0
-        shell: bash
-        run: |
-          set -euo pipefail
+            exit 0
+          fi
 
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
-          git checkout -B prepare-keymap-drawings
+          # Do not overwrite main if it changed while this pipeline
+          # was running.
+          git fetch origin "${DEFAULT_BRANCH}"
 
-          git commit -m "[Draw] Refresh keymap diagrams"
+          remote_sha="$(git rev-parse "origin/${DEFAULT_BRANCH}")"
 
-          git push -f origin HEAD:prepare-keymap-drawings
-
-      - name: Open pull request if needed
-        if: steps.changes.outputs.count > 0
-        env:
-          GH_TOKEN: ${{ secrets.ZMK_ACTIONS_TOKEN != '' && secrets.ZMK_ACTIONS_TOKEN || github.token }}
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          PR="$(
-            gh pr list \
-              --head prepare-keymap-drawings \
-              --base "${{ github.event.repository.default_branch }}" \
-              --json number \
-              -q '.[0].number'
-          )"
-
-          if [ -z "$PR" ]; then
-            PR_BODY="$(
-              printf \
-                'Automated keymap drawing refresh.\n\nSource run: https://github.com/%s/actions/runs/%s\n' \
-                "${{ github.repository }}" \
-                "${{ github.run_id }}"
-            )"
-
-            LABEL_ARGS=()
-
-            EXISTING_LABELS="$(
-              gh label list \
-                --limit 200 \
-                --json name \
-                -q '.[].name' \
-                || true
-            )"
-
-            for label in dependencies automation; do
-              if printf '%s\n' "$EXISTING_LABELS" | grep -Fxq "$label"; then
-                LABEL_ARGS+=(--label "$label")
-              else
-                echo "Label '$label' not found; creating PR without it."
-              fi
-            done
-
-            gh pr create \
-              --base "${{ github.event.repository.default_branch }}" \
-              --head prepare-keymap-drawings \
-              --title "[Draw] Refresh keymap diagrams" \
-              "${LABEL_ARGS[@]}" \
-              --body "$PR_BODY"
-          else
-            echo "Pull request already exists (#$PR), skipped creating a new one."
+          if [ "${remote_sha}" != "${SOURCE_SHA}" ]; then
+            echo "::error::${DEFAULT_BRANCH} changed while drawing keymaps."
+            echo "::error::Expected: ${SOURCE_SHA}"
+            echo "::error::Current:  ${remote_sha}"
+            exit 1
           fi
+
+          git checkout -B "${DEFAULT_BRANCH}" "${SOURCE_SHA}"
+
+          git commit -m "chore: update keymap drawings"
+
+          git push origin "HEAD:${DEFAULT_BRANCH}"
+
+          echo "source_sha=$(git rev-parse HEAD)" \
+            >> "$GITHUB_OUTPUT"
 
   queue-release:
     name: Queue Firmware Release
 
     needs:
       - keymap-drawer
-      - keymap-pr
+      - keymap-sync
 
-    # keymap-drawer와 keymap-pr가 모두 성공해야 실행됨.
     if: ${{ inputs.chain_next == true }}
 
     runs-on: ubuntu-latest
@@ -353,7 +317,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_SHA: ${{ inputs.source_sha || github.sha }}
+          SOURCE_SHA: ${{ needs.keymap-sync.outputs.source_sha }}
           BUILD_RUN_ID: ${{ inputs.build_run_id }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
@@ -361,6 +325,11 @@ jobs:
 
           if [ -z "${BUILD_RUN_ID}" ]; then
             echo "::error::Missing build_run_id."
+            exit 1
+          fi
+
+          if [ -z "${SOURCE_SHA}" ]; then
+            echo "::error::Missing source_sha."
             exit 1
           fi
 
