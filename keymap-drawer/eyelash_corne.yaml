@@ -20,22 +20,22 @@ layers:
   - t: A
     h: Alt
   - t: S
-    h: Ctrl
+    h: Gui
   - t: D
     h: Shift
   - t: F
-    h: Gui
+    h: Ctrl
   - G
   - ←
   - Enter
   - →
   - H
   - t: J
-    h: Gui
+    h: Ctrl
   - t: K
     h: Shift
   - t: L
-    h: Ctrl
+    h: Gui
   - t: ''''
     h: Alt
   - t: ']'
