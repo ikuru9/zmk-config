@@ -15,19 +15,19 @@ layers:
   - t: A
     h: Alt
   - t: S
-    h: Ctrl
+    h: Gui
   - t: D
     h: Shift
   - t: F
-    h: Gui
+    h: Ctrl
   - G
   - H
   - t: J
-    h: Gui
+    h: Ctrl
   - t: K
     h: Shift
   - t: L
-    h: Ctrl
+    h: Gui
   - t: ''''
     h: Alt
   - LSHIFT
@@ -57,34 +57,34 @@ layers:
   - '&lang_screen'
   Nav:
   - ''
-  - Ctrl+Alt+←
+  - Shift+Gui+←
   - ''
-  - Ctrl+Alt+→
+  - Shift+Gui+→
   - ''
   - ''
   - ''
   - t: ↑
-    h: Gui+↑
+    h: Ctrl+Home
   - ''
   - ''
   - ''
-  - Ctrl+←
+  - Ctrl+Gui+←
   - ''
-  - Ctrl+→
-  - Ctrl+Gui+F
+  - Ctrl+Gui+→
+  - Gui+↑
   - ''
   - t: ←
-    h: ←
+    h: Home
   - t: ↓
-    h: Gui+↓
+    h: Ctrl+End
   - t: →
-    h: →
+    h: End
   - ''
   - LSHIFT
   - ''
-  - Ctrl+Alt+Gui+←
+  - Gui+←
   - ''
-  - Ctrl+Alt+Gui+→
+  - Gui+→
   - ''
   - ''
   - ''
@@ -134,7 +134,7 @@ layers:
   - Esc
   - type: held
   - type: trans
-  - Ctrl+Gui+Q
+  - Gui+L
   - Cancel
   - '&lang_screen'
   Num:
