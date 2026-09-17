@@ -14,8 +14,7 @@ layers:
   - I
   - O
   - P
-  - t: '['
-    right: '{'
+  - '['
   - Tab
   - t: A
     h: Alt
@@ -38,8 +37,7 @@ layers:
     h: Gui
   - t: ''''
     h: Alt
-  - t: ']'
-    right: '}'
+  - ']'
   - Caps
   - Z
   - X
@@ -81,8 +79,7 @@ layers:
     h: Ctrl+Home
   - ''
   - ''
-  - t: '['
-    right: '{'
+  - '['
   - Tab
   - ''
   - Ctrl+Gui+←
@@ -100,8 +97,7 @@ layers:
   - t: →
     h: End
   - ''
-  - t: ']'
-    right: '}'
+  - ']'
   - Caps
   - ''
   - Gui+←
@@ -135,8 +131,7 @@ layers:
   - ''
   - ''
   - ''
-  - t: '['
-    right: '{'
+  - '['
   - Tab
   - ''
   - F4
@@ -151,8 +146,7 @@ layers:
   - $$mdi:play-pause$$
   - $$mdi:skip-forward$$
   - ''
-  - t: ']'
-    right: '}'
+  - ']'
   - Caps
   - ''
   - F1
@@ -189,8 +183,7 @@ layers:
   - Mouse ↑
   - Right Click
   - Scroll ←
-  - t: '['
-    right: '{'
+  - '['
   - Tab
   - ''
   - t: '4'
@@ -209,8 +202,7 @@ layers:
   - Mouse ↓
   - Mouse →
   - Scroll →
-  - t: ']'
-    right: '}'
+  - ']'
   - Caps
   - ''
   - t: '1'
@@ -248,8 +240,7 @@ layers:
   - Out Toggle
   - USB
   - BLE
-  - t: '['
-    right: '{'
+  - '['
   - Tab
   - ''
   - ''
@@ -264,8 +255,7 @@ layers:
   - ''
   - ''
   - ''
-  - t: ']'
-    right: '}'
+  - ']'
   - Caps
   - Boot
   - Reset
@@ -338,32 +328,42 @@ layers:
 combos:
 - p:
   - 4
+  - 5
+  k: '{'
+  l:
+  - Combos
+  hidden: true
+- p:
+  - 3
+  - 4
+  k: <
+  l:
+  - Combos
+  hidden: true
+- p:
+  - 2
   - 3
   k: (
+  l:
+  - Combos
+- p:
+  - 7
+  - 8
+  k: '}'
   l:
   - Combos
   hidden: true
 - p:
   - 8
   - 9
-  k: )
+  k: '>'
   l:
   - Combos
   hidden: true
 - p:
-  - 3
-  - 2
-  k:
-    t: '['
-    right: '{'
-  l:
-  - Combos
-- p:
   - 9
   - 10
-  k:
-    t: ']'
-    right: '}'
+  k: )
   l:
   - Combos
 - p:
@@ -401,13 +401,13 @@ combos:
 - p:
   - 25
   - 26
-  k: /
+  k: '|'
   l:
   - Combos
 - p:
   - 39
   - 40
-  k: '|'
+  k: /
   l:
   - Combos
 - p:

@@ -268,32 +268,42 @@ layers:
 combos:
 - p:
   - 3
+  - 4
+  k: '{'
+  l:
+  - Combos
+  hidden: true
+- p:
+  - 2
+  - 3
+  k: <
+  l:
+  - Combos
+  hidden: true
+- p:
+  - 1
   - 2
   k: (
+  l:
+  - Combos
+- p:
+  - 5
+  - 6
+  k: '}'
   l:
   - Combos
   hidden: true
 - p:
   - 6
   - 7
-  k: )
+  k: '>'
   l:
   - Combos
   hidden: true
 - p:
-  - 2
-  - 1
-  k:
-    t: '['
-    right: '{'
-  l:
-  - Combos
-- p:
   - 7
   - 8
-  k:
-    t: ']'
-    right: '}'
+  k: )
   l:
   - Combos
 - p:
@@ -331,13 +341,13 @@ combos:
 - p:
   - 18
   - 19
-  k: /
+  k: '|'
   l:
   - Combos
 - p:
   - 29
   - 30
-  k: '|'
+  k: /
   l:
   - Combos
 - p:
