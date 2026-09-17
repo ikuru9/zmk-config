@@ -12,10 +12,10 @@ PROFILES: dict[str, dict[str, str]] = {
     "stable": {
         "profile": "stable",
         "container_image": "zmkfirmware/zmk-build-arm:4.1",
-        "zmk_revision": "main",
+        "zmk_revision": "",
         "base_dir": "/tmp/zmk-config",
         "workspace_dir": ".build/local/workspace",
-        "cache_key": "stable-4.1-main",
+        "cache_key": "stable-4.1",
     },
 }
 
