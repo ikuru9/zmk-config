@@ -28,6 +28,7 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
+      revision: fa1c89bf98b16a24fc51d65f239e9f99426ab843
       import: app/west.yml
 
     ## Urob's ZMK modules
@@ -58,7 +59,6 @@ manifest:
     - name: prospector-zmk-module
       remote: carrefinho
       revision: feat/new-status-screens
-
 
     ## RGB LED Widget
     - name: zmk-rgbled-widget
