@@ -13,22 +13,23 @@
 #define ZMK_COMBO_IDLE_FAST 150
 #define ZMK_COMBO_IDLE_SLOW 50
 
-ZMK_COMBO(lbrc,      &kp LPAR,             LT1 LT2,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
-ZMK_COMBO(rbrc,      &kp RPAR,             RT1 RT2,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(lbrc,      &kp LBRC,             LT1 LT0,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(lt,        &kp LT,               LT2 LT1,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(lpar,      &kp LPAR,             LT3 LT2,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 
-ZMK_COMBO(lbkt,      &kp LBKT,             LT2 LT3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
-ZMK_COMBO(rbkt,      &kp RBKT,             RT2 RT3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(rbrc,      &kp RBRC,             RT0 RT1,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(gt,        &kp GT,               RT1 RT2,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(rpar,      &kp RPAR,             RT2 RT3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 
 ZMK_COMBO(cut,       &kp C_CUT,            LB3 LB1,     DEF NAV    , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 ZMK_COMBO(copy,      &kp C_CPY,            LB3 LB2,     DEF NAV    , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 ZMK_COMBO(paste,     &kp C_PST,            LB2 LB1,     DEF NAV    , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 
-
 ZMK_COMBO(grave,     &kp GRAVE,            LT4 LT3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 
 ZMK_COMBO(bslh,      &kp BSLH,             RT3 RT4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
-ZMK_COMBO(flsh,      &kp SLASH,            RM3 RM4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
-ZMK_COMBO(pipe,      &kp PIPE,             RB3 RB4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(pipe,      &kp PIPE,             RM3 RM4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(flsh,      &kp SLASH,            RB3 RB4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 
 ZMK_COMBO(esc,       &kp ESC,              LH1 LH0,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 ZMK_COMBO(raycast,   &kp LG(LA(SPACE)),    RH1 RH0,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)

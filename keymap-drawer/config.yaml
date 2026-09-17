@@ -94,10 +94,12 @@ parse_config:
     # combo helper hold-taps
     "&hm_combo_ldr": Leader
     "&hm_combo_ldrsh": Shift+Leader
-    "&hm_combo_lpar": { "tap": "(", "right": "<" }
-    "&hm_combo_rpar": { "tap": ")", "right": ">" }
-    "&kp LBKT": { "tap": "[", "right": "{" }
-    "&kp RBKT": { "tap": "]", "right": "}" }
+    "&hm_combo_lpar": "("
+    "&hm_combo_rpar": ")"
+    "&hm_combo_lbrc": "{"
+    "&hm_combo_rbrc": "}"
+    "&hm_combo_lt": "<"
+    "&hm_combo_gt": ">"
 
     # pointer and mouse
     "&mmv MOVE_UP": Mouse ↑
