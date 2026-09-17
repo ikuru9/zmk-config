@@ -20,7 +20,7 @@ Build and release are matrix-driven via `build.yaml`.
 
 - `.github/workflows/build.yml`: runs the full matrix for relevant pushes/PRs and supports reusable/manual profile-driven builds
 - `.github/workflows/release.yml`: builds and publishes firmware release assets using the stable profile
-- `.github/workflows/run-tests.yml` and `.github/workflows/test-main.yml`: run `tests/west.yml` directly against ZMK `main` and upload isolated build logs
+- `.github/workflows/run-tests.yml` and `.github/workflows/test-main.yml`: manually run `tests/west.yml` against ZMK `main` and upload isolated build logs
 - `.github/workflows/config-policy-guard.yml`: policy lint plus random matrix sanity builds through `build.yml`
 
 - `.github/workflows/draw-keymaps.yml`: generates keymap drawings and opens a refresh PR
@@ -30,7 +30,7 @@ Build and release are matrix-driven via `build.yaml`.
 
 1. Edit `config/*.keymap`, `config/*.conf`, `build.yaml`, or shield files.
 2. Commit and push your branch.
-3. Wait for CI (`Build ZMK firmware` or test workflows).
+3. Wait for the `Build ZMK firmware` CI workflow. Run the test workflow manually when needed.
 4. Download build artifacts from Actions or release assets from Releases.
 5. Flash matching firmware files to target devices.
 
