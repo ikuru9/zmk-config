@@ -139,16 +139,15 @@ jobs:
               -c keymap-drawer/config.yaml \
               parse \
               -z "${keymap_file}" \
-              --virtual-layers Combos \
               > "${yaml_out}"
 
-            python -c \
-              "import sys, yaml; \
-              path=sys.argv[1]; \
-              data=yaml.safe_load(open(path, encoding='utf-8')) or {}; \
-              [combo.__setitem__('l', ['Combos']) for combo in (data.get('combos') or [])]; \
-              yaml.safe_dump(data, open(path, 'w', encoding='utf-8'), sort_keys=False, allow_unicode=True)" \
-              "${yaml_out}"
+            # python -c \
+            #   "import sys, yaml; \
+            #   path=sys.argv[1]; \
+            #   data=yaml.safe_load(open(path, encoding='utf-8')) or {}; \
+            #   [combo.__setitem__('l', ['Combos']) for combo in (data.get('combos') or [])]; \
+            #   yaml.safe_dump(data, open(path, 'w', encoding='utf-8'), sort_keys=False, allow_unicode=True)" \
+            #   "${yaml_out}"
 
             if [ -n "${layout_json}" ]; then
               keymap \
