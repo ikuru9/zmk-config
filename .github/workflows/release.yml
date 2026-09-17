@@ -118,12 +118,10 @@ jobs:
               major="${version%%.*}"
               fraction="${version#*.}"
 
-              current_value=$(
-                (
-                  10#${major} * 100 +
-                  10#${fraction}
-                )
-              )
+              current_value=$((
+                10#${major} * 100 +
+                10#${fraction}
+              ))
 
               next_value=$((current_value + 1))
             fi
