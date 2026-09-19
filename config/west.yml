@@ -11,8 +11,8 @@ manifest:
 
     - name: englmaxi
       url-base: https://github.com/englmaxi
-    - name: carrefinho
-      url-base: https://github.com/carrefinho
+    - name: prog13
+      url-base: https://github.com/prog13
 
     - name: zzeneg
       url-base: https://github.com/zzeneg
@@ -40,8 +40,8 @@ manifest:
 
     ## Prospector Dongle
     - name: prospector-zmk-module
-      remote: carrefinho
-      revision: feat/new-status-screens
+      remote: prog13
+      revision: 06769d5db781705792d636c31adb4f8474945f7d
 
     ## KeyPeek support
     - name: zmk-raw-hid
