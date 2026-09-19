@@ -120,6 +120,8 @@ parse_config:
   zmk_combos:
     combo_cut: { align: bottom, offset: 0.10 }
     combo_ldrsh: { align: top, offset: 1.35 }
+    combo_lang: { "tap": $$mdi:translate$$ }
+    combo_search: { "tap": $$mdi:text-search$$ }
 
   zmk_keycode_map:
     # modifiers
@@ -239,4 +241,4 @@ draw_config:
   dark_mode: auto
   style_layer_activators: true
   shrink_wide_legends: 8
-  footer_text: "jon's zmk-config"
+  footer_text: "ikuru9's zmk-config"

@@ -1,8 +1,10 @@
 // shortcut select os
 #ifdef MAC_OS
 // homerow mods
-  #define M_IDX LGUI
-  #define M_PNK LCTRL
+  #define OL_IDX LGUI
+  #define OL_PNK LCTRL
+  #define OR_IDX RGUI
+  #define OR_PNK RCTRL
 // clipboard shortcut
   #define C_RDO LG(LS(Z))
   #define C_PST LG(V)
@@ -23,7 +25,6 @@
   #define D_PRV LG(LC(LEFT))
   #define D_NXT LG(LC(RIGHT))
 
-  
   // Hold → Cmd + Left/Right = start/end of line.
   // If Cmd is already held, consume it to avoid accidental modifier stacking.
   MASK_MODS(masked_home, (MOD_LGUI), &kp LEFT)
@@ -59,8 +60,10 @@
   #define SP_RIGHT    &kp LC(RIGHT)
 #else
 // homerow mods
-  #define M_IDX LCTRL
-  #define M_PNK LGUI
+  #define OL_IDX LCTRL
+  #define OL_PNK LGUI
+  #define OR_IDX RCTRL
+  #define OR_PNK RGUI
 // clipboard shortcut
   #define C_RDO LC(Y)
   #define C_PST LC(V)
