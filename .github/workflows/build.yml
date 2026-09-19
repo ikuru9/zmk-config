@@ -236,6 +236,7 @@ jobs:
             --build-root "${BUILD_ROOT}" \
             --output-dir "${ARTIFACT_ROOT}" \
             --base-dir "${{ needs.prepare.outputs.base_dir }}" \
+            --pristine \
             --entry-json "${MATRIX_ENTRY}"
 
       - name: ${{ matrix.artifact_name }} Kconfig file

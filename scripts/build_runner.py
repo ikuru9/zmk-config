@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import fnmatch
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -14,6 +15,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+import uuid
 from typing import Any
 
 import yaml
@@ -34,6 +36,24 @@ def resolve_path(raw_path: str, *, base_dir: Path = REPO_ROOT) -> Path:
     if path.is_absolute():
         return path.resolve()
     return (base_dir / path).resolve()
+
+
+def read_json_object(path: Path) -> dict[str, Any] | None:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def write_json_atomic(path: Path, data: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path = path.with_suffix(f"{path.suffix}.tmp")
+    temporary_path.write_text(
+        json.dumps(data, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    os.replace(temporary_path, path)
 
 
 def load_matrix_data(build_matrix_path: Path | None, build_matrix_json: str) -> list[dict[str, Any]]:
@@ -216,25 +236,59 @@ def remove_stale_git_locks(base_dir: Path) -> list[Path]:
     return removed
 
 
-def ensure_west_ready(base_dir: Path, config_dir: Path, skip_update: bool) -> None:
-    if not (base_dir / ".west").exists():
+def ensure_west_ready(
+    base_dir: Path,
+    config_dir: Path,
+    *,
+    force_update: bool,
+) -> str:
+    west_manifest = config_dir / "west.yml"
+    if not west_manifest.is_file():
+        raise FileNotFoundError(f"West manifest not found: {west_manifest}")
+
+    manifest_sha256 = hashlib.sha256(west_manifest.read_bytes()).hexdigest()
+    west_dir = base_dir / ".west"
+    workspace_marker = west_dir / "zmk-config-workspace.json"
+    marker_data = read_json_object(workspace_marker)
+    marker_valid = (
+        marker_data is not None
+        and marker_data.get("schema") == 1
+        and marker_data.get("manifest_sha256") == manifest_sha256
+        and isinstance(marker_data.get("generation"), str)
+        and bool(marker_data["generation"])
+    )
+    needs_update = force_update or not west_dir.is_dir() or not marker_valid
+
+    if not west_dir.is_dir():
         run(["west", "init", "-l", str(config_dir)], cwd=base_dir)
     else:
         run(["west", "config", "manifest.path", config_dir.name], cwd=base_dir)
 
-    if not skip_update:
-        try:
-            run(["west", "update", "--fetch-opt=--filter=tree:0"], cwd=base_dir)
-        except subprocess.CalledProcessError:
-            removed = remove_stale_git_locks(base_dir)
-            if not removed:
-                raise
-            print(
-                f"Detected stale git lock files. Removed {len(removed)} lock file(s) and retrying west update.",
-                flush=True,
-            )
-            run(["west", "update", "--fetch-opt=--filter=tree:0"], cwd=base_dir)
+    if not needs_update:
+        run(["west", "zephyr-export"], cwd=base_dir)
+        return marker_data["generation"]
+
+    workspace_marker.unlink(missing_ok=True)
+    try:
+        run(["west", "update", "--fetch-opt=--filter=tree:0"], cwd=base_dir)
+    except subprocess.CalledProcessError:
+        removed = remove_stale_git_locks(base_dir)
+        if not removed:
+            raise
+        print(
+            f"Detected stale git lock files. Removed {len(removed)} lock file(s) and retrying west update.",
+            flush=True,
+        )
+        run(["west", "update", "--fetch-opt=--filter=tree:0"], cwd=base_dir)
+
     run(["west", "zephyr-export"], cwd=base_dir)
+    workspace_state = {
+        "schema": 1,
+        "manifest_sha256": manifest_sha256,
+        "generation": uuid.uuid4().hex,
+    }
+    write_json_atomic(workspace_marker, workspace_state)
+    return workspace_state["generation"]
 
 
 def detect_physical_cores() -> int | None:
@@ -296,9 +350,9 @@ def prepare_workspace(
     profile_name: str,
     config_path: Path,
     base_dir: Path | None,
-    skip_update: bool,
+    force_update: bool,
     zmk_revision_override: str,
-) -> tuple[Path, Path, Path | None]:
+) -> tuple[Path, Path, Path | None, str]:
     profile = get_profile(profile_name)
     src_config_path = config_path
     if not src_config_path.exists():
@@ -318,46 +372,114 @@ def prepare_workspace(
     if revision:
         override_zmk_revision(config_dir, revision)
 
-    ensure_west_ready(effective_base_dir, config_dir, skip_update=skip_update)
-    return effective_base_dir, config_dir, extra_modules_dir
+    workspace_generation = ensure_west_ready(
+        effective_base_dir,
+        config_dir,
+        force_update=force_update,
+    )
+    return effective_base_dir, config_dir, extra_modules_dir, workspace_generation
+
+
+def build_signature(
+    entry: dict[str, Any],
+    *,
+    profile_name: str,
+    workspace_generation: str,
+    base_dir: Path,
+    config_dir: Path,
+    extra_modules_dir: Path | None,
+) -> dict[str, Any]:
+    profile = get_profile(profile_name)
+    snippet = str(entry.get("snippet", "")).strip()
+    cmake_args = str(entry.get("cmake-args") or entry.get("cmake_args") or "").strip()
+
+    return {
+        "schema": 1,
+        "profile_name": profile["profile"],
+        "profile_cache_key": profile["cache_key"],
+        "container_image": profile["container_image"],
+        "workspace_generation": workspace_generation,
+        "artifact_name": artifact_name(entry),
+        "board": str(entry.get("board", "")).strip(),
+        "shield": str(entry.get("shield", "")).strip(),
+        "snippets": shlex.split(snippet),
+        "cmake_args": shlex.split(cmake_args),
+        "source_dir": str((base_dir / "zmk" / "app").resolve()),
+        "config_dir": str(config_dir.resolve()),
+        "extra_modules_dir": (
+            str(extra_modules_dir.resolve()) if extra_modules_dir is not None else None
+        ),
+    }
 
 
 def build_entry(
     *,
     entry: dict[str, Any],
+    profile_name: str,
+    workspace_generation: str,
     base_dir: Path,
     build_root: Path,
     output_dir: Path,
     config_dir: Path,
     fallback_binary: str,
     extra_modules_dir: Path | None,
+    pristine: bool,
+    build_jobs: int,
 ) -> Path:
-    board = str(entry.get("board", "")).strip()
+    signature = build_signature(
+        entry,
+        profile_name=profile_name,
+        workspace_generation=workspace_generation,
+        base_dir=base_dir,
+        config_dir=config_dir,
+        extra_modules_dir=extra_modules_dir,
+    )
+    board = signature["board"]
     if not board:
         raise ValueError(f"Missing board in matrix entry: {entry}")
+    if build_jobs < 1:
+        raise ValueError("build_jobs must be >= 1")
 
-    shield = str(entry.get("shield", "")).strip()
-    snippet = str(entry.get("snippet", "")).strip()
-    cmake_args = str(entry.get("cmake-args") or entry.get("cmake_args") or "").strip()
-
-    artifact = artifact_name(entry)
+    artifact = signature["artifact_name"]
     build_dir = build_root / artifact
+    signature_path = build_dir / ".zmk-build-entry.json"
     build_root.mkdir(parents=True, exist_ok=True)
 
-    cmd = ["west", "build", "-p", "-s", "zmk/app", "-d", str(build_dir), "-b", board]
-    if snippet:
-        for snippet_name in shlex.split(snippet):
+    reuse_build = (
+        not pristine
+        and (build_dir / "CMakeCache.txt").is_file()
+        and (build_dir / "build.ninja").is_file()
+        and read_json_object(signature_path) == signature
+    )
+
+    if reuse_build:
+        cmd = ["west", "build", "-d", str(build_dir), f"-o=-j{build_jobs}"]
+    else:
+        cmd = [
+            "west",
+            "build",
+            "-p=always",
+            "-s",
+            "zmk/app",
+            "-d",
+            str(build_dir),
+            "-b",
+            board,
+            f"-o=-j{build_jobs}",
+        ]
+        for snippet_name in signature["snippets"]:
             cmd.extend(["-S", snippet_name])
-    cmd.append("--")
-    cmd.append(f"-DZMK_CONFIG={config_dir}")
-    if shield:
-        cmd.append(f"-DSHIELD={shield}")
-    if extra_modules_dir is not None:
-        cmd.append(f"-DZMK_EXTRA_MODULES={extra_modules_dir}")
-    if cmake_args:
-        cmd.extend(shlex.split(cmake_args))
+        cmd.append("--")
+        cmd.append(f"-DZMK_CONFIG={config_dir}")
+        if signature["shield"]:
+            cmd.append(f"-DSHIELD={signature['shield']}")
+        if extra_modules_dir is not None:
+            cmd.append(f"-DZMK_EXTRA_MODULES={extra_modules_dir}")
+        cmd.extend(signature["cmake_args"])
 
     run(cmd, cwd=base_dir)
+    if not reuse_build:
+        write_json_atomic(signature_path, signature)
 
     zephyr_out = build_dir / "zephyr"
     uf2 = zephyr_out / "zmk.uf2"
@@ -381,12 +503,15 @@ def build_entry(
 def build_entries(
     *,
     entries: list[dict[str, Any]],
+    profile_name: str,
+    workspace_generation: str,
     base_dir: Path,
     build_root: Path,
     output_dir: Path,
     config_dir: Path,
     fallback_binary: str,
     extra_modules_dir: Path | None,
+    pristine: bool,
     jobs: int | None,
 ) -> int:
     logical_cores = max(1, os.cpu_count() or 1)
@@ -416,6 +541,16 @@ def build_entries(
             )
             max_workers = physical_core_cap
 
+    build_jobs = max(1, physical_core_cap // max_workers)
+    print(
+        "Build concurrency: "
+        f"matrix_workers={max_workers}, "
+        f"ninja_jobs_per_target={build_jobs}, "
+        f"total_job_cap={max_workers * build_jobs}, "
+        f"physical_cores={physical_core_cap}.",
+        flush=True,
+    )
+
     produced: list[Path] = []
     if max_workers == 1:
         for entry in entries:
@@ -423,12 +558,16 @@ def build_entries(
             print(f"\n=== Building {name} ===", flush=True)
             out = build_entry(
                 entry=entry,
+                profile_name=profile_name,
+                workspace_generation=workspace_generation,
                 base_dir=base_dir,
                 build_root=build_root,
                 output_dir=output_dir,
                 config_dir=config_dir,
                 fallback_binary=fallback_binary,
                 extra_modules_dir=extra_modules_dir,
+                pristine=pristine,
+                build_jobs=build_jobs,
             )
             produced.append(out)
             print(f"Built artifact: {out}", flush=True)
@@ -446,12 +585,16 @@ def build_entries(
                 future = executor.submit(
                     build_entry,
                     entry=entry,
+                    profile_name=profile_name,
+                    workspace_generation=workspace_generation,
                     base_dir=base_dir,
                     build_root=build_root,
                     output_dir=output_dir,
                     config_dir=config_dir,
                     fallback_binary=fallback_binary,
                     extra_modules_dir=extra_modules_dir,
+                    pristine=pristine,
+                    build_jobs=build_jobs,
                 )
                 future_to_name[future] = name
 
@@ -486,7 +629,7 @@ def add_common_matrix_args(parser: argparse.ArgumentParser) -> None:
         default="",
         help=(
             "Comma-separated artifact-name values or wildcard patterns "
-            "(e.g. 'totem_*', '*_reset'). If omitted, use all selected entries."
+            "(e.g. 'totem_*', '*_reset')."
         ),
     )
 
@@ -498,7 +641,16 @@ def add_common_build_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--output-dir", default="firmware")
     parser.add_argument("--build-root", default=".build/local/build")
     parser.add_argument("--base-dir", default="")
-    parser.add_argument("--skip-update", action="store_true")
+    parser.add_argument(
+        "--update",
+        action="store_true",
+        help="Refresh west projects even when the staged manifest is unchanged.",
+    )
+    parser.add_argument(
+        "--pristine",
+        action="store_true",
+        help="Discard the selected targets' build state before compiling.",
+    )
     parser.add_argument(
         "--zmk-revision-override",
         default="",
@@ -519,6 +671,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     build_many = subparsers.add_parser("build-many", help="Build a filtered matrix of firmware targets.")
     add_common_matrix_args(build_many)
     add_common_build_args(build_many)
+    build_many.add_argument(
+        "--all",
+        action="store_true",
+        help="Build every matrix entry. Cannot be combined with --artifact-names.",
+    )
     build_many.add_argument(
         "--jobs",
         type=int,
@@ -568,6 +725,12 @@ def command_select_matrix(args: argparse.Namespace) -> int:
 
 
 def command_build_many(args: argparse.Namespace) -> int:
+    has_artifact_names = bool(args.artifact_names.strip())
+    if args.all and has_artifact_names:
+        raise ValueError("--all cannot be combined with --artifact-names")
+    if not args.list and not args.all and not has_artifact_names:
+        raise ValueError("Specify --artifact-names PATTERN or --all.")
+
     build_matrix_path = resolve_path(args.build_matrix_path)
     if not args.build_matrix_json and not build_matrix_path.exists():
         raise FileNotFoundError(f"Build matrix path not found: {build_matrix_path}")
@@ -590,21 +753,24 @@ def command_build_many(args: argparse.Namespace) -> int:
     output_dir = resolve_path(args.output_dir)
     base_dir = Path(args.base_dir).resolve() if args.base_dir else None
 
-    effective_base_dir, config_dir, extra_modules_dir = prepare_workspace(
+    effective_base_dir, config_dir, extra_modules_dir, workspace_generation = prepare_workspace(
         profile_name=args.profile,
         config_path=config_path,
         base_dir=base_dir,
-        skip_update=args.skip_update,
+        force_update=args.update,
         zmk_revision_override=args.zmk_revision_override,
     )
     return build_entries(
         entries=entries,
+        profile_name=args.profile,
+        workspace_generation=workspace_generation,
         base_dir=effective_base_dir,
         build_root=build_root,
         output_dir=output_dir,
         config_dir=config_dir,
         fallback_binary=args.fallback_binary,
         extra_modules_dir=extra_modules_dir,
+        pristine=args.pristine,
         jobs=args.jobs,
     )
 
@@ -616,23 +782,32 @@ def command_build_one(args: argparse.Namespace) -> int:
     output_dir = resolve_path(args.output_dir)
     base_dir = Path(args.base_dir).resolve() if args.base_dir else None
 
-    effective_base_dir, config_dir, extra_modules_dir = prepare_workspace(
+    effective_base_dir, config_dir, extra_modules_dir, workspace_generation = prepare_workspace(
         profile_name=args.profile,
         config_path=config_path,
         base_dir=base_dir,
-        skip_update=args.skip_update,
+        force_update=args.update,
         zmk_revision_override=args.zmk_revision_override,
     )
+
+    logical_cores = max(1, os.cpu_count() or 1)
+    detected_physical_cores = detect_physical_cores()
+    physical_cores = logical_cores if detected_physical_cores is None else detected_physical_cores
+    build_jobs = max(1, min(physical_cores, logical_cores))
 
     print(f"\n=== Building {artifact_name(entry)} ===", flush=True)
     out = build_entry(
         entry=entry,
+        profile_name=args.profile,
+        workspace_generation=workspace_generation,
         base_dir=effective_base_dir,
         build_root=build_root,
         output_dir=output_dir,
         config_dir=config_dir,
         fallback_binary=args.fallback_binary,
         extra_modules_dir=extra_modules_dir,
+        pristine=args.pristine,
+        build_jobs=build_jobs,
     )
     print(f"Built artifact: {out}", flush=True)
     return 0

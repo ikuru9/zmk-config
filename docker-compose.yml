@@ -8,6 +8,9 @@ services:
       - build-many
       - --profile
       - stable
+    environment:
+      CCACHE_DIR: /tmp/zmk-config/.ccache
+      CCACHE_IGNOREOPTIONS: -specs=picolibc.specs
     volumes:
       - .:/workspace
       - ./.build/local/workspace:/tmp/zmk-config

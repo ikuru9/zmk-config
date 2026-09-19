@@ -101,29 +101,52 @@ docker compose run --rm zmk-build-stable --artifact-names "*_left,*_right"
 docker compose run --rm zmk-build-stable --artifact-names "totem_*" --jobs 3
 
 # Build every target in build.yaml
-docker compose run --rm zmk-build-stable
+docker compose run --rm zmk-build-stable --all
+
+# Force a clean build for the selected targets
+docker compose run --rm zmk-build-stable --artifact-names "totem_*" --pristine
+
+# Refresh west projects, then build the selected targets cleanly
+docker compose run --rm zmk-build-stable --artifact-names "totem_*" --update
 ```
 
 Notes:
 
 - This uses `docker-compose.yml`, `scripts/build_profiles.py`, and `scripts/build_runner.py`.
 - Output artifacts are written to `firmware/`.
-- Build directories are kept under `.build/local/build/`.
-- West workspace/cache state is kept under `.build/local/workspace/`.
-- `--artifact-names` accepts exact names and wildcard patterns. If a pattern matches nothing, the script exits with an error.
-- `--jobs` controls matrix-level parallelism.
-- If `--jobs` is omitted, it auto-selects `min(selected entries, max(1, physical core count // 2))`.
-- Even when `--jobs` is provided, the runner caps it to physical core count.
+- Per-target build state is retained under `.build/local/build/`.
+- West workspace state and the persistent compiler cache are retained under `.build/local/workspace/`. The cache ignores the image's relative `-specs=picolibc.specs` argument; the pinned image/toolchain keeps that specs file invariant.
+- A build command must specify exactly one of `--artifact-names` or `--all`; `--list` needs neither.
+- `--artifact-names` accepts exact names and wildcard patterns. An unmatched pattern is an error.
+- The first build, a target identity change, a workspace generation change, or `--pristine` runs a pristine configure/build. An unchanged repeat uses `west build -d` against the retained target directory.
+- `--update` runs `west update` and `west zephyr-export`, assigns a new workspace generation, and forces each target clean on its next use. A changed `config/west.yml` does the same automatically.
+- `--jobs` controls matrix-level parallelism. If omitted, the runner uses at most half the physical cores.
+- Ninja jobs are divided across active matrix workers, so nested parallelism remains bounded by the detected physical core count.
+- GitHub Actions intentionally invokes `build-one --pristine`; local incremental state does not change CI reproducibility.
 
 ### Direct docker run (without compose)
 
-If you prefer not to use Docker Compose:
+Mount the persistent workspace and set the same compiler cache directory used by Compose:
 
 ```bash
-docker run --rm -it -v "${PWD}:/workspace" -w /workspace zmkfirmware/zmk-build-arm:4.1 python3 scripts/build_runner.py build-many --profile stable --artifact-names "totem_left,totem_right"
+docker run --rm -it \
+  -v "${PWD}:/workspace" \
+  -v "${PWD}/.build/local/workspace:/tmp/zmk-config" \
+  -e CCACHE_DIR=/tmp/zmk-config/.ccache \
+  -e CCACHE_IGNOREOPTIONS=-specs=picolibc.specs \
+  -w /workspace \
+  zmkfirmware/zmk-build-arm:4.1 \
+  python3 scripts/build_runner.py build-many --profile stable --artifact-names "totem_left,totem_right"
 
 # Parallel example
-docker run --rm -it -v "${PWD}:/workspace" -w /workspace zmkfirmware/zmk-build-arm:4.1 python3 scripts/build_runner.py build-many --profile stable --artifact-names "totem_*" --jobs 3
+docker run --rm -it \
+  -v "${PWD}:/workspace" \
+  -v "${PWD}/.build/local/workspace:/tmp/zmk-config" \
+  -e CCACHE_DIR=/tmp/zmk-config/.ccache \
+  -e CCACHE_IGNOREOPTIONS=-specs=picolibc.specs \
+  -w /workspace \
+  zmkfirmware/zmk-build-arm:4.1 \
+  python3 scripts/build_runner.py build-many --profile stable --artifact-names "totem_*" --jobs 3
 ```
 
 ### Why not plain CMake?
@@ -134,7 +157,7 @@ Use `west build` instead of raw `cmake` for ZMK firmware. `west` handles:
 - module resolution from `config/west.yml`
 - snippet wiring and board/shield build conventions
 
-The local runner follows the same model as the GitHub workflow and keeps command length short.
+The local runner follows the same model as the GitHub workflow and keeps command length short. See the official [ZMK local toolchain guide](https://zmk.dev/docs/development/local-toolchain/build-flash), [Zephyr `west build` guide](https://docs.zephyrproject.org/4.1.0/develop/west/build-flash-debug.html), [`west update` reference](https://docs.zephyrproject.org/latest/develop/west/built-in.html#west-update), and [ccache cache-directory reference](https://ccache.dev/manual/latest.html#config_cache_dir).
 
 ## Flashing
 
@@ -148,7 +171,7 @@ For each target device:
 ## Quick Troubleshooting
 
 - Unknown `artifact-name`: run `--list` and use an exact name or valid wildcard from `build.yaml`.
-- Missing module/build errors: rerun without `--skip-update` so `west update` runs.
+- Missing module/build errors: rerun with `--update` to refresh the west workspace.
 - `recursive 'source' of 'Kconfig.zephyr' detected`: this usually means a local Zephyr checkout exists under repo `zephyr/`. The local runner now stages only git-visible module files, but cleanup of stale local checkouts still helps (`zephyr/`, `modules/`, `.west/`).
 - No `.uf2` output for a target: check for fallback binary output (`.bin`), board type, and build logs.
 - Split reconnect problems after flashing: flash reset firmware and re-pair.
