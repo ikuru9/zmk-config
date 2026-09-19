@@ -120,10 +120,10 @@ parse_config:
   zmk_combos:
     combo_cut: { align: bottom, offset: 0.10 }
     combo_ldrsh: { align: top, offset: 1.35 }
-    combo_lang: { "tap": $$mdi:translate$$ }
-    combo_search: { "tap": $$mdi:text-search$$ }
-    combo_lbrc: { "tap": "{", "shifted": "[" }
-    combo_rbrc: { "tap": "}", "shifted": "]" }
+    combo_lang: { key: { "tap": $$mdi:translate$$ } }
+    combo_search: { key: { "tap": $$mdi:text-search$$ } }
+    combo_lbrc: { key: { "tap": "{", "shifted": "[" } }
+    combo_rbrc: { key: { "tap": "}", "shifted": "]" } }
 
   zmk_keycode_map:
     # modifiers
