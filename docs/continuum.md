@@ -2,7 +2,7 @@
 
 This document describes Continuum, the personal keymap framework used in this repository.
 
-Continuum lives under `config/continuum/` and is designed to adapt one personal layout/behavior model to any keyboard I personally use. It provides reusable layers, behaviors, combos, leader sequences, and matrix mappings so different keyboards can keep one consistent typing experience.
+Continuum lives under `config/continuum/` and is designed to adapt one personal layout/behavior model to any keyboard I personally use. It provides reusable layers, behaviors, combos, and matrix mappings so different keyboards can keep one consistent typing experience.
 
 ## Purpose
 
@@ -29,7 +29,6 @@ Continuum is primarily inspired by:
 - ZMK Auto Layer: <https://github.com/urob/zmk-auto-layer>
 - ZMK Unicode: <https://github.com/urob/zmk-unicode>
 - ZMK Tri-State: <https://github.com/urob/zmk-tri-state>
-- ZMK Leader Key: <https://github.com/urob/zmk-leader-key>
 - ZMK Adaptive Key: <https://github.com/urob/zmk-adaptive-key>
 
 ## Framework Structure
@@ -40,8 +39,6 @@ Continuum is primarily inspired by:
   - Macro helpers for behaviors, combos, layers, unicode, and conditional layers.
 - `config/continuum/combos.dtsi`
   - Horizontal and vertical combo definitions.
-- `config/continuum/leader.dtsi`
-  - Leader-key sequences, including unicode sequences and firmware control sequences.
 - `config/continuum/mouse.dtsi`
   - Pointer speed, acceleration, and precision/warp profile handling.
 - `config/continuum/shortcuts.dtsi`
@@ -112,7 +109,6 @@ Continuum depends on modules already declared in `config/west.yml`:
 - `zmk-auto-layer`
 - `zmk-unicode`
 - `zmk-tri-state`
-- `zmk-leader-key`
 - `zmk-adaptive-key`
 
 If those modules are removed from west manifest, `base.keymap` features that depend on them will fail to compile.

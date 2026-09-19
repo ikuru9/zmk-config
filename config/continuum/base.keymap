@@ -91,10 +91,9 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 #define MASK_MODS(NAME, MODS, BINDING)                                         \
   ZMK_MOD_MORPH(NAME, bindings = <BINDING>, <BINDING>; mods = <MODS>;)
 
-/* Combos, leader key sequences, mouse emulation */
+/* Combos and mouse emulation */
 #include "shortcuts.dtsi"
 #include "combos.dtsi" // Must be sourced after HRM-combo hack.
-#include "leader.dtsi"
 #include "mouse.dtsi"
 
 /* Magic-shift & auto-layers */
@@ -179,9 +178,6 @@ ZMK_TAP_DANCE(lang_screen, bindings = <&kp LANG_CHANGE>, <&kp SCREENSHOT>;
 // Tap: undo | double-tap: redo.
 ZMK_TAP_DANCE(undo_redo, bindings = <&kp C_UND>, <&kp C_RDO>;
               tapping-term-ms = <200>;)
-
-// Sticky shift + leader.
-ZMK_MACRO(leader_sft, bindings = <&sk LSHFT &leader>;)
 
 /* Keymap */
 

@@ -25,7 +25,7 @@ Short statement of what changed for users.
 
 - `<layer/behavior change>`
 - `<combo or hold-tap timing change>`
-- `<macro or leader sequence change>`
+- `<macro or behavior change>`
 
 ### Input Devices (Encoder / Joystick / Pointing)
 

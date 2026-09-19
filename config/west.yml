@@ -41,9 +41,6 @@ manifest:
     - name: zmk-helpers
       path: modules/zmk/helpers
       remote: urob
-    - name: zmk-leader-key
-      path: modules/zmk/leader-key
-      remote: urob
     - name: zmk-tri-state
       path: modules/zmk/tri-state
       remote: urob
