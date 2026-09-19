@@ -79,9 +79,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          test -f modules/zmk/helpers/include/zmk-helpers/helper.h
           test -d modules/zmk/auto-layer/dts
-          test -d modules/zmk/unicode/dts
 
           echo "ZMK modules available:"
           west list

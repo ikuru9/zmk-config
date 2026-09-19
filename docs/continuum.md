@@ -27,7 +27,6 @@ Continuum is primarily inspired by:
 - Urob's ZMK config: <https://github.com/urob/zmk-config>
 - ZMK Helpers: <https://github.com/urob/zmk-helpers>
 - ZMK Auto Layer: <https://github.com/urob/zmk-auto-layer>
-- ZMK Unicode: <https://github.com/urob/zmk-unicode>
 - ZMK Tri-State: <https://github.com/urob/zmk-tri-state>
 - ZMK Adaptive Key: <https://github.com/urob/zmk-adaptive-key>
 
@@ -36,7 +35,7 @@ Continuum is primarily inspired by:
 - `config/continuum/base.keymap`
   - Shared layer stack and behavior definitions.
 - `config/continuum/utils/helper.h`
-  - Macro helpers for behaviors, combos, layers, unicode, and conditional layers.
+  - Macro helpers for behaviors, combos, layers, and conditional layers.
 - `config/continuum/combos.dtsi`
   - Horizontal and vertical combo definitions.
 - `config/continuum/mouse.dtsi`
@@ -45,8 +44,6 @@ Continuum is primarily inspired by:
   - Host-OS shortcut mapping (`MAC_OS` or default Windows/Linux style).
 - `config/continuum/matrix/*.h`
   - Physical-matrix to logical-position maps for each keyboard family.
-- `config/continuum/unicode-chars/*.dtsi`
-  - Locale unicode definitions used with `zmk-unicode`.
 
 ## Layer Model
 
@@ -105,9 +102,7 @@ Customized base-layer pattern:
 
 Continuum depends on modules already declared in `config/west.yml`:
 
-- `zmk-helpers`
 - `zmk-auto-layer`
-- `zmk-unicode`
 - `zmk-tri-state`
 - `zmk-adaptive-key`
 
@@ -117,4 +112,3 @@ If those modules are removed from west manifest, `base.keymap` features that dep
 
 - `CONFIG_WIRELESS` gates BLE/output controls in the `SYS` layer.
 - `MAC_OS` changes shortcut mappings in `shortcuts.dtsi`.
-- `HOST_OS` affects unicode lead/trail behavior in `helper.h`.

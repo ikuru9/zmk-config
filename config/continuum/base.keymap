@@ -1,6 +1,5 @@
 #include <behaviors.dtsi>
 #include <behaviors/num_word.dtsi> // Requires zmk-auto-layer module.
-#include <behaviors/unicode.dtsi> // Requires zmk-unicode module.
 
 #include "utils/helper.h"
 
