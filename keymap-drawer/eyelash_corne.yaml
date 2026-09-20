@@ -49,6 +49,55 @@ layers:
   - {t: Enter, h: Num}
   - {t: Bspc, s: Del}
   - Del
+  Num:
+  - Esc
+  - ''
+  - {t: '7', h: '&'}
+  - {t: '8', h: '*'}
+  - {t: '9', h: )}
+  - ''
+  - ↑
+  - +
+  - {t: '[', h: '{'}
+  - ''
+  - {t: ']', h: '}'}
+  - ''
+  - '['
+  - Tab
+  - ''
+  - {t: '4', h: $}
+  - {t: '5', h: '%'}
+  - {t: '6', h: ^}
+  - ''
+  - ←
+  - Enter
+  - →
+  - {t: '-', h: _}
+  - (
+  - ''
+  - )
+  - ''
+  - ']'
+  - Caps
+  - ''
+  - {t: '1', h: '!'}
+  - {t: '2', h: '@'}
+  - {t: '3', h: '#'}
+  - ''
+  - $$mdi:volume-off$$
+  - ↓
+  - '='
+  - <
+  - ''
+  - '>'
+  - ''
+  - \
+  - Alt
+  - {t: '0', h: (}
+  - {type: trans}
+  - {type: held}
+  - Cancel
+  - Del
   Nav:
   - Esc
   - ''
@@ -98,55 +147,6 @@ layers:
   - {type: trans}
   - Cancel
   - Del
-  Num:
-  - Esc
-  - ''
-  - {t: '7', h: '&'}
-  - {t: '8', h: '*'}
-  - {t: '9', h: )}
-  - +
-  - ↑
-  - Scroll ↑
-  - Left Click
-  - Mouse ↑
-  - Right Click
-  - Scroll ←
-  - '['
-  - Tab
-  - ''
-  - {t: '4', h: $}
-  - {t: '5', h: '%'}
-  - {t: '6', h: ^}
-  - {t: '-', h: _}
-  - ←
-  - Enter
-  - →
-  - Scroll ↓
-  - Mouse ←
-  - Mouse ↓
-  - Mouse →
-  - Scroll →
-  - ']'
-  - Caps
-  - ''
-  - {t: '1', h: '!'}
-  - {t: '2', h: '@'}
-  - {t: '3', h: '#'}
-  - '='
-  - $$mdi:volume-off$$
-  - ↓
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - \
-  - Alt
-  - {t: '0', h: (}
-  - {type: trans}
-  - {type: held}
-  - Cancel
-  - Del
   Fn:
   - Esc
   - ''
@@ -193,7 +193,7 @@ layers:
   - Alt
   - {type: held}
   - {type: trans}
-  - Gui+L
+  - Lock
   - Cancel
   - Del
   Sys:
@@ -245,25 +245,61 @@ layers:
   - {type: held}
   - Cancel
   - Del
+  Mouse:
+  - Esc
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ↑
+  - Scroll ↑
+  - Left Click
+  - Mouse ↑
+  - Right Click
+  - Scroll ←
+  - '['
+  - Tab
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ←
+  - Enter
+  - →
+  - Scroll ↓
+  - Mouse ←
+  - Mouse ↓
+  - Mouse →
+  - Scroll →
+  - ']'
+  - Caps
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - $$mdi:volume-off$$
+  - ↓
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - \
+  - Alt
+  - ''
+  - ''
+  - {type: trans}
+  - Cancel
+  - Del
 combos:
-- p: [4, 5]
-  k: {t: '{', s: '['}
+- p: [2, 4]
+  k: Smart Mouse
   l: [Base]
-- p: [3, 4]
-  k: <
-  l: [Base]
-- p: [2, 3]
-  k: (
-  l: [Base]
-- p: [7, 8]
-  k: {t: '}', s: ']'}
-  l: [Base]
-- p: [8, 9]
-  k: '>'
-  l: [Base]
-- p: [9, 10]
-  k: )
-  l: [Base]
+  a: top
+  o: 0.1
 - p: [30, 32]
   k: Cut
   l: [Base, Nav]
