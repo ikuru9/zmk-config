@@ -135,7 +135,7 @@ parse_config:
   trans_legend: { "tap": "", "type": "trans" }
 
   zmk_combos:
-    combo_sm: { align: top, offset: 0.10 }
+    combo_sm: { align: top, offset: 1.0 }
     combo_cut: { align: bottom, offset: 0.10 }
     combo_ldrsh: { align: top, offset: 1.35 }
     combo_lang: { key: { "tap": $$mdi:translate$$ } }
