@@ -27,6 +27,7 @@ ZMK_COMBO(paste,     &kp C_PST,            LB2 LB1,     DEF NAV    , ZMK_COMBO_T
 
 ZMK_COMBO(grave,     &kp GRAVE,            LT4 LT3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 ZMK_COMBO(tidle,     &kp TILDE,            LM4 LM3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(under,     &kp UNDER,            LB4 LB3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 
 ZMK_COMBO(bslh,      &kp BSLH,             RT3 RT4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 ZMK_COMBO(pipe,      &kp PIPE,             RM3 RM4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
