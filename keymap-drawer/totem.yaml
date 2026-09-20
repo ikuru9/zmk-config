@@ -197,7 +197,7 @@ layers:
   - '&lang_screen'
 combos:
 - p: [3, 4]
-  k: '{'
+  k: {t: '{', s: '['}
   l: [Base]
 - p: [2, 3]
   k: <
@@ -206,7 +206,7 @@ combos:
   k: (
   l: [Base]
 - p: [5, 6]
-  k: '}'
+  k: {t: '}', s: ']'}
   l: [Base]
 - p: [6, 7]
   k: '>'
@@ -228,6 +228,9 @@ combos:
 - p: [0, 1]
   k: '`'
   l: [Base]
+- p: [10, 11]
+  k: '~'
+  l: [Base]
 - p: [8, 9]
   k: \
   l: [Base]
@@ -237,9 +240,12 @@ combos:
 - p: [29, 30]
   k: /
   l: [Base]
+- p: [26, 27]
+  k: $$mdi:translate$$
+  l: [Base]
 - p: [33, 34]
   k: Esc
   l: [Base]
 - p: [36, 35]
-  k: Gui+Alt+Spc
+  k: $$mdi:text-search$$
   l: [Base]

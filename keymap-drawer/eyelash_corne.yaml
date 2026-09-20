@@ -247,7 +247,7 @@ layers:
   - Del
 combos:
 - p: [4, 5]
-  k: '{'
+  k: {t: '{', s: '['}
   l: [Base]
 - p: [3, 4]
   k: <
@@ -256,7 +256,7 @@ combos:
   k: (
   l: [Base]
 - p: [7, 8]
-  k: '}'
+  k: {t: '}', s: ']'}
   l: [Base]
 - p: [8, 9]
   k: '>'
@@ -278,6 +278,9 @@ combos:
 - p: [1, 2]
   k: '`'
   l: [Base]
+- p: [14, 15]
+  k: '~'
+  l: [Base]
 - p: [10, 11]
   k: \
   l: [Base]
@@ -287,9 +290,12 @@ combos:
 - p: [39, 40]
   k: /
   l: [Base]
+- p: [36, 37]
+  k: $$mdi:translate$$
+  l: [Base]
 - p: [43, 44]
   k: Esc
   l: [Base]
 - p: [46, 45]
-  k: Gui+Alt+Spc
+  k: $$mdi:text-search$$
   l: [Base]
