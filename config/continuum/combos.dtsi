@@ -13,13 +13,15 @@
 #define ZMK_COMBO_IDLE_FAST 150
 #define ZMK_COMBO_IDLE_SLOW 50
 
-ZMK_COMBO(lbrc,      &lbrc_morph,          LT1 LT0,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
-ZMK_COMBO(lt,        &kp LT,               LT2 LT1,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
-ZMK_COMBO(lpar,      &kp LPAR,             LT3 LT2,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(sm,        &smart_mouse,         LT3 LT1,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 
-ZMK_COMBO(rbrc,      &rbrc_morph,          RT0 RT1,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
-ZMK_COMBO(gt,        &kp GT,               RT1 RT2,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
-ZMK_COMBO(rpar,      &kp RPAR,             RT2 RT3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+// ZMK_COMBO(lbrc,      &lbrc_morph,          LT1 LT0,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+// ZMK_COMBO(lt,        &kp LT,               LT2 LT1,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+// ZMK_COMBO(lpar,      &kp LPAR,             LT3 LT2,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+
+// ZMK_COMBO(rbrc,      &rbrc_morph,          RT0 RT1,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+// ZMK_COMBO(gt,        &kp GT,               RT1 RT2,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+// ZMK_COMBO(rpar,      &kp RPAR,             RT2 RT3,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 
 ZMK_COMBO(cut,       &kp C_CUT,            LB3 LB1,     DEF NAV    , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 ZMK_COMBO(copy,      &kp C_CPY,            LB3 LB2,     DEF NAV    , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)

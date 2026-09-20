@@ -38,7 +38,46 @@ layers:
   - {t: Spc, h: Nav}
   - {t: Enter, h: Num}
   - {t: Bspc, s: Del}
-  - '&lang_screen'
+  - $$mdi:translate$$
+  Num:
+  - ''
+  - {t: '7', h: '&'}
+  - {t: '8', h: '*'}
+  - {t: '9', h: )}
+  - ''
+  - +
+  - {t: '[', h: '{'}
+  - ''
+  - {t: ']', h: '}'}
+  - ''
+  - ''
+  - {t: '4', h: $}
+  - {t: '5', h: '%'}
+  - {t: '6', h: ^}
+  - ''
+  - {t: '-', h: _}
+  - (
+  - ''
+  - )
+  - ''
+  - LSHIFT
+  - ''
+  - {t: '1', h: '!'}
+  - {t: '2', h: '@'}
+  - {t: '3', h: '#'}
+  - ''
+  - '='
+  - <
+  - ''
+  - '>'
+  - ''
+  - '&undo_redo'
+  - Esc
+  - {t: '0', h: (}
+  - {type: trans}
+  - {type: held}
+  - Cancel
+  - $$mdi:translate$$
   Nav:
   - ''
   - Shift+Gui+←
@@ -77,7 +116,7 @@ layers:
   - {type: held}
   - {type: trans}
   - Cancel
-  - '&lang_screen'
+  - $$mdi:translate$$
   Fn:
   - ''
   - F7
@@ -114,48 +153,9 @@ layers:
   - Esc
   - {type: held}
   - {type: trans}
-  - Gui+L
+  - Lock
   - Cancel
-  - '&lang_screen'
-  Num:
-  - ''
-  - {t: '7', h: Shift+7}
-  - {t: '8', h: Shift+8}
-  - {t: '9', h: Shift+9}
-  - +
-  - Scroll ↑
-  - Left Click
-  - Mouse ↑
-  - Right Click
-  - Scroll ←
-  - ''
-  - {t: '4', h: Shift+4}
-  - {t: '5', h: Shift+5}
-  - {t: '6', h: Shift+6}
-  - {t: '-', h: _}
-  - Scroll ↓
-  - Mouse ←
-  - Mouse ↓
-  - Mouse →
-  - Scroll →
-  - LSHIFT
-  - ''
-  - {t: '1', h: Shift+1}
-  - {t: '2', h: Shift+2}
-  - {t: '3', h: Shift+3}
-  - '='
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - '&undo_redo'
-  - Esc
-  - {t: '0', h: Shift+0}
-  - {type: trans}
-  - {type: held}
-  - Cancel
-  - '&lang_screen'
+  - $$mdi:translate$$
   Sys:
   - BT 1
   - BT 2
@@ -194,25 +194,49 @@ layers:
   - {type: held}
   - {type: held}
   - Cancel
-  - '&lang_screen'
+  - $$mdi:translate$$
+  Mouse:
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - Scroll ↑
+  - Left Click
+  - Mouse ↑
+  - Right Click
+  - Scroll ←
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - Scroll ↓
+  - Mouse ←
+  - Mouse ↓
+  - Mouse →
+  - Scroll →
+  - LSHIFT
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - '&undo_redo'
+  - Esc
+  - ''
+  - ''
+  - {type: trans}
+  - Cancel
+  - $$mdi:translate$$
 combos:
-- p: [3, 4]
-  k: {t: '{', s: '['}
-  l: [Base]
-- p: [2, 3]
-  k: <
-  l: [Base]
-- p: [1, 2]
-  k: (
-  l: [Base]
-- p: [5, 6]
-  k: {t: '}', s: ']'}
-  l: [Base]
-- p: [6, 7]
-  k: '>'
-  l: [Base]
-- p: [7, 8]
-  k: )
+- p: [1, 3]
+  k: Smart Mouse
   l: [Base]
 - p: [22, 24]
   k: Cut
@@ -230,6 +254,9 @@ combos:
   l: [Base]
 - p: [10, 11]
   k: '~'
+  l: [Base]
+- p: [21, 22]
+  k: _
   l: [Base]
 - p: [8, 9]
   k: \
