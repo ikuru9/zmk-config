@@ -98,6 +98,55 @@ layers:
   - {type: trans}
   - Cancel
   - Del
+  Num:
+  - Esc
+  - ''
+  - {t: '7', h: '&'}
+  - {t: '8', h: '*'}
+  - {t: '9', h: )}
+  - +
+  - ↑
+  - Scroll ↑
+  - Left Click
+  - Mouse ↑
+  - Right Click
+  - Scroll ←
+  - '['
+  - Tab
+  - ''
+  - {t: '4', h: $}
+  - {t: '5', h: '%'}
+  - {t: '6', h: ^}
+  - {t: '-', h: _}
+  - ←
+  - Enter
+  - →
+  - Scroll ↓
+  - Mouse ←
+  - Mouse ↓
+  - Mouse →
+  - Scroll →
+  - ']'
+  - Caps
+  - ''
+  - {t: '1', h: '!'}
+  - {t: '2', h: '@'}
+  - {t: '3', h: '#'}
+  - '='
+  - $$mdi:volume-off$$
+  - ↓
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - \
+  - Alt
+  - {t: '0', h: (}
+  - {type: trans}
+  - {type: held}
+  - Cancel
+  - Del
   Fn:
   - Esc
   - ''
@@ -145,55 +194,6 @@ layers:
   - {type: held}
   - {type: trans}
   - Gui+L
-  - Cancel
-  - Del
-  Num:
-  - Esc
-  - ''
-  - {t: '7', h: Shift+7}
-  - {t: '8', h: Shift+8}
-  - {t: '9', h: Shift+9}
-  - +
-  - ↑
-  - Scroll ↑
-  - Left Click
-  - Mouse ↑
-  - Right Click
-  - Scroll ←
-  - '['
-  - Tab
-  - ''
-  - {t: '4', h: Shift+4}
-  - {t: '5', h: Shift+5}
-  - {t: '6', h: Shift+6}
-  - {t: '-', h: _}
-  - ←
-  - Enter
-  - →
-  - Scroll ↓
-  - Mouse ←
-  - Mouse ↓
-  - Mouse →
-  - Scroll →
-  - ']'
-  - Caps
-  - ''
-  - {t: '1', h: Shift+1}
-  - {t: '2', h: Shift+2}
-  - {t: '3', h: Shift+3}
-  - '='
-  - $$mdi:volume-off$$
-  - ↓
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - \
-  - Alt
-  - {t: '0', h: Shift+0}
-  - {type: trans}
-  - {type: held}
   - Cancel
   - Del
   Sys:
@@ -280,6 +280,9 @@ combos:
   l: [Base]
 - p: [14, 15]
   k: '~'
+  l: [Base]
+- p: [29, 30]
+  k: _
   l: [Base]
 - p: [10, 11]
   k: \
