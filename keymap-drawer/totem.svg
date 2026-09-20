@@ -1,4 +1,4 @@
-<svg width="911" height="2249" viewBox="0 0 911 2249" class="keymap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="911" height="2291" viewBox="0 0 911 2291" class="keymap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>/* start glyphs */
 <svg id="mdi:play-pause">
 <svg xmlns="http://www.w3.org/2000/svg" id="mdi-play-pause" viewBox="0 0 24 24"><path d="M3,5V19L11,12M13,19H16V5H13M18,5V19H21V5" /></svg>
@@ -163,7 +163,7 @@ path.combo { stroke: #7f7f7f; }
 }</style>
 <g transform="translate(30, 0)" class="layer-Base">
 <text x="0" y="28" class="label" id="Base">Base</text>
-<g transform="translate(0, 56)">
+<g transform="translate(0, 98)">
 <g transform="translate(78, 113) rotate(-10.0)" class="key keypos-0">
 <rect rx="6" ry="6" x="-28" y="-26" width="55" height="52" class="key"/>
 <text x="0" y="0" class="key tap">Q</text>
@@ -335,10 +335,10 @@ path.combo { stroke: #7f7f7f; }
 <use href="#mdi:translate" xlink:href="#mdi:translate" x="-7" y="-7" height="14" width="14.0" class="key tap glyph mdi:translate"/>
 </g>
 <g class="combo combopos-0">
-<path d="M208,21 h-58 a6.0,6.0 0 0 0 -6.0,6.0 v16" class="combo"/>
-<path d="M208,21 h58 a6.0,6.0 0 0 1 6.0,6.0 v10" class="combo"/>
-<rect rx="6" ry="6" x="194" y="8" width="28" height="26" class="combo"/>
-<text x="208" y="21" class="combo tap">
+<path d="M208,-29 h-58 a6.0,6.0 0 0 0 -6.0,6.0 v66" class="combo"/>
+<path d="M208,-29 h58 a6.0,6.0 0 0 1 6.0,6.0 v60" class="combo"/>
+<rect rx="6" ry="6" x="194" y="-42" width="28" height="26" class="combo"/>
+<text x="208" y="-29" class="combo tap">
 <tspan x="208" dy="-0.6em">Smart</tspan><tspan x="208" dy="1.2em">Mouse</tspan>
 </text>
 </g>
@@ -394,7 +394,7 @@ path.combo { stroke: #7f7f7f; }
 </g>
 </g>
 </g>
-<g transform="translate(30, 366)" class="layer-Num">
+<g transform="translate(30, 408)" class="layer-Num">
 <text x="0" y="28" class="label" id="Num">Num</text>
 <g transform="translate(0, 56)">
 <g transform="translate(78, 113) rotate(-10.0)" class="key keypos-0">
@@ -550,7 +550,7 @@ path.combo { stroke: #7f7f7f; }
 </g>
 </g>
 </g>
-<g transform="translate(30, 731)" class="layer-Nav">
+<g transform="translate(30, 773)" class="layer-Nav">
 <text x="0" y="28" class="label" id="Nav">Nav</text>
 <g transform="translate(0, 56)">
 <g transform="translate(78, 113) rotate(-10.0)" class="key keypos-0">
@@ -711,7 +711,7 @@ path.combo { stroke: #7f7f7f; }
 </g>
 </g>
 </g>
-<g transform="translate(30, 1097)" class="layer-Fn">
+<g transform="translate(30, 1139)" class="layer-Fn">
 <text x="0" y="28" class="label" id="Fn">Fn</text>
 <g transform="translate(0, 56)">
 <g transform="translate(78, 113) rotate(-10.0)" class="key keypos-0">
@@ -854,7 +854,7 @@ path.combo { stroke: #7f7f7f; }
 </g>
 </g>
 </g>
-<g transform="translate(30, 1462)" class="layer-Sys">
+<g transform="translate(30, 1504)" class="layer-Sys">
 <text x="0" y="28" class="label" id="Sys">Sys</text>
 <g transform="translate(0, 56)">
 <g transform="translate(78, 113) rotate(-10.0)" class="key keypos-0">
@@ -1002,7 +1002,7 @@ path.combo { stroke: #7f7f7f; }
 </g>
 </g>
 </g>
-<g transform="translate(30, 1828)" class="layer-Mouse">
+<g transform="translate(30, 1870)" class="layer-Mouse">
 <text x="0" y="28" class="label" id="Mouse">Mouse</text>
 <g transform="translate(0, 56)">
 <g transform="translate(78, 113) rotate(-10.0)" class="key keypos-0">
@@ -1156,4 +1156,4 @@ path.combo { stroke: #7f7f7f; }
 </g>
 </g>
 </g>
-<text x="881.0" y="2221.0" class="footer">ikuru9's zmk-config</text></svg>
+<text x="881.0" y="2263.0" class="footer">ikuru9's zmk-config</text></svg>
