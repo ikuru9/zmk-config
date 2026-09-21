@@ -132,6 +132,10 @@ parse_config:
     "&soft_off": BAT Save
     "&lang_screen": $$mdi:translate$$
 
+    # Macro
+    "&CT_PASS01": Pw1
+    "&CT_PASS02": Pw2
+
   trans_legend: { "tap": "", "type": "trans" }
 
   zmk_combos:

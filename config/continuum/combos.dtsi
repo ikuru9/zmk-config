@@ -1,11 +1,12 @@
 /*                KEY POSITIONS
 
-  ╭─────────────────────╮ ╭─────────────────────╮
-  │ LT4 LT3 LT2 LT1 LT0 │ │ RT0 RT1 RT2 RT3 RT4 │
-  │ LM4 LM3 LM2 LM1 LM0 │ │ RM0 RM1 RM2 RM3 RM4 │
-  │ LB4 LB3 LB2 LB1 LB0 │ │ RB0 RB1 RB2 RB3 RB4 │
-  ╰───────╮ LH2 LH1 LH0 │ │ RH0 RH1 RH2 ╭───────╯
-          ╰─────────────╯ ╰─────────────╯ */
+ * ╭─────────────────────╮ ╭─────────────────────╮
+ * │ LT4 LT3 LT2 LT1 LT0 │ │ RT0 RT1 RT2 RT3 RT4 │
+ * │ LM4 LM3 LM2 LM1 LM0 │ │ RM0 RM1 RM2 RM3 RM4 │
+ * │ LB4 LB3 LB2 LB1 LB0 │ │ RB0 RB1 RB2 RB3 RB4 │
+ * ╰───────╮ LH2 LH1 LH0 │ │ RH0 RH1 RH2 ╭───────╯
+ * ╰─────────────╯ ╰─────────────╯
+ */
 
 #define ZMK_COMBO_TERM_FAST 18
 #define ZMK_COMBO_TERM_SLOW 30
@@ -35,7 +36,7 @@ ZMK_COMBO(bslh,      &kp BSLH,             RT3 RT4,     DEF        , ZMK_COMBO_T
 ZMK_COMBO(pipe,      &kp PIPE,             RM3 RM4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 ZMK_COMBO(flsh,      &kp SLASH,            RB3 RB4,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 
-ZMK_COMBO(lang,      &lang_screen,         RB0 RB1,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
+ZMK_COMBO(lang,      &kp LANG_CHANGE,      RB0 RB1,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 
 ZMK_COMBO(esc,       &kp ESC,              LH1 LH0,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)
 ZMK_COMBO(search,    &kp LG(LA(SPACE)),    RH1 RH0,     DEF        , ZMK_COMBO_TERM_FAST, ZMK_COMBO_IDLE_FAST)

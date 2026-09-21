@@ -4,6 +4,8 @@
 #include <behaviors/num_word.dtsi> // Requires zmk-auto-layer module.
 
 #include "utils/helper.h"
+#include "macro.dtsi"
+
 
 #ifdef CONFIG_WIRELESS
   #include <dt-bindings/zmk/bt.h>
@@ -91,6 +93,7 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 
 /* Combos and mouse emulation */
 #include "shortcuts.dtsi"
+#include "macro.dtsi"
 #include "combos.dtsi" // Must be sourced after HRM-combo hack.
 #include "mouse.dtsi"
 
@@ -176,7 +179,6 @@ ZMK_MOD_MORPH(bs_del, bindings = <&kp BSPC>, <&kp DEL>;
 // Tap: lang change | double-tap: screenshot.
 ZMK_TAP_DANCE(lang_screen, bindings = <&kp LANG_CHANGE>, <&kp SCREENSHOT>;
               tapping-term-ms = <200>;)
-
 // Tap: undo | double-tap: redo.
 ZMK_TAP_DANCE(undo_redo, bindings = <&kp C_UND>, <&kp C_RDO>;
               tapping-term-ms = <200>;)
@@ -197,7 +199,7 @@ ZMK_BASE_LAYER(Base,                                                            
 // ╭─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────╮   ╭─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────╮
      &kp Q             &kp W             &kp E             &kp R             &kp T           ,     &kp Y             &kp U             &kp I             &kp O             &kp P           ,           \
 // ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
-     &hml LALT A       &hml OL_PNK S     &hml LSHFT D      &hml OL_IDX F     &kp G           ,     &kp H             &hmr OR_IDX J     &hmr RSHFT K      &hmr OR_PNK L     &hmr RALT SQT   ,           \
+     &hml LALT A       &hml OL_PNK S     &hml LSHFT D      &hml OL_IDX F     &kp G           ,     &kp H             &hml OR_IDX J     &hml RSHFT K      &hml OR_PNK L     &hml RALT SQT   ,           \
 // ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
      &kp Z             &kp X             &kp C             &kp V             &kp B           ,     &kp N             &kp M             &hmr SEMI COMMA   &hmr COLON DOT    &hmr EXCL QMARK ,           \
 // ╰─────────────────┼─────────────────┴─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┴─────────────────┴─────────────────╯
@@ -231,7 +233,7 @@ ZMK_BASE_LAYER(Nav,                                                             
 
 ZMK_BASE_LAYER(Fn,                                                                                                                                                                                     \
 // ╭─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────╮   ╭─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────╮
-     XXX               &kp F7            &kp F8            &kp F9            &kp F12         ,     &kp C_VOL_UP      XXX               XXX               XXX               XXX             ,           \
+     XXX               &kp F7            &kp F8            &kp F9            &kp F12         ,     &kp C_VOL_UP      XXX               XXX               &CT_PASS01        &CT_PASS02      ,           \
 // ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
      XXX               &kp F4            &kp F5            &kp F6            &kp F11         ,     &kp C_VOL_DN      &kp C_PREV        &kp C_PP          &kp C_NEXT        XXX             ,           \
 // ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤

@@ -1,0 +1,10 @@
+// Types: 1q2w3e$R
+ZMK_MACRO(CT_PASS01,
+          bindings = <&kp GRAVE &kp N1 &kp Q &kp N2 &kp W &kp N3 &kp E &kp LS(N4) &kp LS(R)>;
+          wait-ms = <0>;
+          tap-ms = <5>;)
+
+ZMK_MACRO(CT_PASS02,
+					bindings = <&kp GRAVE &kp Q &kp N1 &kp W &kp N2 &kp E &kp N3 &kp LS(R) &kp LS(N4)>;
+          wait-ms = <0>;
+          tap-ms = <5>;)

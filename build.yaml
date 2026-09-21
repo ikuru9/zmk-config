@@ -76,8 +76,3 @@ include:
     snippet: common-config studio-rpc-usb-uart prospector-config
     cmake-args: -DCONFIG_ZMK_KEYBOARD_NAME=\"TOTEM\ PRSP\" -DCONFIG_ZMK_KEYPEEK_LAYER_NOTIFIER=n -DCONFIG_RAW_HID=n
     artifact-name: totem_prospector_dongle
-  - board: xiao_ble//zmk
-    shield: eyelash_corne_dongle raw_hid_adapter prospector_adapter
-    snippet: common-config studio-rpc-usb-uart prospector-config
-    cmake-args: -DCONFIG_ZMK_KEYBOARD_NAME=\"ELCornePRSP\"
-    artifact-name: eyelash_corne_prospector_dongle
