@@ -299,7 +299,7 @@ combos:
   k: Smart Mouse
   l: [Base]
   a: top
-  o: 0.1
+  o: 1.0
 - p: [30, 32]
   k: Cut
   l: [Base, Nav]
