@@ -8,19 +8,23 @@ config ZMK_SPLIT_ROLE_CENTRAL
 
 endif
 
-if SHIELD_TOTEM_LEFT || SHIELD_TOTEM_RIGHT
+if SHIELD_TOTEM_RIGHT || SHIELD_TOTEM_LEFT_W_DONGLE
 
-config ZMK_SPLIT
-    default y
+config ZMK_SPLIT_ROLE_CENTRAL
+    default n
 
 endif
 
-if SHIELD_TOTEM_DONGLE || SHIELD_TOTEM_LEFT_W_DONGLE
+if SHIELD_TOTEM_LEFT || SHIELD_TOTEM_RIGHT || \
+    SHIELD_TOTEM_LEFT_W_DONGLE || SHIELD_TOTEM_DONGLE
 
 config ZMK_SPLIT
     default y
 
-endif # SHIELD_TOTEM_DONGLE || SHIELD_TOTEM_LEFT_W_DONGLE
+config ZMK_BLE
+    default y
+
+endif
 
 if SHIELD_TOTEM_DONGLE
 
@@ -29,9 +33,6 @@ config ZMK_KEYBOARD_NAME
     default "TOTEM DGL"
 
 config ZMK_SPLIT_ROLE_CENTRAL
-    default y
-
-config ZMK_SPLIT
     default y
 
 # Set this to the number of peripherals your dongle will have.

@@ -7,7 +7,7 @@
 
 / {
     chosen {
-        zmk,kscan = &kscan0;
+        zmk,kscan = &kscan;
         zmk,physical-layout = &totem_layout;
     };
 
@@ -28,7 +28,7 @@
     };
 
 
-    kscan0: kscan_0 {
+    kscan: seed_xiao_kscan {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
         diode-direction = "col2row";
