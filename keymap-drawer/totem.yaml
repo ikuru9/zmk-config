@@ -46,9 +46,9 @@ layers:
   - {t: '9', h: )}
   - ''
   - +
-  - {t: '[', h: '{'}
+  - {t: '{', h: '['}
   - ''
-  - {t: ']', h: '}'}
+  - {t: '}', h: ']'}
   - ''
   - ''
   - {t: '4', h: $}
@@ -242,15 +242,15 @@ combos:
   o: 1.0
 - p: [22, 24]
   k: Cut
-  l: [Base, Nav]
+  l: [Base]
   a: bottom
   o: 0.1
 - p: [22, 23]
   k: Copy
-  l: [Base, Nav]
+  l: [Base]
 - p: [23, 24]
   k: Paste
-  l: [Base, Nav]
+  l: [Base]
 - p: [0, 1]
   k: '`'
   l: [Base]
