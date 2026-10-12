@@ -58,9 +58,9 @@ layers:
   - ''
   - ↑
   - +
-  - {t: '[', h: '{'}
+  - {t: '{', h: '['}
   - ''
-  - {t: ']', h: '}'}
+  - {t: '}', h: ']'}
   - ''
   - '['
   - Tab
@@ -302,15 +302,15 @@ combos:
   o: 1.0
 - p: [30, 32]
   k: Cut
-  l: [Base, Nav]
+  l: [Base]
   a: bottom
   o: 0.1
 - p: [30, 31]
   k: Copy
-  l: [Base, Nav]
+  l: [Base]
 - p: [31, 32]
   k: Paste
-  l: [Base, Nav]
+  l: [Base]
 - p: [1, 2]
   k: '`'
   l: [Base]
