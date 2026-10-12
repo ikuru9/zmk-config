@@ -72,7 +72,7 @@ layers:
   - ←
   - Enter
   - →
-  - {t: '-', h: _}
+  - '-'
   - (
   - ''
   - )
@@ -101,10 +101,10 @@ layers:
   Nav:
   - Esc
   - ''
+  - Ctrl+Gui+←
+  - Ctrl+Gui+→
   - Shift+Gui+←
-  - ''
   - Shift+Gui+→
-  - ''
   - ↑
   - ''
   - ''
@@ -113,10 +113,10 @@ layers:
   - ''
   - '['
   - Tab
-  - ''
-  - Ctrl+Gui+←
-  - ''
-  - Ctrl+Gui+→
+  - Alt
+  - Gui
+  - Shift
+  - Ctrl
   - Gui+↑
   - ←
   - Enter

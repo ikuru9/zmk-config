@@ -55,7 +55,7 @@ layers:
   - {t: '5', h: '%'}
   - {t: '6', h: ^}
   - ''
-  - {t: '-', h: _}
+  - '-'
   - (
   - ''
   - )
@@ -80,19 +80,19 @@ layers:
   - $$mdi:translate$$
   Nav:
   - ''
+  - Ctrl+Gui+←
+  - Ctrl+Gui+→
   - Shift+Gui+←
-  - ''
   - Shift+Gui+→
-  - ''
   - ''
   - ''
   - {t: ↑, h: Ctrl+Home}
   - ''
   - ''
-  - ''
-  - Ctrl+Gui+←
-  - ''
-  - Ctrl+Gui+→
+  - Alt
+  - Gui
+  - Shift
+  - Ctrl
   - Gui+↑
   - ''
   - {t: ←, h: Home}
