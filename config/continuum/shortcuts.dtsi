@@ -25,8 +25,7 @@
   #define D_PRV LG(LC(LEFT))
   #define D_NXT LG(LC(RIGHT))
 
-  // Hold → Cmd + Left/Right = start/end of line.
-  // If Cmd is already held, consume it to avoid accidental modifier stacking.
+  // Hold → Cmd + Left/Right = previous/next word.
   MASK_MODS(masked_home, (MOD_LGUI), &kp LEFT)
   MASK_MODS(masked_end,  (MOD_LGUI), &kp RIGHT)
 
@@ -84,10 +83,9 @@
   #define D_PRV LG(LC(LEFT))
   #define D_NXT LG(LC(RIGHT))
 
-  // Hold → Home/End = start/end of line.
-  // If Ctrl is already held, consume it to avoid accidental Ctrl+Home/End.
-  MASK_MODS(masked_left, (MOD_LCTL), &kp HOME)
-  MASK_MODS(masked_right,  (MOD_LCTL), &kp END)
+  // Hold → Ctrl + Left/Right = previous/next
+  MASK_MODS(masked_left, (MOD_LCTL), &kp LC(LEFT))
+  MASK_MODS(masked_right, (MOD_LCTL), &kp LC(RIGHT))
 
   ZMK_HOLD_TAP(mt_left, bindings = <&masked_left>, <&kp>; MT_CORE)
   ZMK_HOLD_TAP(mt_right,  bindings = <&masked_right>,  <&kp>; MT_CORE)
