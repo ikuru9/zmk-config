@@ -95,9 +95,9 @@ layers:
   - Ctrl
   - Gui+↑
   - ''
-  - {t: ←, h: Home}
+  - {t: ←, h: Ctrl+←}
   - {t: ↓, h: Ctrl+End}
-  - {t: →, h: End}
+  - {t: →, h: Ctrl+→}
   - ''
   - LSHIFT
   - ''
