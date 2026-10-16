@@ -8,3 +8,23 @@ ZMK_MACRO(CT_PASS02,
 					bindings = <&kp GRAVE &kp Q &kp N1 &kp W &kp N2 &kp E &kp N3 &kp LS(R) &kp LS(N4)>;
           wait-ms = <0>;
           tap-ms = <5>;)
+
+ZMK_MACRO(CT_BRACES,
+          bindings = <&kp LBRC &kp RBRC &kp LEFT>;
+          wait-ms = <0>;
+          tap-ms = <5>;)
+
+ZMK_MACRO(CT_BRACKETS,
+          bindings = <&kp LBKT &kp RBKT &kp LEFT>;
+          wait-ms = <0>;
+          tap-ms = <5>;)
+
+ZMK_MACRO(CT_ANGLE,
+          bindings = <&kp LT &kp GT &kp LEFT>;
+          wait-ms = <0>;
+          tap-ms = <5>;)
+
+ZMK_MACRO(CT_PARENS,
+          bindings = <&kp LPAR &kp RPAR &kp LEFT>;
+          wait-ms = <0>;
+          tap-ms = <5>;)
