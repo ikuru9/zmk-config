@@ -48,8 +48,8 @@ layers:
   - +
   - '&CT_BRACES'
   - '&CT_PARENS'
-  - '&CT_PARENS'
-  - ''
+  - '&CT_BRACES'
+  - '&CT_ANGLE'
   - ''
   - {t: '4', h: $}
   - {t: '5', h: '%'}
