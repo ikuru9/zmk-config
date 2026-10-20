@@ -46,10 +46,10 @@ layers:
   - {t: '9', h: )}
   - ''
   - +
-  - '&CT_BRACES'
-  - '&CT_PARENS'
-  - '&CT_BRACKETS'
-  - '&CT_ANGLE'
+  - '{ }'
+  - ( )
+  - '[ ]'
+  - < >
   - ''
   - {t: '4', h: $}
   - {t: '5', h: '%'}
