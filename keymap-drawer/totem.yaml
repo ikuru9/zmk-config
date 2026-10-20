@@ -48,7 +48,7 @@ layers:
   - +
   - '&CT_BRACES'
   - '&CT_PARENS'
-  - '&CT_BRACES'
+  - '&CT_BRACKETS'
   - '&CT_ANGLE'
   - ''
   - {t: '4', h: $}
