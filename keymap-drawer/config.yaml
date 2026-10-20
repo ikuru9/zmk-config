@@ -135,6 +135,10 @@ parse_config:
     # Macro
     "&CT_PASS01": Pw1
     "&CT_PASS02": Pw2
+    "&CT_BRACES": "{ }"
+    "&CT_BRACKETS": "[ ]"
+    "&CT_ANGLE": "< >"
+    "&CT_PARENS": "( )"
 
   trans_legend: { "tap": "", "type": "trans" }
 
