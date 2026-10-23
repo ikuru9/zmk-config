@@ -25,30 +25,32 @@
   #define D_PRV LG(LC(LEFT))
   #define D_NXT LG(LC(RIGHT))
 
-  // Hold → Cmd + Left/Right = previous/next word.
+// Tap: Left/Right | Double-tap: Cmd + Left/Right = start/end of line.
   MASK_MODS(masked_home, (MOD_LGUI), &kp LEFT)
   MASK_MODS(masked_end,  (MOD_LGUI), &kp RIGHT)
 
-  ZMK_HOLD_TAP(mt_home, bindings = <&masked_home>, <&kp>; MT_CORE)
-  ZMK_HOLD_TAP(mt_end,  bindings = <&masked_end>,  <&kp>; MT_CORE)
+  ZMK_TAP_DANCE(td_home, bindings = <&kp LEFT>, <&masked_home>;
+                tapping-term-ms = <220>;)
+  ZMK_TAP_DANCE(td_end, bindings = <&kp RIGHT>, <&masked_end>;
+                tapping-term-ms = <220>;)
 
-  // Hold → Cmd + Up/Down = start/end of document.
-  // If Cmd is already held, consume it to avoid accidental modifier stacking.
-
+// Tap: Up/Down | Double-tap: Cmd + Up/Down = start/end of document.
   MASK_MODS(masked_doc_up, (MOD_LGUI), &kp LG(UP))
   MASK_MODS(masked_doc_down, (MOD_LGUI), &kp LG(DOWN))
 
-  ZMK_HOLD_TAP(mt_doc_up, bindings = <&masked_doc_up>, <&kp>; MT_CORE)
-  ZMK_HOLD_TAP(mt_doc_down, bindings = <&masked_doc_down>, <&kp>; MT_CORE)
+  ZMK_TAP_DANCE(td_doc_up, bindings = <&kp UP>, <&masked_doc_up>;
+                tapping-term-ms = <220>;)
+  ZMK_TAP_DANCE(td_doc_down, bindings = <&kp DOWN>, <&masked_doc_down>;
+                tapping-term-ms = <220>;)
 
-  #define NAV_LEFT &mt_home 0 LEFT   // Tap: left  | Long-tap: start of line.
-  #define NAV_RIGHT &mt_end 0 RIGHT  // Tap: right | Long-tap: end of line.
-  #define NAV_UP &mt_doc_up 0 UP     // Tap: up    | Long-tap: start of doc.
-  #define NAV_DOWN &mt_doc_down 0 DOWN   // Tap: down  | Long-tap: end of doc.
+  #define NAV_LEFT &td_home
+  #define NAV_RIGHT &td_end
+  #define NAV_UP &td_doc_up
+  #define NAV_DOWN &td_doc_down
 
   #define SPACE_FULL &kp LC(LG(F))
 
-  // window and fit
+// window and fit
   #define WIN_LEFT    &kp LC(LA(LG(LEFT)))
   #define WIN_RIGHT   &kp LC(LA(LG(RIGHT)))
   #define FIT_LEFT    &kp LC(LA(LEFT))
@@ -83,26 +85,28 @@
   #define D_PRV LG(LC(LEFT))
   #define D_NXT LG(LC(RIGHT))
 
-  // Hold → Ctrl + Left/Right = previous/next
+  // Tap: Left/Right | Double-tap: Ctrl + Left/Right = previous/next word.
   MASK_MODS(masked_left, (MOD_LCTL), &kp LC(LEFT))
   MASK_MODS(masked_right, (MOD_LCTL), &kp LC(RIGHT))
 
-  ZMK_HOLD_TAP(mt_left, bindings = <&masked_left>, <&kp>; MT_CORE)
-  ZMK_HOLD_TAP(mt_right,  bindings = <&masked_right>,  <&kp>; MT_CORE)
+  ZMK_TAP_DANCE(td_left, bindings = <&kp LEFT>, <&masked_left>;
+                tapping-term-ms = <220>;)
+  ZMK_TAP_DANCE(td_right, bindings = <&kp RIGHT>, <&masked_right>;
+                tapping-term-ms = <220>;)
 
-  // Hold → Ctrl + Home/End = start/end of document.
-  // If Ctrl is already held, consume it to avoid accidental modifier stacking.
-
+  // Tap: Up/Down | Double-tap: Ctrl + Home/End = start/end of document.
   MASK_MODS(masked_doc_home, (MOD_LCTL), &kp LC(HOME))
   MASK_MODS(masked_doc_end, (MOD_LCTL), &kp LC(END))
 
-  ZMK_HOLD_TAP(mt_doc_home, bindings = <&masked_doc_home>, <&kp>; MT_CORE)
-  ZMK_HOLD_TAP(mt_doc_end, bindings = <&masked_doc_end>, <&kp>; MT_CORE)
+  ZMK_TAP_DANCE(td_doc_home, bindings = <&kp UP>, <&masked_doc_home>;
+                tapping-term-ms = <220>;)
+  ZMK_TAP_DANCE(td_doc_end, bindings = <&kp DOWN>, <&masked_doc_end>;
+                tapping-term-ms = <220>;)
 
-  #define NAV_LEFT  &mt_left 0       LEFT   // Tap: left  | Long-tap: start of line.
-  #define NAV_RIGHT &mt_right 0       RIGHT  // Tap: right | Long-tap: end of line.
-  #define NAV_UP    &mt_doc_home 0     UP     // Tap: up    | Long-tap: start of doc.
-  #define NAV_DOWN  &mt_doc_end 0      DOWN   // Tap: down  | Long-tap: end of doc.
+  #define NAV_LEFT  &td_left
+  #define NAV_RIGHT &td_right
+  #define NAV_UP    &td_doc_home
+  #define NAV_DOWN  &td_doc_end
 
   #define SPACE_FULL  &kp LG(UP)
 

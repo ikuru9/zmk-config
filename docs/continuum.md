@@ -60,6 +60,7 @@ Key mechanics included in the framework:
 - `TOOL` layer combining editor shortcuts with symbol fallback
 - Default 34-key thumbs: `Space/Nav`, `Enter/Fn`, `NumWord/Num`, `Magic/Shift`
 - Default 34-key layer holds on alpha keys: `Z/Tool`, `?/Mouse`
+- Navigation keys use a single tap for the arrow and a double-tap for the host-OS navigation shortcut.
 - Conditional layer:
   - `FN + NUM -> SYS`
 - Optional wireless system controls (`CONFIG_WIRELESS`)
