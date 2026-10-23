@@ -11,16 +11,16 @@ layers:
   - I
   - O
   - P
-  - {t: A, h: Alt}
-  - {t: S, h: Gui}
+  - {t: A, h: Gui}
+  - {t: S, h: Alt}
   - {t: D, h: Shift}
   - {t: F, h: Ctrl}
   - G
   - H
   - {t: J, h: Ctrl}
   - {t: K, h: Shift}
-  - {t: L, h: Gui}
-  - {t: '''', h: Alt}
+  - {t: L, h: Alt}
+  - {t: '''', h: Gui}
   - LSHIFT
   - Z
   - X
@@ -46,20 +46,20 @@ layers:
   - {t: '9', h: )}
   - ''
   - +
-  - '{ }'
-  - ( )
-  - '[ ]'
-  - < >
+  - '}'
+  - )
+  - ']'
+  - '>'
   - ''
   - {t: '4', h: $}
   - {t: '5', h: '%'}
   - {t: '6', h: ^}
   - ''
   - '-'
-  - ''
-  - ''
-  - ''
-  - ''
+  - '{ }'
+  - ( )
+  - '[ ]'
+  - < >
   - LSHIFT
   - ''
   - {t: '1', h: '!'}
@@ -67,9 +67,9 @@ layers:
   - {t: '3', h: '#'}
   - ''
   - '='
-  - <
   - ''
-  - '>'
+  - ''
+  - ''
   - ''
   - '&undo_redo'
   - Esc
@@ -86,18 +86,18 @@ layers:
   - Shift+Gui+→
   - ''
   - ''
-  - {t: ↑, h: Ctrl+Home}
+  - '&td_doc_home'
   - ''
   - ''
-  - Alt
   - Gui
+  - Alt
   - Shift
   - Ctrl
   - Gui+↑
   - ''
-  - {t: ←, h: Ctrl+←}
-  - {t: ↓, h: Ctrl+End}
-  - {t: →, h: Ctrl+→}
+  - '&td_left'
+  - '&td_doc_end'
+  - '&td_right'
   - ''
   - LSHIFT
   - ''

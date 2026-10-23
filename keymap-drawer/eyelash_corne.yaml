@@ -15,8 +15,8 @@ layers:
   - P
   - '['
   - Tab
-  - {t: A, h: Alt}
-  - {t: S, h: Gui}
+  - {t: A, h: Gui}
+  - {t: S, h: Alt}
   - {t: D, h: Shift}
   - {t: F, h: Ctrl}
   - G
@@ -26,8 +26,8 @@ layers:
   - H
   - {t: J, h: Ctrl}
   - {t: K, h: Shift}
-  - {t: L, h: Gui}
-  - {t: '''', h: Alt}
+  - {t: L, h: Alt}
+  - {t: '''', h: Gui}
   - ']'
   - Caps
   - Z
@@ -58,10 +58,10 @@ layers:
   - ''
   - ↑
   - +
-  - '{ }'
-  - ( )
-  - '[ ]'
-  - < >
+  - '}'
+  - )
+  - ']'
+  - '>'
   - '['
   - Tab
   - ''
@@ -73,10 +73,10 @@ layers:
   - Enter
   - →
   - '-'
-  - ''
-  - ''
-  - ''
-  - ''
+  - '{ }'
+  - ( )
+  - '[ ]'
+  - < >
   - ']'
   - Caps
   - ''
@@ -87,9 +87,9 @@ layers:
   - $$mdi:volume-off$$
   - ↓
   - '='
-  - <
   - ''
-  - '>'
+  - ''
+  - ''
   - ''
   - \
   - Alt
@@ -108,13 +108,13 @@ layers:
   - ↑
   - ''
   - ''
-  - {t: ↑, h: Ctrl+Home}
+  - '&td_doc_home'
   - ''
   - ''
   - '['
   - Tab
-  - Alt
   - Gui
+  - Alt
   - Shift
   - Ctrl
   - Gui+↑
@@ -122,9 +122,9 @@ layers:
   - Enter
   - →
   - ''
-  - {t: ←, h: Ctrl+←}
-  - {t: ↓, h: Ctrl+End}
-  - {t: →, h: Ctrl+→}
+  - '&td_left'
+  - '&td_doc_end'
+  - '&td_right'
   - ''
   - ']'
   - Caps
